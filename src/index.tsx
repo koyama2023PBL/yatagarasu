@@ -3,12 +3,39 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    {/*
+    <Box component="span" m={0}>
+      <Button variant="contained" startIcon={<FavoriteIcon />}>
+        Default
+      </Button>
+    </Box>
+    <Box component="span" m={0}>
+      <Button variant="contained" color="primary" startIcon={<FavoriteIcon />}>
+        Primary
+      </Button>
+    </Box>
+    <Box component="span" m={0}>
+      <Button variant="contained" color="secondary" startIcon={<FavoriteIcon />}>
+        Secondary
+      </Button>
+    </Box>
+    */}
     <App />
   </React.StrictMode>
 );
