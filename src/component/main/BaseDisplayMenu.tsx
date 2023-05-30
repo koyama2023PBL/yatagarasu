@@ -22,6 +22,8 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import MultilineChartIcon from '@mui/icons-material/MultilineChart';
 
+import Graph from '../chart/samplechart2'
+
 const drawerWidth = 240;
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -183,9 +185,10 @@ export default function BaseDisplayMenu() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         <Typography paragraph>
-          CPUの使用率をまずは表示します。
-          日時の入力ボックスなどはすみません、後回しにさせてください。。。
+          サンプル：CPUの使用率（疎通確認レベル）。
+          今後、グラフの表示内容などはブラッシュアップ予定。
         </Typography>
+        <Graph />
       </Box>
     </Box>
   );
