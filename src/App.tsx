@@ -1,25 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import styled from "@emotion/styled";
+import Header from "./component/header/header";
+import Drawer from "./component/drawer/drawer";
+import BaseDisplayMenu from "./component/main/BaseDisplayMenu"
+import DataDisplayComponent from './DataDisplayComponent';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { blueGrey } from '@mui/material/colors';
+
+const theme = createTheme({
+  palette: {
+    primary: blueGrey,
+  },
+  //TODO 色・デザインの決定 
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <ThemeProvider theme={theme}>
+    <div className="App" style={{ display: 'flex' }}>
+      <BaseDisplayMenu />
+      <DataDisplayComponent/>
     </div>
+    </ThemeProvider>
   );
 }
 
