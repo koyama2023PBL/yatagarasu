@@ -22,7 +22,11 @@ import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import MultilineChartIcon from '@mui/icons-material/MultilineChart';
 
-import Graph from '../chart/samplechart2'
+import CacheHitRate from '../Content/CacheHitRate';
+import CPUusage from '../Content/CPUusage';
+import SlowQueryCount from '../Content/SlowQuery';
+import AverageQueryTime from '../Content/AvgQueryTime';
+import PostgresProcessStatus from '../Content/ProcessCheck';
 
 const drawerWidth = 240;
 
@@ -41,9 +45,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(5)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(6)} + 1px)`,
   },
 });
 
@@ -51,7 +55,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
+  padding: theme.spacing(0, 0),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -123,7 +127,7 @@ export default function BaseDisplayMenu() {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+          <MenuIcon />
           </IconButton>
           <Typography
             variant="h5"
@@ -182,14 +186,76 @@ export default function BaseDisplayMenu() {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        <Typography paragraph>
-          サンプル：CPUの使用率（疎通確認レベル）。
-          今後、グラフの表示内容などはブラッシュアップ予定。
-        </Typography>
-        <Graph />
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 0,
+              p: 3,
+              height: '40vh',
+              width: '40vw',
+              border: `1px dashed ${theme.palette.primary.main}`
+            }}
+          >
+            <CPUusage />
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+            <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '24vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`
+              }}
+            >
+              <AverageQueryTime />
+            </Box>
+            <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '18vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`
+              }}
+            >
+              <CacheHitRate />
+            </Box>
+            <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '18vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`,
+                color: theme.palette.text.primary
+              }}
+            >
+              <SlowQueryCount />
+            </Box>
+            <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '30vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`,
+                color: theme.palette.text.primary
+              }}
+            >
+              <PostgresProcessStatus />
+            </Box>
+          </Box>
+        </Box>
       </Box>
-    </Box>
   );
 }

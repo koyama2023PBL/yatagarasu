@@ -10,24 +10,43 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { fetchFromAPI } from "../../ApiService";
-import { fetchFromAPIwithRequest } from "../../ApiService";
+//import { fetchFromAPIwithRequest } from "../../ApiService";
 
-type CpuUsageData = {
+import instance from '../../axios/axiosInstance';
+import { getDate, padZero} from '../Common/Util';
+
+interface CpuUsageData {
   date: string;
   usage: number;
 };
 
-type CpuUsageApiResponse = {
+interface CpuUsageApiResponse {
   starttime: string;
   endtime: string;
   data: CpuUsageData[];
 };
 
-type CpuUsageApiRequest = {
+interface CpuUsageApiRequest {
   starttime: Date;
   endtime: Date;
 };
+
+const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CpuUsageApiRequest) => {
+  try {
+      // Format the Date objects as strings
+      const startTimeString = getDate(queryParameters.starttime);
+      const endTimeString = getDate(queryParameters.endtime);
+
+      // Add the query parameters to the URL
+      const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}`);
+      console.log("URL:", endpoint);
+      console.log("Response:", response);
+      return response.data;
+  } catch (err) {
+      console.log("err:", err);
+      throw err;
+  }
+}
 
 ChartJS.register(
   CategoryScale,
@@ -39,18 +58,17 @@ ChartJS.register(
   Legend
 );
 
-const Graph: React.FC = () => {
+const CPUusage: React.FC = () => {
   const [chartData, setChartData] = useState<any | null>(null);
 
   useEffect(() => {
     const fetchChartData = async () => {
-    //const  fetchFromAPIwithRequest = async () => {
+
       const endpoint = "/database-explorer/api/visualization/cpu-usage";
-      //const response: CpuUsageApiResponse = await fetchFromAPI(endpoint);
 
       const requestBody: CpuUsageApiRequest = {
         starttime: new Date("2023-05-07T18:00:00"),
-        endtime: new Date("2023-05-07T18:10:00"),
+        endtime: new Date("2023-05-07T18:10:00")
       };
 
       const response: CpuUsageApiResponse = await fetchFromAPIwithRequest(endpoint, requestBody);
@@ -62,7 +80,7 @@ const Graph: React.FC = () => {
         labels: labels,
         datasets: [
           {
-            label: "CPU Usage",
+            label: "CPU使用率(%)",
             data: data,
             borderColor: "rgb(255, 99, 132)",
             backgroundColor: "rgba(255, 99, 132, 0.5)",
@@ -76,20 +94,19 @@ const Graph: React.FC = () => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false, 
     plugins: {
       title: {
         display: true,
-        text: "CPU Usage",
+        text: "CPU使用率"
       },
     },
+
   };
 
-  return <>{chartData && <Line options={options} data={chartData} />}</>;
+
+
+  return <>{chartData ? <Line options={options} data={chartData}/> : 'Loading...'}</>;
 };
 
-export default Graph;
-
-
-
-
-
+export default CPUusage;
