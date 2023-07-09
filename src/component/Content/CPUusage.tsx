@@ -6,10 +6,11 @@ import {
   PointElement,
   LineElement,
   Title,
-  Tooltip,
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import Tooltip from '@mui/material/Tooltip';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 //import { fetchFromAPIwithRequest } from "../../ApiService";
 
 import instance from '../../axios/axiosInstance';
@@ -54,7 +55,6 @@ ChartJS.register(
   PointElement,
   LineElement,
   Title,
-  Tooltip,
   Legend
 );
 
@@ -94,19 +94,20 @@ const CPUusage: React.FC = () => {
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false, 
-    plugins: {
-      title: {
-        display: true,
-        text: "CPU使用率"
-      },
-    },
-
+    maintainAspectRatio: false
   };
-
-
-
-  return <>{chartData ? <Line options={options} data={chartData}/> : 'Loading...'}</>;
+  
+  return (
+    <>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '-35px' }}>
+        <h5>CPU使用率</h5>
+        <Tooltip title="データベースが稼働しているサーバのCPU使用率を表示しています。" arrow>
+          <HelpOutlineIcon fontSize="small" style={{ marginLeft: '0px' }} />
+        </Tooltip>
+      </div>
+      {chartData ? <Line options={options} data={chartData}/> : 'Loading...'}
+    </>
+  );
 };
 
 export default CPUusage;

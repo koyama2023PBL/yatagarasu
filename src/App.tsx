@@ -15,6 +15,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
     <div className="App" style={{ display: 'flex' }} >
+      {/*TODO Stateの管理対応追加。State用のライブラリを追加する*/}
       <BaseDisplayMenu />
     </div>
     </ThemeProvider>

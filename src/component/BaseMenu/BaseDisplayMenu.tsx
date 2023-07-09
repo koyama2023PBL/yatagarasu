@@ -21,12 +21,18 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import MultilineChartIcon from '@mui/icons-material/MultilineChart';
+import Settings from '@mui/icons-material/Settings';
 
 import CacheHitRate from '../Content/CacheHitRate';
 import CPUusage from '../Content/CPUusage';
 import SlowQueryCount from '../Content/SlowQuery';
 import AverageQueryTime from '../Content/AvgQueryTime';
 import PostgresProcessStatus from '../Content/ProcessCheck';
+
+import DateTimePicker from '../Common/DateTimePicker';
+import { DatePicker } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers'
 
 const drawerWidth = 240;
 
@@ -146,6 +152,8 @@ export default function BaseDisplayMenu() {
           >
           DatabaseExplorer
           </Typography>
+          <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -159,7 +167,8 @@ export default function BaseDisplayMenu() {
           {[{text: 'Dashboard', icon: <DashboardIcon />},
             {text: 'Visualization', icon: <MultilineChartIcon />},  
             {text: 'Metrics', icon: <QueryStatsIcon />}, 
-            {text: 'Analytics', icon: <TroubleshootIcon />}
+            {text: 'Analytics', icon: <TroubleshootIcon />},
+            {text: 'Settings', icon: <Settings />}
           ].map((item, index) => (
               <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
@@ -168,7 +177,7 @@ export default function BaseDisplayMenu() {
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
+                    px: 3,
                   }}
                 >
                   <ListItemIcon
@@ -186,20 +195,52 @@ export default function BaseDisplayMenu() {
           ))}
         </List>
       </Drawer>
+        {/*TODO 画面設計での説明の追加対応・DateTimePickerの追加*/}
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 0,
-              p: 3,
-              height: '40vh',
-              width: '40vw',
-              border: `1px dashed ${theme.palette.primary.main}`
-            }}
-          >
-            <CPUusage />
-          </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '40vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`
+              }}
+            >
+              <CPUusage />
+            </Box>
+            <Box
+                component="main"
+                border={1}
+                sx={{
+                  flexGrow: 0,
+                  p: 2,
+                  height: '30vh',
+                  width: '40vw',
+                  border: `1px dashed ${theme.palette.primary.main}`,
+                  color: theme.palette.text.primary
+                }}
+              >
+                <PostgresProcessStatus />
+              </Box>
+            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+          <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '20vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`,
+                alignItems: 'left'
+              }}
+            >
+              <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
+              <DateTimePicker/>
+            </Box>
             <Box
               component="main"
               border={1}
@@ -239,20 +280,6 @@ export default function BaseDisplayMenu() {
               }}
             >
               <SlowQueryCount />
-            </Box>
-            <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '30vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`,
-                color: theme.palette.text.primary
-              }}
-            >
-              <PostgresProcessStatus />
             </Box>
           </Box>
         </Box>

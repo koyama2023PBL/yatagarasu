@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import instance from '../../axios/axiosInstance';
 import { getDate, padZero} from '../Common/Util';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Card, CardContent, Typography, IconButton, Popover, Grid } from '@mui/material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 interface CacheHitRateData {
   startTime: string;
@@ -45,6 +46,19 @@ export const fetchFromAPIwithRequest = async (endpoint: string, queryParameters:
 const CacheHitRate: React.FC = () => {
   const [cacheHitRateData, setCacheHitRateData] = useState<CacheHitRateData | null>(null);
 
+  // Popoverに必要なstateと関数を定義
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+
   useEffect(() => {
     const fetchCacheHitRateData = async () => {
       const endpoint = '/database-explorer/api/visualization/hit-rate';
@@ -72,9 +86,39 @@ const CacheHitRate: React.FC = () => {
   }, []);
 
   return (
-    //cacheHitRateData ? `${cacheHitRateData.hitRate * 100}%` : 'Loading...'
     <Card>
       <CardContent>
+        <div style={{ display: 'flex', alignItems: 'center', marginTop: '-30px',marginBottom: '-20px' }}>
+          <h4>キャッシュヒット率</h4>
+          <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '0px' }}>
+            <HelpOutlineIcon fontSize="small" />
+          </IconButton>
+          <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+          >
+            <Typography sx={{ p: 2 }} style={{ width: '600px', whiteSpace: 'pre-line' }}>
+              pg_stat_databaseから取得したキャッシュヒット率です。
+              キャッシュヒット率が低いとクエリの実行にかかる時間が長くなり、パフォーマンスの低下に繋がります。
+              この値を下げる要因には以下のようなものがあります。
+              <ul>
+                <li>メモリ不足</li>
+                <li>不適切なクエリ</li>
+                <li>不適切なインデックス設定</li>
+                <li>VACUUM不足</li>
+              </ul>
+            </Typography>
+          </Popover>
+        </div>
         {cacheHitRateData ? (
           <>
             <Typography variant="h6" component="div" align="left">
@@ -93,8 +137,7 @@ const CacheHitRate: React.FC = () => {
         )}
       </CardContent>
     </Card>
-
-    );
+  );
 };
 
 export default CacheHitRate;
