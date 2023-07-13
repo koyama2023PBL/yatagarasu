@@ -21,8 +21,18 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import MultilineChartIcon from '@mui/icons-material/MultilineChart';
+import Settings from '@mui/icons-material/Settings';
 
-import Graph from '../chart/samplechart2'
+import CacheHitRate from '../Content/CacheHitRate';
+import CPUusage from '../Content/CPUusage';
+import SlowQueryCount from '../Content/SlowQuery';
+import AverageQueryTime from '../Content/AvgQueryTime';
+import PostgresProcessStatus from '../Content/ProcessCheck';
+
+import DateTimePicker from '../Common/DateTimePicker';
+import { DatePicker } from '@mui/x-date-pickers'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers'
 
 const drawerWidth = 240;
 
@@ -41,9 +51,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
+  width: `calc(${theme.spacing(5)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
+    width: `calc(${theme.spacing(6)} + 1px)`,
   },
 });
 
@@ -51,7 +61,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
-  padding: theme.spacing(0, 1),
+  padding: theme.spacing(0, 0),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
@@ -123,7 +133,7 @@ export default function BaseDisplayMenu() {
               ...(open && { display: 'none' }),
             }}
           >
-            <MenuIcon />
+          <MenuIcon />
           </IconButton>
           <Typography
             variant="h5"
@@ -142,6 +152,8 @@ export default function BaseDisplayMenu() {
           >
           DatabaseExplorer
           </Typography>
+          <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -155,7 +167,8 @@ export default function BaseDisplayMenu() {
           {[{text: 'Dashboard', icon: <DashboardIcon />},
             {text: 'Visualization', icon: <MultilineChartIcon />},  
             {text: 'Metrics', icon: <QueryStatsIcon />}, 
-            {text: 'Analytics', icon: <TroubleshootIcon />}
+            {text: 'Analytics', icon: <TroubleshootIcon />},
+            {text: 'Settings', icon: <Settings />}
           ].map((item, index) => (
               <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
@@ -164,7 +177,7 @@ export default function BaseDisplayMenu() {
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
+                    px: 3,
                   }}
                 >
                   <ListItemIcon
@@ -182,14 +195,94 @@ export default function BaseDisplayMenu() {
           ))}
         </List>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        <Typography paragraph>
-          サンプル：CPUの使用率（疎通確認レベル）。
-          今後、グラフの表示内容などはブラッシュアップ予定。
-        </Typography>
-        <Graph />
+        {/*TODO 画面設計での説明の追加対応・DateTimePickerの追加*/}
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+            <Box
+              component="main"
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '40vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`
+              }}
+            >
+              <CPUusage />
+            </Box>
+            <Box
+                component="main"
+                border={1}
+                sx={{
+                  flexGrow: 0,
+                  p: 2,
+                  height: '30vh',
+                  width: '40vw',
+                  border: `1px dashed ${theme.palette.primary.main}`,
+                  color: theme.palette.text.primary
+                }}
+              >
+                <PostgresProcessStatus />
+              </Box>
+            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+          <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '20vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`,
+                alignItems: 'left'
+              }}
+            >
+              <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
+              <DateTimePicker/>
+            </Box>
+            <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '24vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`
+              }}
+            >
+              <AverageQueryTime />
+            </Box>
+            <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '18vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`
+              }}
+            >
+              <CacheHitRate />
+            </Box>
+            <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '18vh',
+                width: '40vw',
+                border: `1px dashed ${theme.palette.primary.main}`,
+                color: theme.palette.text.primary
+              }}
+            >
+              <SlowQueryCount />
+            </Box>
+          </Box>
+        </Box>
       </Box>
-    </Box>
   );
 }

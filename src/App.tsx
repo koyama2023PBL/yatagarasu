@@ -1,10 +1,6 @@
 import React from 'react';
 import './App.css';
-import styled from "@emotion/styled";
-import Header from "./component/header/header";
-import Drawer from "./component/drawer/drawer";
-import BaseDisplayMenu from "./component/main/BaseDisplayMenu"
-import DataDisplayComponent from './DataDisplayComponent';
+import BaseDisplayMenu from "./component/BaseMenu/BaseDisplayMenu"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blueGrey } from '@mui/material/colors';
 
@@ -18,9 +14,9 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-    <div className="App" style={{ display: 'flex' }}>
+    <div className="App" style={{ display: 'flex' }} >
+      {/*TODO Stateの管理対応追加。State用のライブラリを追加する*/}
       <BaseDisplayMenu />
-      <DataDisplayComponent/>
     </div>
     </ThemeProvider>
   );
