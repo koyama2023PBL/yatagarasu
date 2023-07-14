@@ -13,8 +13,8 @@ import Tooltip from '@mui/material/Tooltip';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 //import { fetchFromAPIwithRequest } from "../../ApiService";
 
-import instance from '../../axios/axiosInstance';
-import { getDate, padZero} from '../Common/Util';
+import instance from '../axios/axiosInstance';
+import { getDate, padZero} from '../component/Common/Util';
 
 interface CpuUsageData {
   date: string;

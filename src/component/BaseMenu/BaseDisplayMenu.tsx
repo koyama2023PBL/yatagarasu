@@ -18,16 +18,23 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import Terminal from '@mui/icons-material/Terminal';
+import Storage from '@mui/icons-material/Storage';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
-import MultilineChartIcon from '@mui/icons-material/MultilineChart';
 import Settings from '@mui/icons-material/Settings';
 
-import CacheHitRate from '../Content/CacheHitRate';
-import CPUusage from '../Content/CPUusage';
-import SlowQueryCount from '../Content/SlowQuery';
-import AverageQueryTime from '../Content/AvgQueryTime';
-import PostgresProcessStatus from '../Content/ProcessCheck';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelected } from '../Redux/menu'; 
+import { RootState } from '../Redux/store';
+
+import CacheHitRate from '../../Content/CacheHitRate';
+import CPUusage from '../../Content/CPUusage';
+import SlowQueryCount from '../../Content/SlowQuery';
+import AverageQueryTime from '../../Content/AvgQueryTime';
+import PostgresProcessStatus from '../../Content/ProcessCheck';
+
+import About from '../Description/aboutDescription';
+import TimePicker from '../Common/TimePicker';
 
 import DateTimePicker from '../Common/DateTimePicker';
 import { DatePicker } from '@mui/x-date-pickers'
@@ -106,7 +113,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function BaseDisplayMenu() {
-  const [selected, setSelected] = React.useState('DashboardIcon');
+  const dispatch = useDispatch();
+  const selected = useSelector((state: RootState) => state.menu.selected);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -116,6 +124,23 @@ export default function BaseDisplayMenu() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const renderContent = () => {
+    switch (selected) {
+      case 'Dashboard':
+      // return <DashboardContent />; // Dashboardアイコンが選択された場合、ダッシュボードのコンテンツを表示
+      // case 'Visualization':
+      //   return <VisualizationContent />;
+      // case 'Metrics':
+      //   return <MetricsContent />;
+      // case 'Analytics':
+      //   return <AnalyticsContent />;
+      // case 'Settings':
+      //   return <SettingsContent />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -152,8 +177,6 @@ export default function BaseDisplayMenu() {
           >
           DatabaseExplorer
           </Typography>
-          <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -164,11 +187,11 @@ export default function BaseDisplayMenu() {
         </DrawerHeader>
         <Divider />
         <List>
-          {[{text: 'Dashboard', icon: <DashboardIcon />},
-            {text: 'Visualization', icon: <MultilineChartIcon />},  
-            {text: 'Metrics', icon: <QueryStatsIcon />}, 
-            {text: 'Analytics', icon: <TroubleshootIcon />},
-            {text: 'Settings', icon: <Settings />}
+          {[{text: 'ダッシュボード', icon: <DashboardIcon />},
+            {text: 'OS情報', icon: <Terminal />},  
+            {text: 'RDBMS情報', icon: <Storage />}, 
+            {text: 'テーブル・クエリ情報', icon: <TroubleshootIcon />},
+            {text: '設定', icon: <Settings />}
           ].map((item, index) => (
               <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
@@ -196,90 +219,95 @@ export default function BaseDisplayMenu() {
         </List>
       </Drawer>
         {/*TODO 画面設計での説明の追加対応・DateTimePickerの追加*/}
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-            <Box
-              component="main"
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '40vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`
-              }}
-            >
-              <CPUusage />
-            </Box>
-            <Box
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
+          <Box 
+            sx={{  
+              display: 'flex', 
+              flexDirection: 'row', 
+              alignItems: 'left',
+              flexGrow: 0,
+              p: 2,
+              height: '20vh',
+              width: '80vw',
+              border: `1px dashed ${theme.palette.primary.main}`
+            }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', height: '20vh', width: '60vw'}}>
+                <About/>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '20vh', width: '20vw'}}>
+                <TimePicker/>
+              </Box>
+          </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+              <Box
+                component="main"
+                sx={{
+                  flexGrow: 0,
+                  p: 2,
+                  height: '40vh',
+                  width: '40vw',
+                  border: `1px dashed ${theme.palette.primary.main}`
+                }}
+              >
+                <CPUusage />
+              </Box>
+              <Box
+                  component="main"
+                  border={1}
+                  sx={{
+                    flexGrow: 0,
+                    p: 2,
+                    height: '30vh',
+                    width: '40vw',
+                    border: `1px dashed ${theme.palette.primary.main}`,
+                    color: theme.palette.text.primary
+                  }}
+                >
+                  <PostgresProcessStatus />
+                </Box>
+              </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+              <Box
                 component="main"
                 border={1}
                 sx={{
                   flexGrow: 0,
                   p: 2,
-                  height: '30vh',
+                  height: '24vh',
+                  width: '40vw',
+                  border: `1px dashed ${theme.palette.primary.main}`
+                }}
+              >
+                <AverageQueryTime />
+              </Box>
+              <Box
+                component="main"
+                border={1}
+                sx={{
+                  flexGrow: 0,
+                  p: 2,
+                  height: '18vh',
+                  width: '40vw',
+                  border: `1px dashed ${theme.palette.primary.main}`
+                }}
+              >
+                <CacheHitRate />
+              </Box>
+              <Box
+                component="main"
+                border={1}
+                sx={{
+                  flexGrow: 0,
+                  p: 2,
+                  height: '18vh',
                   width: '40vw',
                   border: `1px dashed ${theme.palette.primary.main}`,
                   color: theme.palette.text.primary
                 }}
               >
-                <PostgresProcessStatus />
+                <SlowQueryCount />
               </Box>
-            </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-          <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '20vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`,
-                alignItems: 'left'
-              }}
-            >
-              <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
-              <DateTimePicker/>
-            </Box>
-            <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '24vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`
-              }}
-            >
-              <AverageQueryTime />
-            </Box>
-            <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '18vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`
-              }}
-            >
-              <CacheHitRate />
-            </Box>
-            <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '18vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`,
-                color: theme.palette.text.primary
-              }}
-            >
-              <SlowQueryCount />
             </Box>
           </Box>
         </Box>

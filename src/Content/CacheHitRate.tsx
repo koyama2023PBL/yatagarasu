@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import instance from '../../axios/axiosInstance';
-import { getDate, padZero} from '../Common/Util';
+import instance from '../axios/axiosInstance';
+import { getDate, padZero} from '../component/Common/Util';
 import { Card, CardContent, Typography, IconButton, Popover, Grid } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 

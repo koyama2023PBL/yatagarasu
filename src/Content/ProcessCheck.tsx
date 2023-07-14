@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
-import instance from "../../axios/axiosInstance";
-import { getDate, DateTostring } from "../Common/Util";
+import instance from "../axios/axiosInstance";
+import { getDate, DateTostring } from "../component/Common/Util";
 
 interface PostgresProcessApiRequest {
   startTime: Date;
