@@ -24,24 +24,24 @@ import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import Settings from '@mui/icons-material/Settings';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelected } from '../Redux/menu'; 
-import { RootState } from '../Redux/store';
+import { setSelected } from '../Redux/MenuState'; 
+import { RootState } from '../Redux/StateStore';
 
-import CacheHitRate from '../../Content/CacheHitRate';
-import CPUusage from '../../Content/CPUusage';
-import SlowQueryCount from '../../Content/SlowQuery';
-import AverageQueryTime from '../../Content/AvgQueryTime';
-import PostgresProcessStatus from '../../Content/ProcessCheck';
+import OverViewMenu from '../Layers/OverViewMenu';
+import OsMenu from '../Layers/OsMenu';
+import RdbmsMenu from '../Layers/RdbmsMenu';
+import TableMenu from '../Layers/TableMenu';
+import SettingMenu from '../Layers/SettingMenu';
 
-import About from '../Description/aboutDescription';
+import About from '../Description/AboutDescription';
+import OSDesc from '../Description/OsDescription';
+import RDBMSDesc from '../Description/RdbmsDescription';
+import TableDesc from '../Description/TableDescription';
+import SettingsDesc from '../Description/SettingsDescription';
+
 import TimePicker from '../Common/TimePicker';
 
-import DateTimePicker from '../Common/DateTimePicker';
-import { DatePicker } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers'
-
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -126,18 +126,35 @@ export default function BaseDisplayMenu() {
     setOpen(false);
   };
 
-  const renderContent = () => {
+  const renderContentMain = () => {
     switch (selected) {
-      case 'Dashboard':
-      // return <DashboardContent />; // Dashboardアイコンが選択された場合、ダッシュボードのコンテンツを表示
-      // case 'Visualization':
-      //   return <VisualizationContent />;
-      // case 'Metrics':
-      //   return <MetricsContent />;
-      // case 'Analytics':
-      //   return <AnalyticsContent />;
-      // case 'Settings':
-      //   return <SettingsContent />;
+      case 'dashboard':
+        return <OverViewMenu />; // Dashboardアイコンが選択された場合、ダッシュボードのコンテンツを表示
+      case 'os':
+        return <OsMenu />;
+      case 'rdbms':
+        return <RdbmsMenu />;
+      case 'table':
+        return <TableMenu />;
+      case 'settings':
+        return <SettingMenu />;
+      default:
+        return null;
+    }
+  };
+
+  const renderContentDesc = () => {
+    switch (selected) {
+      case 'dashboard':
+        return <About />;
+      case 'os':
+        return <OSDesc />;
+      case 'rdbms':
+      return <RDBMSDesc />;
+      case 'table':
+      return <TableDesc />;
+      case 'settings':
+      return <SettingsDesc />;
       default:
         return null;
     }
@@ -187,26 +204,26 @@ export default function BaseDisplayMenu() {
         </DrawerHeader>
         <Divider />
         <List>
-          {[{text: 'ダッシュボード', icon: <DashboardIcon />},
-            {text: 'OS情報', icon: <Terminal />},  
-            {text: 'RDBMS情報', icon: <Storage />}, 
-            {text: 'テーブル・クエリ情報', icon: <TroubleshootIcon />},
-            {text: '設定', icon: <Settings />}
-          ].map((item, index) => (
-              <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  selected={item.text === selected}
-                  onClick={() => setSelected(item.text)}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 3,
-                  }}
+        {[{ id: 'dashboard', text: 'ダッシュボード', icon: <DashboardIcon /> },
+          { id: 'os', text: 'OS情報', icon: <Terminal /> },
+          { id: 'rdbms', text: 'RDBMS情報', icon: <Storage /> },
+          { id: 'table', text: 'テーブル・クエリ情報', icon: <TroubleshootIcon /> },
+          { id: 'settings', text: '設定', icon: <Settings /> },
+        ].map((item) => (
+          <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              selected={item.id === selected}
+              onClick={() => dispatch(setSelected(item.id))}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 3,
+              }}
                 >
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
-                      mr: open ? 3 : 'auto',
+                      mr: open ? 2 : 'auto',
                       justifyContent: 'center',
                     }}
                   >
@@ -218,7 +235,6 @@ export default function BaseDisplayMenu() {
           ))}
         </List>
       </Drawer>
-        {/*TODO 画面設計での説明の追加対応・DateTimePickerの追加*/}
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
           <Box 
             sx={{  
@@ -227,89 +243,18 @@ export default function BaseDisplayMenu() {
               alignItems: 'left',
               flexGrow: 0,
               p: 2,
-              height: '20vh',
+              height: '25vh',
               width: '80vw',
               border: `1px dashed ${theme.palette.primary.main}`
             }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', height: '20vh', width: '60vw'}}>
-                <About/>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', height: '25vh', width: '60vw'}}>
+              {renderContentDesc()}
               </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '20vh', width: '20vw'}}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '25vh', width: '30vw'}}>
                 <TimePicker/>
               </Box>
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-              <Box
-                component="main"
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '40vh',
-                  width: '40vw',
-                  border: `1px dashed ${theme.palette.primary.main}`
-                }}
-              >
-                <CPUusage />
-              </Box>
-              <Box
-                  component="main"
-                  border={1}
-                  sx={{
-                    flexGrow: 0,
-                    p: 2,
-                    height: '30vh',
-                    width: '40vw',
-                    border: `1px dashed ${theme.palette.primary.main}`,
-                    color: theme.palette.text.primary
-                  }}
-                >
-                  <PostgresProcessStatus />
-                </Box>
-              </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-              <Box
-                component="main"
-                border={1}
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '24vh',
-                  width: '40vw',
-                  border: `1px dashed ${theme.palette.primary.main}`
-                }}
-              >
-                <AverageQueryTime />
-              </Box>
-              <Box
-                component="main"
-                border={1}
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '18vh',
-                  width: '40vw',
-                  border: `1px dashed ${theme.palette.primary.main}`
-                }}
-              >
-                <CacheHitRate />
-              </Box>
-              <Box
-                component="main"
-                border={1}
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '18vh',
-                  width: '40vw',
-                  border: `1px dashed ${theme.palette.primary.main}`,
-                  color: theme.palette.text.primary
-                }}
-              >
-                <SlowQueryCount />
-              </Box>
-            </Box>
-          </Box>
+          {renderContentMain()}
         </Box>
       </Box>
   );

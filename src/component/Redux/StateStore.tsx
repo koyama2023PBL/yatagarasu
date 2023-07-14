@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import menuReducer from './menu';
+import menuReducer from './MenuState';
+import dateReducer from './DateState';
 
 export const store = configureStore({
   reducer: {
     menu: menuReducer,
+    date: dateReducer, 
   },
 });
 

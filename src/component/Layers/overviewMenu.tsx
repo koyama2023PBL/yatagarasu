@@ -18,77 +18,77 @@ const OverViewMenu: React.FC = () => {
   });
 
   return (
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-              <Box
-                component="main"
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '40vh',
-                  width: '40vw',
-                  border: `1px dashed`
-                }}
-              >
-                <CPUusage />
-              </Box>
-              <Box
-                  component="main"
-                  border={1}
-                  sx={{
-                    flexGrow: 0,
-                    p: 2,
-                    height: '30vh',
-                    width: '40vw',
-                    border: `1px dashed`
-                  }}
-                >
-                  <PostgresProcessStatus />
-                </Box>
-              </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-              <Box
-                component="main"
-                border={1}
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '24vh',
-                  width: '40vw',
-                  border: `1px dashed`
-                }}
-              >
-                <AverageQueryTime />
-              </Box>
-              <Box
-                component="main"
-                border={1}
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '18vh',
-                  width: '40vw',
-                  border: `1px dashed`
-                }}
-              >
-                <CacheHitRate />
-              </Box>
-              <Box
-                component="main"
-                border={1}
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '18vh',
-                  width: '40vw',
-                  border: `1px dashed`
-                }}
-              >
-                <SlowQueryCount />
-              </Box>
-            </Box>
+    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 0,
+            p: 2,
+            height: '40vh',
+            width: '40vw',
+            border: `1px dashed`
+          }}
+        >
+          <CPUusage />
+        </Box>
+        <Box
+            component="main"
+            border={1}
+            sx={{
+              flexGrow: 0,
+              p: 2,
+              height: '30vh',
+              width: '40vw',
+              border: `1px dashed`
+            }}
+          >
+            <PostgresProcessStatus />
           </Box>
-      );
+        </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+        <Box
+          component="main"
+          border={1}
+          sx={{
+            flexGrow: 0,
+            p: 2,
+            height: '24vh',
+            width: '40vw',
+            border: `1px dashed`
+          }}
+        >
+          <AverageQueryTime />
+        </Box>
+        <Box
+          component="main"
+          border={1}
+          sx={{
+            flexGrow: 0,
+            p: 2,
+            height: '18vh',
+            width: '40vw',
+            border: `1px dashed`
+          }}
+        >
+          <CacheHitRate />
+        </Box>
+        <Box
+          component="main"
+          border={1}
+          sx={{
+            flexGrow: 0,
+            p: 2,
+            height: '18vh',
+            width: '40vw',
+            border: `1px dashed`
+          }}
+        >
+          <SlowQueryCount />
+        </Box>
+      </Box>
+    </Box>
+  );
 }
 
 export default OverViewMenu;

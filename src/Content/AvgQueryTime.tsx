@@ -15,20 +15,6 @@ import instance from '../axios/axiosInstance';
 import { getDate, padZero, DateTostring, roundToThreeDecimalPlaces} from '../component/Common/Util';
 import { Card, CardContent, Typography } from '@mui/material';
 
-/*
-interface AverageQueryTimeApiResponse {
-  starttime: string;
-  endtime: string;
-  kind: number;
-  time: number;
-}
-
-interface AverageQueryTimeApiRequest {
-  starttime: Date;
-  endtime: Date;
-  queryKind: number;
-}
-*/
 type AverageQueryTimeApiResponse = {
   starttime: string;
   endtime: string;

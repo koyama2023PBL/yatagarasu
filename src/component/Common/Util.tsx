@@ -8,11 +8,6 @@ export function getDate(date: Date) {
   return res;
 }
 
-//先頭ゼロ付加
-export function padZero(num: number) {
-  return (num < 10 ? "0" : "") + num;
-}
-
 //Date型変換->[YYYY/MM/DD HH:mm:SS]
 export function DateTostring(date: Date): string {
   const year = date.getFullYear();
@@ -25,8 +20,24 @@ export function DateTostring(date: Date): string {
   return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 }
 
+//分以下切り捨て
+export function truncateMinites(date: Date): Date {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  const hours = date.getHours();
+  
+  return new Date(year, month, day, hours, 0, 0);
+}
+
 //小数点以下3桁丸め
 export function roundToThreeDecimalPlaces(value: number): number {
   const factor = Math.pow(10, 3);
   return Math.round(value * factor) / factor;
 }
+
+//先頭ゼロ付加
+export function padZero(num: number) {
+  return (num < 10 ? "0" : "") + num;
+}
+
