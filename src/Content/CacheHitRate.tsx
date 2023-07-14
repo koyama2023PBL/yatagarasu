@@ -24,13 +24,16 @@ interface CacheHitRateApiRequest {
   dbname: string;
 }
 
+interface CacheHitRateProps {
+  starttime: Date;
+  endtime: Date;
+}
+
 export const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CacheHitRateApiRequest) => {
   try {
-      // Format the Date objects as strings
       const startTimeString = getDate(queryParameters.starttime);
       const endTimeString = getDate(queryParameters.endtime);
 
-      // Add the query parameters to the URL
       const response = await instance.get<CacheHitRateApiResponse>(
         `${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}&dbname=${queryParameters.dbname}`
       );
@@ -43,10 +46,9 @@ export const fetchFromAPIwithRequest = async (endpoint: string, queryParameters:
   }
 }
 
-const CacheHitRate: React.FC = () => {
+const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
   const [cacheHitRateData, setCacheHitRateData] = useState<CacheHitRateData | null>(null);
 
-  // Popoverに必要なstateと関数を定義
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,8 +66,8 @@ const CacheHitRate: React.FC = () => {
       const endpoint = '/database-explorer/api/visualization/hit-rate';
 
       const requestBody: CacheHitRateApiRequest = {
-        starttime: new Date('2023-05-07T18:00:00'),
-        endtime: new Date('2023-05-07T18:10:00'),
+        starttime: starttime,
+        endtime: endtime,
         dbname: 'databaseexplorer',
       };
 
@@ -81,6 +83,8 @@ const CacheHitRate: React.FC = () => {
         hitRate: response.hitrate,
       });
     };
+
+    //alert(starttime.toISOString() + endtime.toISOString())
 
     fetchCacheHitRateData();
   }, []);

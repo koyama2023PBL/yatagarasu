@@ -32,6 +32,11 @@ interface CpuUsageApiRequest {
   endtime: Date;
 };
 
+interface CpuUsageProps {
+  starttime: Date;
+  endtime: Date;
+}
+
 const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CpuUsageApiRequest) => {
   try {
       // Format the Date objects as strings
@@ -58,7 +63,7 @@ ChartJS.register(
   Legend
 );
 
-const CPUusage: React.FC = () => {
+const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
 
   useEffect(() => {
@@ -67,8 +72,8 @@ const CPUusage: React.FC = () => {
       const endpoint = "/database-explorer/api/visualization/cpu-usage";
 
       const requestBody: CpuUsageApiRequest = {
-        starttime: new Date("2023-05-07T18:00:00"),
-        endtime: new Date("2023-05-07T18:10:00")
+        starttime: new Date(starttime),
+        endtime: new Date(endtime)
       };
 
       const response: CpuUsageApiResponse = await fetchFromAPIwithRequest(endpoint, requestBody);

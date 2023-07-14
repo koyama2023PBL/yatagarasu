@@ -9,13 +9,17 @@ import AverageQueryTime from '../../Content/AvgQueryTime';
 import PostgresProcessStatus from '../../Content/ProcessCheck';
 
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/StateStore';
 
 
 const OverViewMenu: React.FC = () => {
-  const [] = useState<{}>({
-    "startTime": null,
-    "endTime": null,
-  });
+
+  const { from, to } = useSelector((state: RootState) => state.date);
+
+  const starttime = new Date(from);
+  const endtime = new Date(to);
+  const querytime = 0.1
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
@@ -30,7 +34,7 @@ const OverViewMenu: React.FC = () => {
             border: `1px dashed`
           }}
         >
-          <CPUusage />
+          <CPUusage starttime={starttime} endtime={endtime}/>
         </Box>
         <Box
             component="main"
@@ -58,7 +62,7 @@ const OverViewMenu: React.FC = () => {
             border: `1px dashed`
           }}
         >
-          <AverageQueryTime />
+          <AverageQueryTime starttime={starttime} endtime={endtime} />
         </Box>
         <Box
           component="main"
@@ -71,7 +75,7 @@ const OverViewMenu: React.FC = () => {
             border: `1px dashed`
           }}
         >
-          <CacheHitRate />
+          <CacheHitRate starttime={starttime} endtime={endtime} />
         </Box>
         <Box
           component="main"
@@ -84,7 +88,7 @@ const OverViewMenu: React.FC = () => {
             border: `1px dashed`
           }}
         >
-          <SlowQueryCount />
+          <SlowQueryCount starttime={starttime} endtime={endtime} querytime={querytime}/>
         </Box>
       </Box>
     </Box>

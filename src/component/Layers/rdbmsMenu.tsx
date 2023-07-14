@@ -9,29 +9,20 @@ import AverageQueryTime from '../../Content/AvgQueryTime';
 import PostgresProcessStatus from '../../Content/ProcessCheck';
 
 import { useState } from 'react';
+import { RootState } from '../Redux/StateStore';
+import { useSelector } from 'react-redux';
 
 
 const RdbmsMenu: React.FC = () => {
-  const [] = useState<{}>({
-    "startTime": null,
-    "endTime": null,
-  });
+
+  const { from, to } = useSelector((state: RootState) => state.date);
+
+  const starttime = new Date(from);
+  const endtime = new Date(to);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '40vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <CPUusage />
-        </Box>
         <Box
             component="main"
             border={1}
@@ -53,38 +44,12 @@ const RdbmsMenu: React.FC = () => {
           sx={{
             flexGrow: 0,
             p: 2,
-            height: '24vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <AverageQueryTime />
-        </Box>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
             height: '18vh',
             width: '40vw',
             border: `1px dashed`
           }}
         >
-          <CacheHitRate />
-        </Box>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '18vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <SlowQueryCount />
+          <CacheHitRate starttime={starttime} endtime={endtime} />
         </Box>
       </Box>
     </Box>

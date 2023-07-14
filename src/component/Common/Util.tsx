@@ -30,6 +30,17 @@ export function truncateMinites(date: Date): Date {
   return new Date(year, month, day, hours, 0, 0);
 }
 
+//分以下丸め込み
+export function roundMinites(date: Date): Date {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  
+  return new Date(year, month, day, hours, minutes, 0);
+}
+
 //小数点以下3桁丸め
 export function roundToThreeDecimalPlaces(value: number): number {
   const factor = Math.pow(10, 3);
