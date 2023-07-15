@@ -5,22 +5,23 @@ import jaLocale from 'date-fns/locale/ja';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ja from 'date-fns/locale/ja'
 import { setFromDate, setToDate } from '../Redux/DateState';
 import Typography from '@mui/material/Typography';
-import { truncateMinites } from './Util';
 import { Card, CardContent } from '@mui/material';
+import { RootState } from '../Redux/StateStore';
 
 const TimePicker = () => {
+
   const dispatch = useDispatch();
 
-  const oneHourAgo = truncateMinites(new Date());
-  oneHourAgo.setHours(oneHourAgo.getHours() - 1);
-  const [temporaryFromDate, setTemporaryFromDate] = useState<Date | null>(oneHourAgo);
-  
-  const [temporaryToDate, setTemporaryToDate] = useState<Date | null>(truncateMinites(new Date()));
-  
+  const { from, to } = useSelector((state: RootState) => state.date);
+  const starttime = new Date(from);
+  const endtime = new Date(to);
+
+  const [temporaryFromDate, setTemporaryFromDate] = useState<Date | null>(starttime);
+  const [temporaryToDate, setTemporaryToDate] = useState<Date | null>(endtime);
 
   const handleFromDateChange = (date: Date | null) => {
     if (date && temporaryToDate && date > temporaryToDate) {
@@ -44,8 +45,8 @@ const TimePicker = () => {
         alert("開始時間は終了時間より前に設定してください");
         return;
       }
-      dispatch(setFromDate(temporaryFromDate.toISOString()));
-      dispatch(setToDate(temporaryToDate.toISOString()));
+      dispatch(setFromDate(temporaryFromDate));
+      dispatch(setToDate(temporaryToDate));
     }
   };
 
@@ -61,7 +62,7 @@ const TimePicker = () => {
                   <Typography variant="body1" marginLeft="1vw" marginRight="1vw">測定開始時刻</Typography>
                   <DateTimePicker
                     label="From"
-                    value={temporaryFromDate}
+                    value={starttime}
                     onChange={handleFromDateChange}
                     minutesStep={5}
                     maxDate={new Date()}
@@ -71,7 +72,7 @@ const TimePicker = () => {
                   <Typography variant="body1" marginLeft="1vw" marginRight="1vw">測定終了時刻</Typography>
                   <DateTimePicker
                     label="To"
-                    value={temporaryToDate}
+                    value={endtime}
                     onChange={handleToDateChange}
                     minutesStep={5}
                     maxDate={new Date()}

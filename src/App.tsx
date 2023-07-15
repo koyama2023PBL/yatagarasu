@@ -5,11 +5,16 @@ import { Provider } from 'react-redux';
 import { Store } from 'redux'; // Store type from 'redux'
 import { store } from './component/Redux/StateStore'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { blueGrey } from '@mui/material/colors';
+import { blueGrey, indigo } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
-    primary: blueGrey,
+    primary: {
+      main: indigo[500]
+    },
+    background: {
+      default: '#c5cae9'
+    }
   },
   //TODO 色・デザインの決定 
 });

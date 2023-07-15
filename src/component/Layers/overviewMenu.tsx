@@ -11,6 +11,9 @@ import PostgresProcessStatus from '../../Content/ProcessCheck';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
+import OverView from '../../Content/OverView';
+import MemoryUsage from '../../Content/MemoryUsage';
+import DeadTuple from '../../Content/DeadTuple';
 
 
 const OverViewMenu: React.FC = () => {
@@ -22,76 +25,79 @@ const OverViewMenu: React.FC = () => {
   const querytime = 0.1
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
         <Box
           component="main"
           sx={{
             flexGrow: 0,
             p: 2,
-            height: '40vh',
-            width: '40vw',
-            border: `1px dashed`
+            height: '15vh',
+            width: '80vw',
+            justifyContent: 'center',
+            alignItems: 'center'
           }}
         >
-          <CPUusage starttime={starttime} endtime={endtime}/>
+          <OverView starttime={starttime} endtime={endtime}/>
         </Box>
-        <Box
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+          <Box
             component="main"
-            border={1}
             sx={{
               flexGrow: 0,
               p: 2,
-              height: '30vh',
+              height: '25vh',
               width: '40vw',
-              border: `1px dashed`
+              justifyContent: 'center',
+              alignItems: 'center'
             }}
           >
-            <PostgresProcessStatus />
+            <CPUusage starttime={starttime} endtime={endtime}/>
           </Box>
+          <Box
+              component="main"
+              border={1}
+              sx={{
+                flexGrow: 0,
+                p: 2,
+                height: '25vh',
+                width: '40vw',
+                border: `1px dashed`
+              }}
+            >
+              <PostgresProcessStatus />
+            </Box>
         </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '24vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <AverageQueryTime starttime={starttime} endtime={endtime} />
-        </Box>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '18vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <CacheHitRate starttime={starttime} endtime={endtime} />
-        </Box>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '18vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <SlowQueryCount starttime={starttime} endtime={endtime} querytime={querytime}/>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 0,
+              p: 2,
+              height: '25vh',
+              width: '40vw'
+            }}
+          >
+            <MemoryUsage starttime={starttime} endtime={endtime} />
+          </Box>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 0,
+              p: 2,
+              height: '25vh',
+              width: '40vw',
+            }}
+          >
+            <DeadTuple starttime={starttime} endtime={endtime} />
+          </Box>
         </Box>
       </Box>
     </Box>
+  </Box>
   );
 }
 

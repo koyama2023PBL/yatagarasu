@@ -40,8 +40,9 @@ import TableDesc from '../Description/TableDescription';
 import SettingsDesc from '../Description/SettingsDescription';
 
 import TimePicker from '../Common/TimePicker';
+import Footer from './Footer';
 
-const drawerWidth = 220;
+const drawerWidth = 300;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -58,9 +59,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(5)} + 1px)`,
+  width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(6)} + 1px)`,
+    width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
 
@@ -204,11 +205,11 @@ export default function BaseDisplayMenu() {
         </DrawerHeader>
         <Divider />
         <List>
-        {[{ id: 'dashboard', text: 'ダッシュボード', icon: <DashboardIcon /> },
-          { id: 'os', text: 'OS情報', icon: <Terminal /> },
-          { id: 'rdbms', text: 'RDBMS情報', icon: <Storage /> },
-          { id: 'table', text: 'テーブル・クエリ情報', icon: <TroubleshootIcon /> },
-          { id: 'settings', text: '設定', icon: <Settings /> },
+        {[{ id: 'dashboard', text: 'ダッシュボード', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
+          { id: 'os', text: 'OS情報', icon: <Terminal style={{ fontSize: 40 }}/> },
+          { id: 'rdbms', text: 'RDBMS情報', icon: <Storage style={{ fontSize: 40 }}/> },
+          { id: 'table', text: 'テーブル・クエリ情報', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
+          { id: 'settings', text: '設定', icon: <Settings style={{ fontSize: 40 }}/> },
         ].map((item) => (
           <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
             <ListItemButton
@@ -235,27 +236,35 @@ export default function BaseDisplayMenu() {
           ))}
         </List>
       </Drawer>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
-          <Box 
-            sx={{  
-              display: 'flex', 
-              flexDirection: 'row', 
-              alignItems: 'left',
-              flexGrow: 0,
-              p: 2,
-              height: '25vh',
-              width: '80vw',
-              border: `1px dashed ${theme.palette.primary.main}`
-            }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', height: '25vh', width: '60vw'}}>
-              {renderContentDesc()}
-              </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '25vh', width: '30vw'}}>
-                <TimePicker/>
-              </Box>
+        <Box 
+          sx={{ 
+            display: 'grid', 
+            gridTemplateRows: '1fr auto', 
+            minHeight: '100vh'
+          }}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}pt` }}>
+            <Box 
+              sx={{  
+                display: 'flex', 
+                flexDirection: 'row', 
+                alignItems: 'left',
+                flexGrow: 0,
+                p: 2,
+                height: '22vh',
+                width: '80vw',
+              }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', height: '25vh', width: '50vw', marginRight:'1vw'}}>
+                  {renderContentDesc()}
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'right', height: '25vh', width: '30vw'}}>
+                  <TimePicker/>
+                </Box>
+            </Box>
+            {renderContentMain()}
+            <Footer/>
           </Box>
-          {renderContentMain()}
-        </Box>
       </Box>
+    </Box>
   );
 }

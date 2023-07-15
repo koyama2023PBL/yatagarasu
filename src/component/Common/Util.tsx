@@ -21,7 +21,7 @@ export function DateTostring(date: Date): string {
 }
 
 //分以下切り捨て
-export function truncateMinites(date: Date): Date {
+export function truncateMinutes(date: Date): Date {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
@@ -31,14 +31,12 @@ export function truncateMinites(date: Date): Date {
 }
 
 //分以下丸め込み
-export function roundMinites(date: Date): Date {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDate();
-  const hours = date.getHours();
-  const minutes = date.getMinutes();
+export function roundMinutes(date: Date): Date {
   
-  return new Date(year, month, day, hours, minutes, 0);
+  const coeff = 1000 * 60 * 5;
+  const rounded = new Date(Math.floor(date.getTime() / coeff) * coeff);
+  return rounded;
+  
 }
 
 //小数点以下3桁丸め

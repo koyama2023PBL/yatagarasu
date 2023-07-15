@@ -26,33 +26,6 @@ const TableMenu: React.FC = () => {
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
         <Box
           component="main"
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '40vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <CPUusage starttime={starttime} endtime={endtime}/>
-        </Box>
-        <Box
-            component="main"
-            border={1}
-            sx={{
-              flexGrow: 0,
-              p: 2,
-              height: '30vh',
-              width: '40vw',
-              border: `1px dashed`
-            }}
-          >
-            <PostgresProcessStatus />
-          </Box>
-        </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-        <Box
-          component="main"
           border={1}
           sx={{
             flexGrow: 0,
@@ -63,19 +36,6 @@ const TableMenu: React.FC = () => {
           }}
         >
           <AverageQueryTime starttime={starttime} endtime={endtime} />
-        </Box>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '18vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <CacheHitRate starttime={starttime} endtime={endtime} />
         </Box>
         <Box
           component="main"

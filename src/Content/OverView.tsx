@@ -33,7 +33,7 @@ interface CpuUsageApiRequest {
   endtime: Date;
 };
 
-interface CpuUsageProps {
+interface OverViewProps {
   starttime: Date;
   endtime: Date;
 }
@@ -61,7 +61,7 @@ ChartJS.register(
   Legend
 );
 
-const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
+const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
 
   useEffect(() => {
@@ -86,10 +86,6 @@ const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
         return `${hours}:${minutes}:${seconds}`;
       });
 
-      //const labels = response.data.map((item) => new Date(item.date).toLocaleString());
-      //const labels = response.data.map((item) => item.date);
-
-      //const data = response.data.map((item) => ({x: item.date,y: item.usage,}));
       const data = response.data.map((item) => item.usage);
 
       setChartData({
@@ -138,10 +134,10 @@ const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
     <Card>
     <CardContent>
       <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '-35px',marginTop: '-25px', width: '100%' }}>
-        <h5>CPU使用率(%)</h5>
+        <h5>OverView -全体概況- *未実装</h5>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-        <div style={{ height: '130pt', width: '100%' }}>
+        <div style={{ height: '60pt', width: '100%' }}>
           {chartData ? <Line options={options} data={chartData}/> : 'Loading...'}
         </div>
       </div>
@@ -150,4 +146,4 @@ const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
   );
 };
 
-export default CPUusage;
+export default OverView;
