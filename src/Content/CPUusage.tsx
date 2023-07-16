@@ -7,15 +7,18 @@ import {
   LineElement,
   Title,
   Legend,
+  TooltipPositionerMap,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import Tooltip from '@mui/material/Tooltip';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-//import { fetchFromAPIwithRequest } from "../../ApiService";
 
 import instance from '../axios/axiosInstance';
-import { getDate, padZero} from '../component/Common/Util';
-import { Card, CardContent } from "@mui/material";
+import { getDate} from '../component/Common/Util';
+import { Box, Card, CardContent, Checkbox,Typography } from "@mui/material";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { green, yellow, red } from '@mui/material/colors';
+
+import ErrorIcon from '@mui/icons-material/Error';
+import WarningIcon from '@mui/icons-material/Warning';
 
 interface CpuUsageData {
   date: string;
@@ -45,7 +48,7 @@ const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CpuUsa
 
       const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}`);
 
-      return response.data;
+      return { status: response.status, data: response.data };
   } catch (err) {
       console.log("err:", err);
       throw err;
@@ -63,35 +66,24 @@ ChartJS.register(
 
 const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
+  const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [yAxisFixed, setYAxisFixed] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchChartData = async () => {
-
       const endpoint = "/database-explorer/api/visualization/cpu-usage";
-
       const requestBody: CpuUsageApiRequest = {
         starttime: new Date(starttime),
         endtime: new Date(endtime)
       };
-
-      const response: CpuUsageApiResponse = await fetchFromAPIwithRequest(endpoint, requestBody);
-
-
-      const labels = response.data.map((item) => {
-        const date = new Date(item.date);
-        const hours = padZero(date.getHours());
-        const minutes = padZero(date.getMinutes());
-        const seconds = padZero(date.getSeconds());
-    
-        return `${hours}:${minutes}:${seconds}`;
-      });
-
-      //const labels = response.data.map((item) => new Date(item.date).toLocaleString());
-      //const labels = response.data.map((item) => item.date);
-
-      //const data = response.data.map((item) => ({x: item.date,y: item.usage,}));
+  
+      const { status, data: response }: {status: number, data: CpuUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
+      setStatusCode(status);
+  
+      const labels = response.data.map((item) => item.date);
       const data = response.data.map((item) => item.usage);
-
+      const length = labels.length;
+  
       setChartData({
         labels: labels,
         datasets: [
@@ -102,51 +94,119 @@ const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
             backgroundColor: "rgba(255, 99, 132, 0.5)",
           },
         ],
+        length: length
       });
     };
-
+  
     fetchChartData();
   }, []);
 
-  const options = {
+  const options = () => ({
     responsive: true,
     maintainAspectRatio: false,
     scales: {
+      y: {
+        min: 0,
+        max: yAxisFixed ? undefined : 100,
+      },
       x: {
         ticks: {
-          autoSkip: true,
+          autoSkip: false,
           maxRotation: 0,
-          minRotation: 0
+          minRotation: 0,
+          callback: function(value : any, index : any , values : any) {
+            return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
+          }
+        },
+        grid: {
+          display: false,
+          drawBorder: false
         }
       }
     },
+    onHover: (e: any, elements: any) => {
+      //TODO tooltipを表示させる。マウスホバーイベント自体は捕捉できているため、描画の問題と予測。
+      console.log("this is test")
+    },
     plugins: {
-      tooltip: {
-        callbacks: {
-          label: function(context: any) {
-            const label = context.chart.data.labels[context.dataIndex];
-            const value = context.parsed.y;
-            return `Date: ${label}, Usage: ${value}%`;
+      // plugins の中では tooltips を設定しない
+    },
+    tooltips: { // tooltip を options のルートに設定
+      mode: 'index',
+      intersect: false,
+      callbacks: {
+        title: function(tooltipItems : any, data : any) {
+          console.log("this is test")
+          return "my tittle";
+        },
+        label: function(tooltipItem : any, data : any) {
+          console.log(tooltipItem)
+          let label = data.datasets[tooltipItem.datasetIndex].label || '';
+          if (tooltipItem.yLabel !== null) {
+            label += ': ' + tooltipItem.yLabel.toFixed(2) + '%';
           }
-        }
+          return label;
+        },
       }
+    },
+  });
+  
+  
+  
+  const getIcon = () => {
+    if (statusCode === null) {
+      return CheckCircleOutlineIcon; 
     }
-  };
   
+    if (statusCode >= 500) {
+      return ErrorIcon;
+    } else if (statusCode >= 400) {
+      return WarningIcon;
+    } else {
+      return CheckCircleOutlineIcon;
+    }
+  }
+
+  const getIconColor = () => {
+    if (statusCode === null) {
+      return; 
+    }
   
+    if (statusCode >= 500) {
+      return red[500];
+    } else if (statusCode >= 400) {
+      return yellow[500];
+    } else {
+      return green[500];
+    }
+  }
+
   return (
     <Card>
-    <CardContent>
-      <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '-35px',marginTop: '-25px', width: '100%' }}>
-        <h5>CPU使用率(%)</h5>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-        <div style={{ height: '130pt', width: '100%' }}>
-          {chartData ? <Line options={options} data={chartData}/> : 'Loading...'}
-        </div>
-      </div>
+      <CardContent>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '-15px', marginTop: '-5px', width: '100%' }}>
+          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+            CPU使用率(%)
+          </Typography>
+          {chartData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 'auto', marginBottom: '-15px', marginTop: '-15px' }}>
+            <Checkbox
+              checked={yAxisFixed}
+              onChange={() => setYAxisFixed(!yAxisFixed)}
+            />
+            <Typography variant="body2">
+              AutoScale
+            </Typography>
+          </Box>
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'left', width: '100%' , marginBottom: '-20px', marginTop: '-10px'}}>
+          <div style={{ height: '145pt', width: '100%', marginLeft: '-2vw', marginRight: '-2vw' }}>
+            {chartData ? <Line options={options()} data={chartData}/> : 'Loading...'}
+          </div>
+        </Box>
     </CardContent>
   </Card>
+
   );
 };
 

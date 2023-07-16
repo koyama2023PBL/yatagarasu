@@ -15,7 +15,9 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import instance from '../axios/axiosInstance';
 import { getDate, padZero} from '../component/Common/Util';
-import { Card, CardContent } from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { green, yellow, red } from '@mui/material/colors';
 
 interface CpuUsageData {
   date: string;
@@ -132,17 +134,20 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
   
   return (
     <Card>
-    <CardContent>
-      <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '-35px',marginTop: '-25px', width: '100%' }}>
-        <h5>Memory使用量(MiB) *未実装 </h5>
-      </div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-        <div style={{ height: '130pt', width: '100%' }}>
-          {chartData ? <Line options={options} data={chartData}/> : 'Loading...'}
-        </div>
-      </div>
-    </CardContent>
-  </Card>
+      <CardContent>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '-15px', marginTop: '-5px', width: '100%' }}>
+          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+            メモリ使用量(MiB)
+          </Typography>
+          <CheckCircleOutlineIcon style={{ color: green[500] }} />
+        </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+          <div style={{ height: '130pt', width: '100%' }}>
+            {chartData ? <Line options={options} data={chartData}/> : 'Loading...'}
+          </div>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

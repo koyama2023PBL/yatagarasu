@@ -11,6 +11,7 @@ import PostgresProcessStatus from '../../Content/ProcessCheck';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
+import LineChart from '../../Content/LineChart';
 
 
 const SettingMenu: React.FC = () => {
@@ -28,54 +29,15 @@ const SettingMenu: React.FC = () => {
           sx={{
             flexGrow: 0,
             p: 2,
-            height: '40vh',
-            width: '40vw',
+            height: '100vh',
+            width: '100vw',
             border: `1px dashed`
           }}
         >
-          <CPUusage starttime={starttime} endtime={endtime}/>
+          <LineChart/>
         </Box>
-        <Box
-            component="main"
-            border={1}
-            sx={{
-              flexGrow: 0,
-              p: 2,
-              height: '30vh',
-              width: '40vw',
-              border: `1px dashed`
-            }}
-          >
-            <PostgresProcessStatus />
-          </Box>
         </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '24vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <AverageQueryTime starttime={starttime} endtime={endtime} />
-        </Box>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '18vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <CacheHitRate starttime={starttime} endtime={endtime} />
-        </Box>
       </Box>
     </Box>
   );

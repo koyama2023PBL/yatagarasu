@@ -41,6 +41,7 @@ import SettingsDesc from '../Description/SettingsDescription';
 
 import TimePicker from '../Common/TimePicker';
 import Footer from './Footer';
+import LineChart from '../../Content/LineChart';
 
 const drawerWidth = 300;
 
@@ -138,7 +139,8 @@ export default function BaseDisplayMenu() {
       case 'table':
         return <TableMenu />;
       case 'settings':
-        return <SettingMenu />;
+        //return <SettingMenu />;
+        return <LineChart/>
       default:
         return null;
     }
@@ -243,7 +245,7 @@ export default function BaseDisplayMenu() {
             minHeight: '100vh'
           }}
         >
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}pt` }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
             <Box 
               sx={{  
                 display: 'flex', 

@@ -1,149 +1,104 @@
-import React, { useEffect, useState } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import Tooltip from '@mui/material/Tooltip';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-//import { fetchFromAPIwithRequest } from "../../ApiService";
-
-import instance from '../axios/axiosInstance';
-import { getDate, padZero} from '../component/Common/Util';
-import { Card, CardContent } from "@mui/material";
-
-interface CpuUsageData {
-  date: string;
-  usage: number;
-};
-
-interface CpuUsageApiResponse {
-  starttime: string;
-  endtime: string;
-  data: CpuUsageData[];
-};
-
-interface CpuUsageApiRequest {
-  starttime: Date;
-  endtime: Date;
-};
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import { Card, CardContent, Typography } from '@mui/material';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import ErrorIcon from '@mui/icons-material/Error';
+import WarningIcon from '@mui/icons-material/Warning';
+import { green, yellow, red } from '@mui/material/colors';
 
 interface OverViewProps {
   starttime: Date;
   endtime: Date;
 }
 
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CpuUsageApiRequest) => {
-  try {
-      const startTimeString = getDate(queryParameters.starttime);
-      const endTimeString = getDate(queryParameters.endtime);
-
-      const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}`);
-
-      return response.data;
-  } catch (err) {
-      console.log("err:", err);
-      throw err;
-  }
-}
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Legend
-);
-
 const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
-  const [chartData, setChartData] = useState<any | null>(null);
 
-  useEffect(() => {
-    const fetchChartData = async () => {
+  //仮の値
+  var dbStatus = "OK";
+  var rdbmsStatus = "STABLE";
+  var queryStatus = "ERROR";
 
-      const endpoint = "/database-explorer/api/visualization/cpu-usage";
-
-      const requestBody: CpuUsageApiRequest = {
-        starttime: new Date(starttime),
-        endtime: new Date(endtime)
-      };
-
-      const response: CpuUsageApiResponse = await fetchFromAPIwithRequest(endpoint, requestBody);
-
-
-      const labels = response.data.map((item) => {
-        const date = new Date(item.date);
-        const hours = padZero(date.getHours());
-        const minutes = padZero(date.getMinutes());
-        const seconds = padZero(date.getSeconds());
-    
-        return `${hours}:${minutes}:${seconds}`;
-      });
-
-      const data = response.data.map((item) => item.usage);
-
-      setChartData({
-        labels: labels,
-        datasets: [
-          {
-            label: "%",
-            data: data,
-            borderColor: "rgb(255, 99, 132)",
-            backgroundColor: "rgba(255, 99, 132, 0.5)",
-          },
-        ],
-      });
-    };
-
-    fetchChartData();
-  }, []);
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      x: {
-        ticks: {
-          autoSkip: true,
-          maxRotation: 0,
-          minRotation: 0
-        }
-      }
-    },
-    plugins: {
-      tooltip: {
-        callbacks: {
-          label: function(context: any) {
-            const label = context.chart.data.labels[context.dataIndex];
-            const value = context.parsed.y;
-            return `Date: ${label}, Usage: ${value}%`;
-          }
-        }
-      }
-    }
-  };
-  
-  
   return (
-    <Card>
-    <CardContent>
-      <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '-35px',marginTop: '-25px', width: '100%' }}>
-        <h5>OverView -全体概況- *未実装</h5>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        height: '100%',
+      }}
+    >
+      <div style={{ height: '100%', width: '100%' }}>
+      <Card style={{height: '100%', width: '100%'}}>
+        <CardContent>
+          <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '-35px',marginTop: '-25px', width: '100%' }}>
+            <h5>OverView -全体概況- </h5>
+          </div>
+          <div>
+            <ul></ul>
+            <ul></ul>
+          </div>
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '75pt'}}>
+            <Box marginLeft={2} marginRight={2} sx={{ flex: 1 , marginBottom: '-10px', marginTop: '-30px'}}>
+              <Card sx={{backgroundColor: dbStatus === "OK" ? '#e8f5e9' : dbStatus === "STABLE" ? '#fffde7' : '#ffebee'}}>
+                <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <Typography variant="h6">
+                      DBサーバの稼働状態 : 
+                    </Typography>
+                    {dbStatus === "OK" ? 
+                      <CheckCircleIcon style={{ color: green[500] }} /> 
+                      : dbStatus === "STABLE" ? 
+                      <WarningIcon style={{ color: yellow[500] }} /> 
+                      : 
+                      <ErrorIcon style={{ color: red[500] }} />
+                    }
+                  </Box>
+                </CardContent>
+              </Card>
+            </Box>
+            <Box marginLeft={2} marginRight={2} sx={{ flex: 1 , marginBottom: '-10px', marginTop: '-30px'}}>
+              <Card sx={{backgroundColor: rdbmsStatus === "OK" ? '#e8f5e9' : rdbmsStatus === "STABLE" ? '#fffde7' : '#ffebee'}}>
+                <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <Typography variant="h6">
+                      RDBMSの稼働状態 :   
+                    </Typography>
+                    {rdbmsStatus === "OK" ? 
+                      <CheckCircleIcon style={{ color: green[500] }} /> 
+                      : rdbmsStatus === "STABLE" ? 
+                      <WarningIcon style={{ color: yellow[500] }} /> 
+                      : 
+                      <ErrorIcon style={{ color: red[500] }} />
+                    }
+                  </Box>
+                </CardContent>
+              </Card>
+            </Box>
+            <Box marginLeft={2} marginRight={2} sx={{ flex: 1 , marginBottom: '-10px', marginTop: '-30px'}}>
+              <Card sx={{backgroundColor: queryStatus === "OK" ? '#e8f5e9' : queryStatus === "STABLE" ? '#fffde7' : '#ffebee'}}>
+                <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <Typography variant="h6">
+                      クエリの処理状態 : 
+                    </Typography>
+                    {queryStatus === "OK" ? 
+                      <CheckCircleIcon style={{ color: green[500] }} /> 
+                      : queryStatus === "STABLE" ? 
+                      <WarningIcon style={{ color: yellow[500] }} /> 
+                      : 
+                      <ErrorIcon style={{ color: red[500] }} />
+                    }
+                  </Box>
+                </CardContent>
+              </Card>
+            </Box>
+          </Box>
+        </CardContent>
+      </Card>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-        <div style={{ height: '60pt', width: '100%' }}>
-          {chartData ? <Line options={options} data={chartData}/> : 'Loading...'}
-        </div>
-      </div>
-    </CardContent>
-  </Card>
+    </Box>
   );
-};
+}
 
 export default OverView;
