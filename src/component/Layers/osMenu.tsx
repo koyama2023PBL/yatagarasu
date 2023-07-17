@@ -8,6 +8,7 @@ import CacheHitRate from '../../Content/CacheHitRate';
 import CPUusage from '../../Content/CPUusage';
 import AverageQueryTime from '../../Content/AvgQueryTime';
 import PostgresProcessStatus from '../../Content/ProcessCheck';
+import MemoryUsage from '../../Content/MemoryUsage';
 
 const OsMenu: React.FC = () => {
 
@@ -17,23 +18,16 @@ const OsMenu: React.FC = () => {
   const endtime = new Date(to);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '40vh',
-            width: '80vw',
-            border: `1px dashed`
-          }}
-        >
+    <div>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <CPUusage starttime={starttime} endtime={endtime}/>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}></Box>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+          <MemoryUsage starttime={starttime} endtime={endtime} />
+        </Box>
       </Box>
-    </Box>
+    </div>
   );
 }
 

@@ -42,6 +42,7 @@ import SettingsDesc from '../Description/SettingsDescription';
 import TimePicker from '../Common/TimePicker';
 import Footer from './Footer';
 import LineChart from '../../Content/LineChart';
+import DatabaseInfomation from '../../Content/DatabaseInfomation';
 
 const drawerWidth = 300;
 
@@ -131,7 +132,7 @@ export default function BaseDisplayMenu() {
   const renderContentMain = () => {
     switch (selected) {
       case 'dashboard':
-        return <OverViewMenu />; // Dashboardアイコンが選択された場合、ダッシュボードのコンテンツを表示
+        return <OverViewMenu />;
       case 'os':
         return <OsMenu />;
       case 'rdbms':
@@ -139,8 +140,7 @@ export default function BaseDisplayMenu() {
       case 'table':
         return <TableMenu />;
       case 'settings':
-        //return <SettingMenu />;
-        return <LineChart/>
+        return <SettingMenu />;
       default:
         return null;
     }
@@ -149,17 +149,17 @@ export default function BaseDisplayMenu() {
   const renderContentDesc = () => {
     switch (selected) {
       case 'dashboard':
-        return <About />;
+        return <DatabaseInfomation />;
       case 'os':
         return <OSDesc />;
       case 'rdbms':
-      return <RDBMSDesc />;
+        return <RDBMSDesc />;
       case 'table':
-      return <TableDesc />;
+        return <TableDesc />;
       case 'settings':
-      return <SettingsDesc />;
+        return <SettingsDesc />;
       default:
-        return null;
+        return <DatabaseInfomation />;
     }
   };
 
@@ -249,13 +249,13 @@ export default function BaseDisplayMenu() {
                 p: 1,
                 height: '18vh',
                 width: '95vw',
-                marginTop: '1.5vh'
+                marginTop: '1vh'
               }}>
               {renderContentDesc()}
               <Box sx={{ width: '1.5vh'}}></Box>
               <TimePicker/>
             </Box>
-                {renderContentMain()}
+              {renderContentMain()}
             <Footer/>
           </Box>
       </Box>

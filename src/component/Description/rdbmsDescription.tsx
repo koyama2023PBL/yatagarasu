@@ -1,17 +1,22 @@
+import { Card, CardContent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
 const rdbms = () => {
 
   return(
-    <><Typography variant="h5" component="div" align="left">
-      RDBMSレイヤ情報とは？
-    </Typography><Typography variant="h6" component="div" align="left">
-        <ul></ul>
-      </Typography><Typography variant="body1" component="div" align="left">
-        RDBMSの稼働状況を確認するために、RDBMSレイヤの情報を表示します。
-      </Typography><Typography variant="body1" component="div" align="left">
-        具体的には、キャッシュヒット率やデッドタプルなどの情報をデータベース単位で確認することができます。
-      </Typography></>
+    <Card sx={{ width: '55vw'}}>
+      <CardContent>
+        <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
+            【仮】RDBMS Infomation
+        </Typography>
+          <Typography variant="body1"  sx={{display: 'flex',marginLeft: '2vw', marginTop: '1.5vh'}}>
+            This is area for display RDBMS infomation.
+          </Typography>
+          <Typography variant="body1"  sx={{display: 'flex',marginLeft: '2vw'}}>
+            There will be filled in with DB kind, version, etc.
+          </Typography>
+      </CardContent>
+    </Card>
   );
 }
 
