@@ -23,6 +23,7 @@
     "@types/react-redux": "^7.1.25",
     "axios": "^1.4.0",
     "chart.js": "^4.1.1",
+    "chartjs-plugin-annotation": "^3.0.1",
     "date-fns": "^2.30.0",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",

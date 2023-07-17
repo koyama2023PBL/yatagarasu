@@ -25,77 +25,23 @@ const OverViewMenu: React.FC = () => {
   const endtime = new Date(to);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: '-8px'}}>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 0,
-          p: 2,
-          height: '18vh',
-          width: '80vw',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
+    <div>
+      <Box sx={{ p: 1, flexDirection: 'column', height: '18vh', alignItems: 'center', marginTop: '-1vh'}}>
         <OverView starttime={starttime} endtime={endtime}/>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', marginRight: 'auto', marginLeft: 'auto', marginTop: '-20px'}}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 0,
-              p: 2,
-              height: '25vh',
-              width: '40vw',
-              justifyContent: 'center',
-              alignItems: 'center'
-            }}
-          >
-            <CPUusage starttime={starttime} endtime={endtime}/>
-          </Box>
-          <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '25vh',
-                width: '40vw',
-                border: `1px dashed`
-              }}
-            >
-              <LineChart />
-            </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+          <CPUusage starttime={starttime} endtime={endtime}/>
+          <Box sx={{ width: '1.5vh'}}></Box>
+          <PostgresProcessStatus starttime={starttime} endtime={endtime}/>
         </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 0,
-              p: 2,
-              height: '25vh',
-              width: '40vw'
-            }}
-          >
-            <MemoryUsage starttime={starttime} endtime={endtime} />
-          </Box>
-          <Box
-            component="main"
-            sx={{
-              flexGrow: 0,
-              p: 2,
-              height: '25vh',
-              width: '40vw',
-            }}
-          >
-            <DeadTuple starttime={starttime} endtime={endtime} />
-          </Box>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+          <MemoryUsage starttime={starttime} endtime={endtime} />
+          <Box sx={{ width: '1.5vh'}}></Box>
+          <DeadTuple starttime={starttime} endtime={endtime} />
         </Box>
       </Box>
-    </Box>
-  </Box>
+    </div>
   );
 }
 

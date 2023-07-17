@@ -238,32 +238,24 @@ export default function BaseDisplayMenu() {
           ))}
         </List>
       </Drawer>
-        <Box 
-          sx={{ 
-            display: 'grid', 
-            gridTemplateRows: '1fr auto', 
-            minHeight: '100vh'
-          }}
-        >
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
+        <Box sx={{ display: 'grid', gridTemplateRows: '1fr auto', minHeight: '100vh'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px`}}>
             <Box 
               sx={{  
                 display: 'flex', 
                 flexDirection: 'row', 
                 alignItems: 'left',
                 flexGrow: 0,
-                p: 2,
-                height: '22vh',
-                width: '80vw',
+                p: 1,
+                height: '18vh',
+                width: '95vw',
+                marginTop: '1.5vh'
               }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', height: '25vh', width: '50vw', marginRight:'1vw'}}>
-                  {renderContentDesc()}
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'right', height: '25vh', width: '30vw'}}>
-                  <TimePicker/>
-                </Box>
+              {renderContentDesc()}
+              <Box sx={{ width: '1.5vh'}}></Box>
+              <TimePicker/>
             </Box>
-            {renderContentMain()}
+                {renderContentMain()}
             <Footer/>
           </Box>
       </Box>

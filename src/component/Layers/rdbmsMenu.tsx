@@ -34,7 +34,7 @@ const RdbmsMenu: React.FC = () => {
               border: `1px dashed`
             }}
           >
-            <PostgresProcessStatus />
+            <PostgresProcessStatus starttime={starttime} endtime={endtime}/>
           </Box>
         </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import instance from '../axios/axiosInstance';
-import { getDate, DateTostring, roundToThreeDecimalPlaces} from '../component/Common/Util';
+import instance from '../Axios/AxiosInstance';
+import { getDate, DateTostring, roundToThreeDecimalPlaces} from '../Component/Common/Util';
 import { Card, CardContent, Typography } from '@mui/material';
 
 type AverageQueryTimeApiResponse = {

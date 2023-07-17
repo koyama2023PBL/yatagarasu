@@ -51,40 +51,39 @@ const TimePicker = () => {
   };
 
   return (
-    <Card>
-      <CardContent>
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', height: '20vh', width: '25vw', marginTop: '-20px',marginBottom: '-20px' }}>
-          <h4>時刻設定</h4>
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: '-15px',marginBottom: '-15px'}}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', marginRight: 'auto', marginLeft: 'auto'}}>
-              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja} dateFormats={{ monthAndYear: 'yyyy年 MM月' }} >
-                <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                  <Typography variant="body1" marginLeft="1vw" marginRight="1vw">測定開始時刻</Typography>
-                  <DateTimePicker
-                    label="From"
-                    value={starttime}
-                    onChange={handleFromDateChange}
-                    minutesStep={5}
-                    maxDate={new Date()}
-                  />
-                </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '1vh' }}>
-                  <Typography variant="body1" marginLeft="1vw" marginRight="1vw">測定終了時刻</Typography>
-                  <DateTimePicker
-                    label="To"
-                    value={endtime}
-                    onChange={handleToDateChange}
-                    minutesStep={5}
-                    maxDate={new Date()}
-                  />
-                </Box>
-              </LocalizationProvider>
-            </Box>
-            <Button variant="outlined" onClick={handleSubmit} style={{ marginLeft: 'auto', marginRight: 'auto' }}>変更</Button>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+<Card sx={{ width: '44vw'}}>
+  <CardContent>
+    <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
+      時刻設定
+    </Typography>
+    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center',marginRight: 'auto', marginLeft: '2vw',marginTop: '1vh'}}>
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja} dateFormats={{ monthAndYear: 'yyyy年 MM月' }} >
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+          <Typography variant="body1" marginLeft='1vw' marginRight='1vw'>開始</Typography>
+          <DateTimePicker
+            label="From"
+            value={starttime}
+            onChange={handleFromDateChange}
+            minutesStep={1}
+            maxDate={new Date()}
+          />
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '1vh' }}>
+          <Typography variant="body1" marginLeft='1vw' marginRight='1vw'>終了</Typography>
+          <DateTimePicker
+            label="To"
+            value={endtime}
+            onChange={handleToDateChange}
+            minutesStep={1}
+            maxDate={new Date()}
+          />
+        </Box>
+      </LocalizationProvider>
+      <Button variant="outlined" onClick={handleSubmit} style={{ marginLeft: '1vw', marginRight: '1vw', height: '4vh' }}>変更</Button>
+    </Box>
+  </CardContent>
+</Card>
+
 
   );
 };

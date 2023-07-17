@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import './App.css';
-import BaseDisplayMenu from "./component/BaseMenu/BaseDisplayMenu"
+import BaseDisplayMenu from "./Component/BaseMenu/BaseDisplayMenu"
 import { Provider } from 'react-redux';
 import { Store } from 'redux'; // Store type from 'redux'
-import { store } from './component/Redux/StateStore'
+import { store } from './Component/Redux/StateStore'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { blueGrey, indigo } from '@mui/material/colors';
 

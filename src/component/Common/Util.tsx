@@ -1,4 +1,5 @@
 import React from 'react';
+import { green, yellow, red } from '@mui/material/colors';
 
 //Date型変換->[yyyymmddhhmmss]
 export function getDate(date: Date) {
@@ -50,3 +51,8 @@ export function padZero(num: number) {
   return (num < 10 ? "0" : "") + num;
 }
 
+//MUIカラーポンポーネントをRGBへ変換
+//色は赤、黄、緑しかまだ対応していないので注意
+export function rgbToRgba(rgb: any, alpha: number) {
+  return rgb.replace(')', `, ${alpha})`).replace('rgb', 'rgba');
+}
