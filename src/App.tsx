@@ -1,24 +1,33 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './App.css';
-import BaseDisplayMenu from "./component/BaseMenu/BaseDisplayMenu"
+import BaseDisplayMenu from "./Component/BaseMenu/BaseDisplayMenu"
+import { Provider } from 'react-redux';
+import { Store } from 'redux'; // Store type from 'redux'
+import { store } from './Component/Redux/StateStore'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { blueGrey } from '@mui/material/colors';
+import { blueGrey, indigo } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
-    primary: blueGrey,
+    primary: {
+      main: indigo[500]
+    },
+    background: {
+      default: '#c5cae9'
+    }
   },
   //TODO 色・デザインの決定 
 });
 
-function App() {
+const App: FC = () => {
   return (
-    <ThemeProvider theme={theme}>
-    <div className="App" style={{ display: 'flex' }} >
-      {/*TODO Stateの管理対応追加。State用のライブラリを追加する*/}
-      <BaseDisplayMenu />
-    </div>
-    </ThemeProvider>
+    <Provider store={store as Store}>
+      <ThemeProvider theme={theme}>
+        <div className="App" style={{ display: 'flex' }} >
+          <BaseDisplayMenu />
+        </div>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

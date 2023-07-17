@@ -18,23 +18,33 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import Terminal from '@mui/icons-material/Terminal';
+import Storage from '@mui/icons-material/Storage';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
-import MultilineChartIcon from '@mui/icons-material/MultilineChart';
 import Settings from '@mui/icons-material/Settings';
 
-import CacheHitRate from '../Content/CacheHitRate';
-import CPUusage from '../Content/CPUusage';
-import SlowQueryCount from '../Content/SlowQuery';
-import AverageQueryTime from '../Content/AvgQueryTime';
-import PostgresProcessStatus from '../Content/ProcessCheck';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelected } from '../Redux/MenuState'; 
+import { RootState } from '../Redux/StateStore';
 
-import DateTimePicker from '../Common/DateTimePicker';
-import { DatePicker } from '@mui/x-date-pickers'
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers'
+import OverViewMenu from '../Layers/OverViewMenu';
+import OsMenu from '../Layers/OsMenu';
+import RdbmsMenu from '../Layers/RdbmsMenu';
+import TableMenu from '../Layers/TableMenu';
+import SettingMenu from '../Layers/SettingMenu';
 
-const drawerWidth = 240;
+import About from '../Description/AboutDescription';
+import OSDesc from '../Description/OsDescription';
+import RDBMSDesc from '../Description/RdbmsDescription';
+import TableDesc from '../Description/TableDescription';
+import SettingsDesc from '../Description/SettingsDescription';
+
+import TimePicker from '../Common/TimePicker';
+import Footer from './Footer';
+import LineChart from '../../Content/LineChart';
+import DatabaseInfomation from '../../Content/DatabaseInfomation';
+
+const drawerWidth = 300;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -51,9 +61,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(5)} + 1px)`,
+  width: `calc(${theme.spacing(7)} + 1px)`,
   [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(6)} + 1px)`,
+    width: `calc(${theme.spacing(8)} + 1px)`,
   },
 });
 
@@ -106,7 +116,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function BaseDisplayMenu() {
-  const [selected, setSelected] = React.useState('DashboardIcon');
+  const dispatch = useDispatch();
+  const selected = useSelector((state: RootState) => state.menu.selected);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -116,6 +127,40 @@ export default function BaseDisplayMenu() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const renderContentMain = () => {
+    switch (selected) {
+      case 'dashboard':
+        return <OverViewMenu />;
+      case 'os':
+        return <OsMenu />;
+      case 'rdbms':
+        return <RdbmsMenu />;
+      case 'table':
+        return <TableMenu />;
+      case 'settings':
+        return <SettingMenu />;
+      default:
+        return null;
+    }
+  };
+
+  const renderContentDesc = () => {
+    switch (selected) {
+      case 'dashboard':
+        return <DatabaseInfomation />;
+      case 'os':
+        return <OSDesc />;
+      case 'rdbms':
+        return <RDBMSDesc />;
+      case 'table':
+        return <TableDesc />;
+      case 'settings':
+        return <SettingsDesc />;
+      default:
+        return <DatabaseInfomation />;
+    }
   };
 
   return (
@@ -152,8 +197,6 @@ export default function BaseDisplayMenu() {
           >
           DatabaseExplorer
           </Typography>
-          <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
-          <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -164,26 +207,26 @@ export default function BaseDisplayMenu() {
         </DrawerHeader>
         <Divider />
         <List>
-          {[{text: 'Dashboard', icon: <DashboardIcon />},
-            {text: 'Visualization', icon: <MultilineChartIcon />},  
-            {text: 'Metrics', icon: <QueryStatsIcon />}, 
-            {text: 'Analytics', icon: <TroubleshootIcon />},
-            {text: 'Settings', icon: <Settings />}
-          ].map((item, index) => (
-              <ListItem key={item.text} disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
-                  selected={item.text === selected}
-                  onClick={() => setSelected(item.text)}
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 3,
-                  }}
+        {[{ id: 'dashboard', text: 'ダッシュボード', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
+          { id: 'os', text: 'OS情報', icon: <Terminal style={{ fontSize: 40 }}/> },
+          { id: 'rdbms', text: 'RDBMS情報', icon: <Storage style={{ fontSize: 40 }}/> },
+          { id: 'table', text: 'テーブル・クエリ情報', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
+          { id: 'settings', text: '設定', icon: <Settings style={{ fontSize: 40 }}/> },
+        ].map((item) => (
+          <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              selected={item.id === selected}
+              onClick={() => dispatch(setSelected(item.id))}
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 3,
+              }}
                 >
                   <ListItemIcon
                     sx={{
                       minWidth: 0,
-                      mr: open ? 3 : 'auto',
+                      mr: open ? 2 : 'auto',
                       justifyContent: 'center',
                     }}
                   >
@@ -195,94 +238,27 @@ export default function BaseDisplayMenu() {
           ))}
         </List>
       </Drawer>
-        {/*TODO 画面設計での説明の追加対応・DateTimePickerの追加*/}
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px` }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-            <Box
-              component="main"
-              sx={{
+        <Box sx={{ display: 'grid', gridTemplateRows: '1fr auto', minHeight: '100vh'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px`}}>
+            <Box 
+              sx={{  
+                display: 'flex', 
+                flexDirection: 'row', 
+                alignItems: 'left',
                 flexGrow: 0,
-                p: 2,
-                height: '40vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`
-              }}
-            >
-              <CPUusage />
-            </Box>
-            <Box
-                component="main"
-                border={1}
-                sx={{
-                  flexGrow: 0,
-                  p: 2,
-                  height: '30vh',
-                  width: '40vw',
-                  border: `1px dashed ${theme.palette.primary.main}`,
-                  color: theme.palette.text.primary
-                }}
-              >
-                <PostgresProcessStatus />
-              </Box>
-            </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-          <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '20vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`,
-                alignItems: 'left'
-              }}
-            >
-              <LocalizationProvider dateAdapter={AdapterDateFns}><DatePicker/></LocalizationProvider>
-              <DateTimePicker/>
-            </Box>
-            <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '24vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`
-              }}
-            >
-              <AverageQueryTime />
-            </Box>
-            <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
+                p: 1,
                 height: '18vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`
-              }}
-            >
-              <CacheHitRate />
+                width: '95vw',
+                marginTop: '1vh'
+              }}>
+              {renderContentDesc()}
+              <Box sx={{ width: '1.5vh'}}></Box>
+              <TimePicker/>
             </Box>
-            <Box
-              component="main"
-              border={1}
-              sx={{
-                flexGrow: 0,
-                p: 2,
-                height: '18vh',
-                width: '40vw',
-                border: `1px dashed ${theme.palette.primary.main}`,
-                color: theme.palette.text.primary
-              }}
-            >
-              <SlowQueryCount />
-            </Box>
+              {renderContentMain()}
+            <Footer/>
           </Box>
-        </Box>
       </Box>
+    </Box>
   );
 }

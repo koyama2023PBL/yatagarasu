@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import instance from '../../axios/axiosInstance';
-import { getDate, padZero} from '../Common/Util';
+import instance from '../Axios/AxiosInstance';
+import { getDate, padZero} from '../Component/Common/Util';
 import { Card, CardContent, Typography } from '@mui/material';
 
 interface SlowQueryCountData {
@@ -18,6 +18,12 @@ interface SlowQueryCountApiResponse {
 }
 
 interface SlowQueryCountApiRequest {
+  starttime: Date;
+  endtime: Date;
+  querytime: number;
+}
+
+interface SlowQueryCountProps {
   starttime: Date;
   endtime: Date;
   querytime: number;
@@ -42,7 +48,7 @@ export const fetchFromAPIwithRequest = async (endpoint: string, queryParameters:
   }
 }
 
-const SlowQueryCount: React.FC = () => {
+const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, querytime}) => {
   const [slowQueryCountData, setSlowQueryCountData] = useState<SlowQueryCountData | null>(null);
 
   useEffect(() => {
@@ -50,9 +56,9 @@ const SlowQueryCount: React.FC = () => {
       const endpoint = '/database-explorer/api/visualization/slow-query-counts';
 
       const requestBody: SlowQueryCountApiRequest = {
-        starttime: new Date('2023-05-07T18:00:00'),
-        endtime: new Date('2023-05-07T18:10:00'),
-        querytime: 0.1,
+        starttime: new Date(starttime),
+        endtime: new Date(endtime),
+        querytime: querytime,
       };
 
       const response: SlowQueryCountApiResponse = await fetchFromAPIwithRequest(

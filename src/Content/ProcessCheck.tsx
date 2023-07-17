@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
-import instance from "../../axios/axiosInstance";
-import { getDate, DateTostring } from "../Common/Util";
+import instance from '../Axios/AxiosInstance';
+import { getDate, DateTostring } from "../Component/Common/Util";
 
 interface PostgresProcessApiRequest {
   startTime: Date;
@@ -19,6 +19,11 @@ interface PostgresProcessApiResponse {
   autoVacuumLauncher: boolean;
   autoVacuumWorker: boolean;
   backendProcess: boolean;
+}
+
+interface PostgresProcessCheckProps {
+  starttime: Date;
+  endtime: Date;
 }
 
 const fetchFromAPIwithRequest = async (
@@ -39,15 +44,15 @@ const fetchFromAPIwithRequest = async (
   }
 };
 
-const PostgresProcessStatus: React.FC = () => {
+const PostgresProcessStatus: React.FC<PostgresProcessCheckProps> = ({ starttime, endtime }) => {
   const [postgresProcessStatus, setPostgresProcessStatus] = useState<PostgresProcessApiResponse | null>(null);
 
   useEffect(() => {
     const fetchProcessStatus = async () => {
       const endpoint = "/database-explorer/api/visualization/processes";
       const requestBody: PostgresProcessApiRequest = {
-        startTime: new Date("2023-05-07T18:00:00"),
-        endTime: new Date("2023-05-07T18:10:00"),
+        startTime: starttime,
+        endTime: endtime,
       };
 
       const response = await fetchFromAPIwithRequest(endpoint, requestBody);
@@ -58,7 +63,7 @@ const PostgresProcessStatus: React.FC = () => {
   }, []);
 
   return (
-    <Card>
+    <Card sx={{ width: '100%' }}>
       <CardContent>
         {postgresProcessStatus ? (
           <>

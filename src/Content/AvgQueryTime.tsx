@@ -1,34 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
 
-import instance from '../../axios/axiosInstance';
-import { getDate, padZero, DateTostring, roundToThreeDecimalPlaces} from '../Common/Util';
+import instance from '../Axios/AxiosInstance';
+import { getDate, DateTostring, roundToThreeDecimalPlaces} from '../Component/Common/Util';
 import { Card, CardContent, Typography } from '@mui/material';
 
-/*
-interface AverageQueryTimeApiResponse {
-  starttime: string;
-  endtime: string;
-  kind: number;
-  time: number;
-}
-
-interface AverageQueryTimeApiRequest {
-  starttime: Date;
-  endtime: Date;
-  queryKind: number;
-}
-*/
 type AverageQueryTimeApiResponse = {
   starttime: string;
   endtime: string;
@@ -41,6 +16,11 @@ type AverageQueryTimeApiRequest = {
   endtime: Date;
   queryKind: number;
 };
+
+interface AvgQueryTimeProps {
+  starttime: Date;
+  endtime: Date;
+}
 
 const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: AverageQueryTimeApiRequest) => {
   try {
@@ -57,7 +37,7 @@ const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: Averag
   }
 };
 
-const AverageQueryTime: React.FC = () => {
+const AverageQueryTime: React.FC<AvgQueryTimeProps> = ({ starttime, endtime }) => {
   const [avgQueryTimes, setAvgQueryTimes] = useState<{[key: string]: number | string | null}>({
     "startTime": null,
     "endTime": null,
@@ -81,8 +61,8 @@ const AverageQueryTime: React.FC = () => {
       const endpoint = "/database-explorer/api/visualization/average-query-time";
 
       const requestBody: AverageQueryTimeApiRequest = {
-        starttime: new Date("2023-05-07T18:00:00"),
-        endtime: new Date("2023-05-07T18:10:00"),
+        starttime: new Date(starttime),
+        endtime: new Date(endtime),
         queryKind: 0,
       };
 
