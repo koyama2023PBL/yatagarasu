@@ -178,7 +178,7 @@ const PostgresProcessStatus: React.FC<PostgresProcessCheckProps> = ({ starttime,
             </>
           ) : (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'left', width: '100%'}}>
-              <CircularProgress sx={{ marginTop: '3.5vh'}}/>
+              <CircularProgress sx={{ marginTop: '3.5vh', marginLeft: '-2vw'}}/>
             </Box>
           )}
         </Box>
