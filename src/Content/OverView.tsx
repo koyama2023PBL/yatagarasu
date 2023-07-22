@@ -14,6 +14,7 @@ interface OverViewProps {
 const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
 
   //仮の値
+  //バックエンドAPIの要件定義、実装後に再度実装
   var dbStatus = "OK";
   var rdbmsStatus = "STABLE";
   var queryStatus = "ERROR";
@@ -22,7 +23,7 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   <Card sx={{ height: '16vh'}}>
     <CardContent>
       <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-        OverView -全体概況-
+        OverView
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh',marginLeft: '2vw' }}>
         <Card sx={{backgroundColor: dbStatus === "OK" ? '#e8f5e9' : dbStatus === "STABLE" ? '#fffde7' : '#ffebee'}}>

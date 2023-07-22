@@ -4,11 +4,8 @@ import Box from '@mui/material/Box';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
 
-import CacheHitRate from '../../Content/CacheHitRate';
 import CPUusage from '../../Content/CPUusage';
-import AverageQueryTime from '../../Content/AvgQueryTime';
-import PostgresProcessStatus from '../../Content/ProcessCheck';
-import MemoryUsage from '../../Content/MemoryUsage';
+import MemoryUsage from '../../Content/PostgresMemoryUsage';
 
 const OsMenu: React.FC = () => {
 

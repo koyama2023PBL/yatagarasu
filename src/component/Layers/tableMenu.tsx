@@ -11,6 +11,8 @@ import PostgresProcessStatus from '../../Content/ProcessCheck';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
+import DeadLocks from '../../Content/DeadLock';
+import QueryCounts from '../../Content/QueryCounts';
 
 
 const TableMenu: React.FC = () => {
@@ -22,36 +24,20 @@ const TableMenu: React.FC = () => {
   const querytime = 0.1
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '24vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
-          <AverageQueryTime starttime={starttime} endtime={endtime} />
-        </Box>
-        <Box
-          component="main"
-          border={1}
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '18vh',
-            width: '40vw',
-            border: `1px dashed`
-          }}
-        >
+    <div>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <SlowQueryCount starttime={starttime} endtime={endtime} querytime={querytime}/>
+          <Box sx={{ width: '1.5vh'}}></Box>
+          <AverageQueryTime starttime={starttime} endtime={endtime}/>
+        </Box>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+          <DeadLocks starttime={starttime} endtime={endtime} />
+          <Box sx={{ width: '1.5vh'}}></Box>
+          <QueryCounts starttime={starttime} endtime={endtime} />
         </Box>
       </Box>
-    </Box>
+    </div>
   );
 }
 

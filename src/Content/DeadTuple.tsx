@@ -23,18 +23,19 @@ import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../Component/Threshold/Threshold";
 
-interface CpuUsageData {
-  date: string;
-  usage: number;
+interface DeadTupData {
+  timestamp: string;
+  deadTupCount: number;
+  deadTupRatio: number;
 };
 
-interface CpuUsageApiResponse {
+interface DeadTupApiResponse {
   starttime: string;
   endtime: string;
-  data: CpuUsageData[];
+  deadTupData: DeadTupData[];
 };
 
-interface CpuUsageApiRequest {
+interface DeadTupApiRequest {
   starttime: Date;
   endtime: Date;
 };
@@ -44,7 +45,7 @@ interface DeadTuplesProps {
   endtime: Date;
 }
 
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CpuUsageApiRequest) => {
+const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: DeadTupApiRequest) => {
   try {
       const startTimeString = getDate(queryParameters.starttime);
       const endTimeString = getDate(queryParameters.endtime);
@@ -81,17 +82,17 @@ const DeadTuples: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/database-explorer/api/visualization/cpu-usage";
-      const requestBody: CpuUsageApiRequest = {
+      const endpoint = "/database-explorer/api/visualization/dead-tup";
+      const requestBody: DeadTupApiRequest = {
         starttime: new Date(starttime),
         endtime: new Date(endtime)
       };
   
-      const { status, data: response }: {status: number, data: CpuUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
+      const { status, data: response }: {status: number, data: DeadTupApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
       setStatusCode(status);
   
-      const labels = response.data.map((item) => item.date);
-      const data = response.data.map((item) => item.usage);
+      const labels = response.deadTupData.map((item) => item.timestamp);
+      const data = response.deadTupData.map((item) => item.deadTupCount);
       const borderColor = data.map((value) => {
         let status: Status;
         if (value <= Thresholds.deadtuple.ok) {
@@ -275,8 +276,27 @@ const DeadTuples: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
           </Box>
         </Box>
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'left', width: '100%' , marginBottom: '-20px', marginTop: '2vh'}}>
-          <div style={{ height: '20vh', width: '100%', marginLeft: '-2vw', marginRight: '-2vw' }}>
+          <div style={{ position: 'relative', height: '20vh', width: '100%', marginLeft: '-2vw', marginRight: '-2vw' }}>
             {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
+            {(chartData && chartData.datasets[0].data.every((val: number) => val === 0)) && (
+              <Box 
+                sx={{ 
+                  position: 'absolute', 
+                  top: 0, 
+                  bottom: 0, 
+                  left: 0, 
+                  right: 0, 
+                  backgroundColor: 'rgba(211, 211, 211, 0.5)', 
+                  display: 'flex', 
+                  justifyContent: 'center', 
+                  alignItems: 'center' 
+                }}
+              >
+                <Typography variant="body1" align="center">
+                  デッドタプルが存在しませんでした
+                </Typography>
+              </Box>
+            )}
           </div>
         </Box>
     </CardContent>
