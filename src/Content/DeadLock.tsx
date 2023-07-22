@@ -179,7 +179,7 @@ const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%', marginLeft: '1vw'}}>
           {deadLocksData ? (
             <>
-              <Card sx={{ width: '30%' , marginRight: '2vh'}}>
+              <Card sx={{ width: '30%' , marginRight: '1vw'}}>
                 <CardContent>
                   <Typography variant="body2" align="left" sx={{ fontWeight: 'bold' , marginTop: '-1vh'}}>
                     データベース名
@@ -212,7 +212,7 @@ const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
             </>
           ) : (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'left', width: '100%'}}>
-              <CircularProgress sx={{marginTop: '3.5vh'}}/>
+              <CircularProgress sx={{marginTop: '3.5vh', marginLeft: '-2vw'}}/>
             </Box>
           )}
         </Box>

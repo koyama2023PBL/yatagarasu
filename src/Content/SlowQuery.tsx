@@ -140,10 +140,10 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
           </Popover>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%' ,height: '3.5vh'}}></Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%' , marginLeft: '1vw'}}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%' ,marginLeft: '1vw'}}>
           {slowQueryCountData ? (
             <>
-              <Card sx={{ width: '30%' , marginRight: '2vh'}}>
+              <Card sx={{ width: '30%' , marginRight: '1vw'}}>
                 <CardContent>
                   <Typography variant="body2" align="left" sx={{ fontWeight: 'bold', marginTop: '-1vh' }}>
                     スロークエリ閾値
@@ -180,7 +180,7 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
             </>
           ) : (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'left', width: '100%' }}>
-              <CircularProgress sx={{marginTop: '3.5vh'}}/>
+              <CircularProgress sx={{marginTop: '3.5vh', marginLeft: '-2vw'}}/>
             </Box>
           )}
         </Box>

@@ -148,11 +148,11 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
             </Typography>
           </Popover>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%' ,height: '3.5vh'}}></Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%', height: '3.5vh'}}></Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%', marginLeft: '1vw'}}>
           {cacheHitRateData ? (
             <>
-              <Card sx={{ width: '35%'}}>
+              <Card sx={{ width: '30%', marginRight: '1vw'}}>
                 <CardContent>
                   <Typography variant="body2" align="left" sx={{ fontWeight: 'bold' , marginTop: '-1vh'}}>
                     データベース名
@@ -164,7 +164,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
                   </Box>
                 </CardContent>
               </Card>
-              <Card sx={{ width: '65%'}}>
+              <Card sx={{ width: '60%'}}>
                 <CardContent>
                   <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' , marginTop: '-1vh'}}>
                     <Typography variant="body2" align="left" sx={{ fontWeight: 'bold' }}>
@@ -185,7 +185,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
             </>
           ) : (
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'left', width: '100%'}}>
-              <CircularProgress sx={{marginTop: '3.5vh'}}/>
+              <CircularProgress sx={{marginTop: '3.5vh', marginLeft: '-2vw'}}/>
             </Box>
           )}
         </Box>
