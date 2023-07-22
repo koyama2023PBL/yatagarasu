@@ -12,6 +12,9 @@ import { useState } from 'react';
 import { RootState } from '../Redux/StateStore';
 import { useSelector } from 'react-redux';
 import DeadTuple from '../../Content/DeadTuple';
+import PostgresMemoryUsageRatio from '../../Content/PostgresMemoryUsageRatio';
+import DeadTupleRatio from '../../Content/DeadTupleRatio';
+import PostgresMemoryUsage from '../../Content/PostgresMemoryUsage';
 
 
 const RdbmsMenu: React.FC = () => {
@@ -25,12 +28,19 @@ const RdbmsMenu: React.FC = () => {
     <div>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
-          <DeadTuple starttime={starttime} endtime={endtime} />
-        </Box>
-        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <CacheHitRate starttime={starttime} endtime={endtime} />
           <Box sx={{ width: '1.5vh'}}></Box>
           <PostgresProcessStatus starttime={starttime} endtime={endtime}/>
+        </Box>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+            <PostgresMemoryUsageRatio starttime={starttime} endtime={endtime} />
+            <Box sx={{ width: '1.5vh'}}></Box>
+            <PostgresMemoryUsage starttime={starttime} endtime={endtime} />
+        </Box>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+          <DeadTupleRatio starttime={starttime} endtime={endtime} />
+          <Box sx={{ width: '1.5vh'}}></Box>
+          <DeadTuple starttime={starttime} endtime={endtime} />
         </Box>
       </Box>
     </div>

@@ -40,9 +40,7 @@ import TableDesc from '../Description/TableDescription';
 import SettingsDesc from '../Description/SettingsDescription';
 
 import TimePicker from '../Common/TimePicker';
-import Footer from './Footer';
-import LineChart from '../../Content/LineChart';
-import DatabaseInfomation from '../../Content/DatabaseInfomation';
+import DatabaseInformation from '../../Content/DatabaseInformation';
 
 const drawerWidth = 300;
 
@@ -72,7 +70,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 0),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -149,7 +146,7 @@ export default function BaseDisplayMenu() {
   const renderContentDesc = () => {
     switch (selected) {
       case 'dashboard':
-        return <DatabaseInfomation />;
+        return <DatabaseInformation />;
       case 'os':
         return <OSDesc />;
       case 'rdbms':
@@ -159,7 +156,7 @@ export default function BaseDisplayMenu() {
       case 'settings':
         return <SettingsDesc />;
       default:
-        return <DatabaseInfomation />;
+        return <DatabaseInformation />;
     }
   };
 
@@ -197,6 +194,23 @@ export default function BaseDisplayMenu() {
           >
           DatabaseExplorer
           </Typography>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'flex-end', 
+            alignItems: 'flex-end', 
+            width: '100%', 
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            pr: 0.5,
+            pb: 0.5,
+            }}
+          >
+            <Typography variant="body2" align="right">
+                © 2023 Advanced Institute of Industrial Technology, Koyama Lab. All rights reserved.
+            </Typography>
+        </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -256,7 +270,6 @@ export default function BaseDisplayMenu() {
               <TimePicker/>
             </Box>
               {renderContentMain()}
-            <Footer/>
           </Box>
       </Box>
     </Box>

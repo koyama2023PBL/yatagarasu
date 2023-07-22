@@ -12,9 +12,8 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
 import OverView from '../../Content/OverView';
-import MemoryUsage from '../../Content/MemoryUsage';
+import MemoryUsage from '../../Content/PostgresMemoryUsage';
 import DeadTuple from '../../Content/DeadTuple';
-import LineChart from '../../Content/LineChart';
 
 
 const OverViewMenu: React.FC = () => {

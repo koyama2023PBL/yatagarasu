@@ -11,7 +11,7 @@ import PostgresProcessStatus from '../../Content/ProcessCheck';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
-import LineChart from '../../Content/LineChart';
+import { Typography } from '@mui/material';
 
 
 const SettingMenu: React.FC = () => {
@@ -22,24 +22,9 @@ const SettingMenu: React.FC = () => {
   const endtime = new Date(to);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left'}}>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 0,
-            p: 2,
-            height: '100vh',
-            width: '100vw',
-            border: `1px dashed`
-          }}
-        >
-          <LineChart/>
-        </Box>
-        </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left'}}>
-      </Box>
-    </Box>
+    <div>
+      <Typography>developing...</Typography>
+    </div>
   );
 }
 

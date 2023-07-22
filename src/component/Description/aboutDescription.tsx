@@ -15,9 +15,6 @@ const About = () => {
           <Typography variant="body1"  sx={{display: 'flex',marginLeft: '2vw'}}>
             There will be filled in with DB name, IP, instances, number of tables.
           </Typography>
-          <Typography variant="body1"  sx={{display: 'flex',marginLeft: '2vw'}}>
-            なお、こちらの項目は追って監視対象のDB情報を表示する箇所とします。
-          </Typography>
       </CardContent>
     </Card>
 
