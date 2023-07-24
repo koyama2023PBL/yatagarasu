@@ -52,7 +52,6 @@ export function padZero(num: number) {
 }
 
 //MUIカラーポンポーネントをRGBへ変換
-//色は赤、黄、緑しかまだ対応していないので注意
 export function rgbToRgba(rgb: any, alpha: number) {
   return rgb.replace(')', `, ${alpha})`).replace('rgb', 'rgba');
 }

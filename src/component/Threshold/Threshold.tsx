@@ -13,9 +13,13 @@ export const Thresholds = {
     ok: 20,
     watch: 60
   },
-  memory: {
+  memory_ratio: {
     ok: 40,
     watch: 70
+  },
+  memory: {
+    ok: 1000,
+    watch: 1500
   },
   disk: {
     ok: 40,
@@ -24,6 +28,18 @@ export const Thresholds = {
   deadtuple: {
     ok: 10,
     watch: 30
+  },
+  deadtuple_ratio: {
+    ok: 10,
+    watch: 30
+  },
+  deadlocks: {
+    ok: 2,
+    watch: 5
+  },
+  querycounts: {
+    ok: 1000,
+    watch: 3000
   },
 };
 

@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import instance from '../Axios/AxiosInstance';
 import { getDate, padZero} from '../Component/Common/Util';
-import { Card, CardContent, Typography } from '@mui/material';
+import { Box, Card, CardContent, CircularProgress, IconButton, Popover, Typography } from '@mui/material';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ErrorIcon from '@mui/icons-material/Error';
+import WarningIcon from '@mui/icons-material/Warning';
+import { green, yellow, red } from '@mui/material/colors';
 
 interface SlowQueryCountData {
   startTime: string;
@@ -31,17 +36,13 @@ interface SlowQueryCountProps {
 
 export const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: SlowQueryCountApiRequest) => {
   try {
-      // Format the Date objects as strings
       const startTimeString = getDate(queryParameters.starttime);
       const endTimeString = getDate(queryParameters.endtime);
 
-      // Add the query parameters to the URL
-      const response = await instance.get<SlowQueryCountApiResponse>(
-        `${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}&querytime=${queryParameters.querytime}`
-      );
-      console.log("URL:", endpoint);
-      console.log("Response:", response);
-      return response.data;
+      const response = await instance.get<SlowQueryCountApiResponse>(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}&querytime=${queryParameters.querytime}`);
+      
+      return { status: response.status, data: response.data };
+
   } catch (err) {
       console.log("err:", err);
       throw err;
@@ -50,6 +51,11 @@ export const fetchFromAPIwithRequest = async (endpoint: string, queryParameters:
 
 const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, querytime}) => {
   const [slowQueryCountData, setSlowQueryCountData] = useState<SlowQueryCountData | null>(null);
+  const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget)};
+  const handlePopoverClose = () => {setAnchorEl(null)};
+  const open = Boolean(anchorEl);
 
   useEffect(() => {
     const fetchSlowQueryCountData = async () => {
@@ -61,10 +67,8 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
         querytime: querytime,
       };
 
-      const response: SlowQueryCountApiResponse = await fetchFromAPIwithRequest(
-        endpoint,
-        requestBody
-      );
+      const { status, data: response }: {status: number, data: SlowQueryCountApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
+      setStatusCode(status);
 
       setSlowQueryCountData({
         startTime: response.starttime,
@@ -77,25 +81,109 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
     fetchSlowQueryCountData();
   }, []);
 
+  const getIcon = () => {
+    if (statusCode === null) {
+      return WarningIcon; 
+    }
+
+    if (statusCode >= 500) {
+      return ErrorIcon;
+    } else if (statusCode >= 400) {
+      return WarningIcon;
+    } else {
+      return CheckCircleOutlineIcon;
+    }
+  }
+
+  const getIconColor = () => {
+    if (statusCode === null) {
+      return; 
+    }
+  
+    if (statusCode >= 500) {
+      return red[500];
+    } else if (statusCode >= 400) {
+      return yellow[700];
+    } else {
+      return green[500];
+    }
+  }
+
   return (
-    <Card>
+    <Card sx={{ width: '100%' }}>
       <CardContent>
-        {slowQueryCountData ? (
-          <>
-            <Typography variant="h6" align="left">
-              スロークエリ数: {slowQueryCountData.queryCount}
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: '-5px' }}>
+          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+            スロークエリ数
+          </Typography>
+          {slowQueryCountData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
+          <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
+            <HelpOutlineIcon fontSize="small" />
+          </IconButton>
+          <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handlePopoverClose}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <Typography sx={{ p: 2 , alignItems: 'center'}} style={{ width: '600px', whiteSpace: 'pre-line' }}>
+              <HelpOutlineIcon fontSize="small" sx={{ marginBottom: '-5px', marginLeft: '3px', marginRight: '3px'}}/>
+              対象期間のスロークエリ数とその閾値を表示します。
             </Typography>
-            <Typography variant="body2" component="div" align="left">
-              スロークエリ閾値: {slowQueryCountData.queryTimeAtLeast}s
-            </Typography>
-            <Typography variant="body2" align="left">
-              測定時間: {slowQueryCountData.startTime} - {slowQueryCountData.endTime}
-            </Typography>
-            
-          </>
-        ) : (
-          <Typography variant="body1">Loading...</Typography>
-        )}
+          </Popover>
+        </Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%' ,height: '3.5vh'}}></Box>
+        <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'left', width: '100%' ,marginLeft: '1vw'}}>
+          {slowQueryCountData ? (
+            <>
+              <Card sx={{ width: '30%' , marginRight: '1vw'}}>
+                <CardContent>
+                  <Typography variant="body2" align="left" sx={{ fontWeight: 'bold', marginTop: '-1vh' }}>
+                    スロークエリ閾値
+                  </Typography>
+                  <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
+                  <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>
+                    <Typography variant="h5" component="div" align="center" sx={{ display: 'inline' }}>
+                      {slowQueryCountData.queryTimeAtLeast}
+                    </Typography>
+                  </Box>
+                  <Typography variant="h6" component="div" align="right" sx={{ marginTop: '-1vh',marginBottom: '-1vw'}}>
+                      {"   "}s
+                  </Typography>
+                </CardContent>
+              </Card>
+              <Card sx={{ width: '60%' }}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', marginTop: '-1vh' }}>
+                    <Typography variant="body2" align="left" sx={{ fontWeight: 'bold' }}>
+                      スロークエリ数
+                    </Typography>
+                    <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
+                    <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>
+                      <Typography variant="h5" component="div" align="center" sx={{ display: 'inline' }}>
+                        {slowQueryCountData.queryCount === -1 ? '0' : slowQueryCountData.queryCount}
+                      </Typography>
+                    </Box>
+                    <Typography variant="body2" component="div" align="right" sx={{ marginTop: '1vh', marginBottom: '-1.3vh'}}>
+                      測定時間: {slowQueryCountData.startTime} - {slowQueryCountData.endTime}
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
+            </>
+          ) : (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'left', width: '100%' }}>
+              <CircularProgress sx={{marginTop: '3.5vh', marginLeft: '-2vw'}}/>
+            </Box>
+          )}
+        </Box>
       </CardContent>
     </Card>
 
