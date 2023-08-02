@@ -2,11 +2,6 @@ import * as React from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-import CacheHitRate from '../../Content/CacheHitRate';
-import CPUusage from '../../Content/CPUusage';
-import SlowQueryCount from '../../Content/SlowQuery';
-import AverageQueryTime from '../../Content/AvgQueryTime';
-import PostgresProcessStatus from '../../Content/ProcessCheck';
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';

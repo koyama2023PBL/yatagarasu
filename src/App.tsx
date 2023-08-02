@@ -2,21 +2,22 @@ import React, { FC } from 'react';
 import './App.css';
 import BaseDisplayMenu from "./Component/BaseMenu/BaseDisplayMenu"
 import { Provider } from 'react-redux';
-import { Store } from 'redux'; // Store type from 'redux'
+import { Store } from 'redux';
 import { store } from './Component/Redux/StateStore'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { blueGrey, indigo } from '@mui/material/colors';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: indigo[500]
+      main: '#073A66'
     },
     background: {
-      default: '#c5cae9'
+      default: '#D0EAFA'
     }
   },
-  //TODO 色・デザインの決定 
+  typography: {
+    fontFamily: 'Oxygen, Arial, sans-serif', 
+  },
 });
 
 const App: FC = () => {
@@ -24,7 +25,9 @@ const App: FC = () => {
     <Provider store={store as Store}>
       <ThemeProvider theme={theme}>
         <div className="App" style={{ display: 'flex' }} >
-          <BaseDisplayMenu />
+          <code>
+            <BaseDisplayMenu />
+          </code>
         </div>
       </ThemeProvider>
     </Provider>
