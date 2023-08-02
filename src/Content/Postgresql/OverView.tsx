@@ -5,9 +5,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { green, yellow, red } from '@mui/material/colors';
-import { getDate } from '../../Component/Common/Util';
+import { DateTostring, getDate, roundToThreeDecimalPlaces } from '../../Component/Common/Util';
 import instance from '../../Axios/AxiosInstance';
 import { useEffect, useState } from 'react';
+import { Thresholds } from '../../Component/Threshold/Threshold';
 
 interface OverViewProps {
   starttime: Date;
@@ -87,6 +88,70 @@ const fetchFromProcessCheckAPIwithRequest = async (
   }
 };
 
+
+interface SlowQueryCountData {
+  startTime: string;
+  endTime: string;
+  queryTimeAtLeast: number;
+  queryCount: number;
+}
+
+interface SlowQueryCountApiResponse {
+  starttime: string;
+  endtime: string;
+  querytime: number;
+  count: number;
+}
+
+interface SlowQueryCountApiRequest {
+  starttime: Date;
+  endtime: Date;
+  querytime: number;
+}
+
+export const fetchFromSlowQueryCountAPIwithRequest = async (endpoint: string, queryParameters: SlowQueryCountApiRequest) => {
+  try {
+      const startTimeString = getDate(queryParameters.starttime);
+      const endTimeString = getDate(queryParameters.endtime);
+
+      const response = await instance.get<SlowQueryCountApiResponse>(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}&querytime=${queryParameters.querytime}`);
+      
+      return { status: response.status, data: response.data };
+
+  } catch (err) {
+      console.log("err:", err);
+      throw err;
+  }
+}
+
+type AverageQueryTimeApiResponse = {
+  starttime: string;
+  endtime: string;
+  kind: number;
+  time: number;
+};
+
+type AverageQueryTimeApiRequest = {
+  starttime: Date;
+  endtime: Date;
+  queryKind: number;
+};
+
+const fetchFromAvarageQueryTimeAPIwithRequest = async (endpoint: string, queryParameters: AverageQueryTimeApiRequest) => {
+  try {
+    const startTimeString = getDate(queryParameters.starttime);
+    const endTimeString = getDate(queryParameters.endtime);
+
+    const response = await instance.get(
+      `${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}&kind=${queryParameters.queryKind}`
+    );
+    return { status: response.status, data: response.data };
+  } catch (err) {
+    console.log("err:", err);
+    throw err;
+  }
+};
+
 const fetchFromAPI = async (endpoint: string) => {
   try {
       const response = await instance.get(`${endpoint}`);
@@ -103,8 +168,19 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   const [postgresProcessStatus, setPostgresProcessStatus] = useState<PostgresProcessApiResponse | null>(null);
   const [dbStatusCode, setDbStatusCode] = useState<string | null>("");
   const [statusCode, setStatusCode] = useState<number | null>(null);
-  const [queryStatus, setQueryStatus] = useState<string>("");
+  const [deadlockStatus, setDeadlockStatus] = useState<string>("");
+  const [slowQueryStatus, setSlowQueryStatus] = useState<string>("");
+  const [averageTimeStatus, setAverageTimeStatus] = useState<string>("");
   const [rdbmsStatus, setRdbmsStatus] = useState<string>("");
+
+  const [avgQueryTimes, setAvgQueryTimes] = useState<{[key: string]: number | string | null}>({
+    "startTime": null,
+    "endTime": null,
+    "SELECT": null,
+    "INSERT": null,
+    "UPDATE": null,
+    "DELETE": null,
+  });
 
   useEffect(() => {
     const fetchDeadLocksData = async () => {
@@ -129,8 +205,7 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
         deadlocks: response.deadlocks,
       });
 
-      setQueryStatus(response.deadlocks === -1 ? "OK" : "ERROR");
-      console.log(response.deadlocks);
+      setDeadlockStatus(response.deadlocks < Thresholds.deadlocks.watch ? "OK" : "ERROR");
     };
 
     fetchDeadLocksData();
@@ -144,12 +219,85 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
         endTime: endtime,
       };
 
-      const { status, data: response }: {status: number, data: PostgresProcessApiResponse} = await fetchFromProcessCheckAPIwithRequest(endpoint, requestBody);
-      setStatusCode(status);
+      const { data: response }: {status: number, data: PostgresProcessApiResponse} = await fetchFromProcessCheckAPIwithRequest(endpoint, requestBody);
       response.masterProcess === true ? setRdbmsStatus("OK") : setRdbmsStatus("ERROR");
     };
 
     fetchProcessStatus();
+  }, []);
+
+  useEffect(() => {
+    const fetchSlowQueryCountData = async () => {
+      const endpoint = '/database-explorer/api/visualization/slow-query-counts';
+
+      const requestBody: SlowQueryCountApiRequest = {
+        starttime: new Date(starttime),
+        endtime: new Date(endtime),
+        querytime: Thresholds.queryruntime.ok,
+      };
+
+      const { data: response }: {status: number, data: SlowQueryCountApiResponse} = await fetchFromSlowQueryCountAPIwithRequest(endpoint, requestBody);
+      response.count < Thresholds.querycounts.watch ? setSlowQueryStatus("OK") : setSlowQueryStatus("ERROR");
+    };
+
+    fetchSlowQueryCountData();
+  }, []);
+
+  useEffect(() => {
+    
+    const fetchQueryTimes = async () => {
+      const newAvgQueryTimes: {[key: string]: number | string | null} = {
+        "startTime": null,
+        "endTime": null,
+        "SELECT": null,
+        "INSERT": null,
+        "UPDATE": null,
+        "DELETE": null,
+      };
+
+      const endpoint = "/database-explorer/api/visualization/average-query-time";
+
+      const requestBody: AverageQueryTimeApiRequest = {
+        starttime: new Date(starttime),
+        endtime: new Date(endtime),
+        queryKind: 0,
+      };
+
+      const startTimeString = requestBody.starttime;
+      const endTimeString = requestBody.endtime;
+
+      newAvgQueryTimes["startTime"] = DateTostring(startTimeString);
+      newAvgQueryTimes["endTime"] = DateTostring(endTimeString);
+
+      const queryKinds = {
+        "SELECT": 1,
+        "INSERT": 2,
+        "UPDATE": 3,
+        "DELETE": 4
+      };
+
+      for (const queryKind in queryKinds as {[key: string]: number}) {
+        requestBody.queryKind = queryKinds[queryKind as keyof typeof queryKinds];
+        const { status, data: response }: {status: number, data: AverageQueryTimeApiResponse} = await fetchFromAvarageQueryTimeAPIwithRequest(endpoint, requestBody);
+        setStatusCode(status);
+        newAvgQueryTimes[queryKind] = roundToThreeDecimalPlaces(response.time);
+      }
+      
+      setAvgQueryTimes(newAvgQueryTimes);
+
+      const keysToCheck = ["SELECT", "INSERT", "UPDATE", "DELETE"];
+      for (const key of keysToCheck) {
+        const value = avgQueryTimes[key];
+        if (value !== null && typeof value === 'number' && value > Thresholds.queryruntime.ok * 0.8) {
+          setAverageTimeStatus("ERROR");
+          return;
+        }
+      }
+      setAverageTimeStatus("OK");
+
+    };
+
+    fetchQueryTimes();
   }, []);
 
   useEffect(() => {
@@ -166,14 +314,14 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   <Card sx={{ height: '16vh'}}>
     <CardContent>
       <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-        OverView
+        Status Overview
       </Typography>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh',marginLeft: '2vw' }}>
         <Card sx={{backgroundColor: dbStatusCode === "OK" ? '#e8f5e9' : dbStatusCode === "STABLE" ? '#fffde7' : dbStatusCode === "ERROR" ? '#ffebee' : ''}}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
               <Typography variant="h6">
-                DBサーバの稼働状態 : 
+                DB-Server:
               </Typography>
               {dbStatusCode === "OK" ? 
                 <CheckCircleIcon style={{ color: green[500] }} /> 
@@ -192,7 +340,7 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
           <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
               <Typography variant="h6">
-                RDBMSの稼働状態 :   
+                RDBMS:   
               </Typography>
               {rdbmsStatus === "OK" ? 
                 <CheckCircleIcon style={{ color: green[500] }} /> 
@@ -207,17 +355,55 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
           </CardContent>
         </Card>
         <Box sx={{ width: '1.5vh'}}></Box>
-        <Card sx={{backgroundColor: queryStatus === "OK" ? '#e8f5e9' : queryStatus === "STABLE" ? '#fffde7' : queryStatus === "ERROR" ? '#ffebee' : ''}}>
+        <Card sx={{backgroundColor: deadlockStatus === "OK" ? '#e8f5e9' : deadlockStatus === "STABLE" ? '#fffde7' : deadlockStatus === "ERROR" ? '#ffebee' : ''}}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
               <Typography variant="h6">
-                クエリの処理状態 : 
+                Deadlocks: 
               </Typography>
-              {queryStatus === "OK" ? 
+              {deadlockStatus === "OK" ? 
                 <CheckCircleIcon style={{ color: green[500] }} /> 
-                : queryStatus === "STABLE" ? 
+                : deadlockStatus === "STABLE" ? 
                 <WarningIcon style={{ color: yellow[700] }} /> 
-                : queryStatus === "ERROR" ? 
+                : deadlockStatus === "ERROR" ? 
+                <ErrorIcon style={{ color: red[500] }} />
+                :
+                <CircularProgress/>
+              }
+            </Box>
+          </CardContent>
+        </Card>
+        <Box sx={{ width: '1.5vh'}}></Box>
+        <Card sx={{backgroundColor: slowQueryStatus === "OK" ? '#e8f5e9' : slowQueryStatus === "STABLE" ? '#fffde7' : slowQueryStatus === "ERROR" ? '#ffebee' : ''}}>
+          <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
+              <Typography variant="h6">
+                SlowQuery: 
+              </Typography>
+              {slowQueryStatus === "OK" ? 
+                <CheckCircleIcon style={{ color: green[500] }} /> 
+                : slowQueryStatus === "STABLE" ? 
+                <WarningIcon style={{ color: yellow[700] }} /> 
+                : slowQueryStatus === "ERROR" ? 
+                <ErrorIcon style={{ color: red[500] }} />
+                :
+                <CircularProgress/>
+              }
+            </Box>
+          </CardContent>
+        </Card>
+        <Box sx={{ width: '1.5vh'}}></Box>
+        <Card sx={{backgroundColor: averageTimeStatus === "OK" ? '#e8f5e9' : averageTimeStatus === "STABLE" ? '#fffde7' : averageTimeStatus === "ERROR" ? '#ffebee' : ''}}>
+          <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
+              <Typography variant="h6">
+                Avg-Time Query: 
+              </Typography>
+              {averageTimeStatus === "OK" ? 
+                <CheckCircleIcon style={{ color: green[500] }} /> 
+                : averageTimeStatus === "STABLE" ? 
+                <WarningIcon style={{ color: yellow[700] }} /> 
+                : averageTimeStatus === "ERROR" ? 
                 <ErrorIcon style={{ color: red[500] }} />
                 :
                 <CircularProgress/>

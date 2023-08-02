@@ -82,7 +82,7 @@ const DatabaseInformation: React.FC = () => {
     <Card sx={{ width: '60%' }}>
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' , marginTop: '-5px'}}>
-          <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
             DatabaseInformation
           </Typography>
           {response && React.createElement(getIcon(), { style: { color: getIconColor() } })}

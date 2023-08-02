@@ -41,6 +41,14 @@ export const Thresholds = {
     ok: 1000,
     watch: 3000
   },
+  queryruntime: {
+    ok: 0.1,
+    watch: 0.5
+  },
+  avgquerytime_counts: {
+    ok: 0,
+    watch: 1
+  },
 };
 
 export const statusColors = {
