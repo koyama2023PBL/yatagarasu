@@ -1,0 +1,569 @@
+openapi: 3.0.3
+info:
+  title: DatabaseExplorer - OpenAPI 3.0
+
+  termsOfService: http://swagger.io/terms/
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.0.1
+
+servers:
+  - url: /database-explorer/api/
+tags:
+  - name: visualization
+    description: RDBMSの情報を可視化する
+
+paths:
+  /visualization/cpu-usage:  
+    get:
+      tags:
+        - visualization
+      summary: CPU使用率の推移を取得する
+      description: 対象期間におけるCPU使用率の推移を返します。
+      parameters:
+        - name: starttime
+          in: query
+          description: 対象期間の開始時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: endtime
+          in: query
+          description: 対象期間の終了時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: リクエストが成功しました。
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/CpuUsage'
+        '400':
+          description: リクエストの形式が不正です。
+        '500':
+          description: 内部エラーです。
+  /visualization/processes:  
+    get:
+      tags:
+        - visualization
+      summary: Postgresのプロセスが正常に稼働しているかを取得する
+      description: 対象期間内でプロセスが1度でも正常稼働していなかった場合にはfalseを返します。
+      parameters:
+        - name: starttime
+          in: query
+          description: 対象期間の開始時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: endtime
+          in: query
+          description: 対象期間の終了時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: リクエストが成功しました。
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/Processes'
+        '400':
+          description: リクエストの形式が不正です。
+        '500':
+          description: 内部エラーです。
+  /visualization/average-query-time:  
+    get:
+      tags:
+        - visualization
+      summary: クエリ実行時間の平均を取得する
+      description: 対象期間におけるクエリ実行時間の平均を返します。<br>SELECT/UPDATE/DELETE/INSERT文 のどれに対する平均を取得するか指定してください。
+      parameters:
+        - name: starttime
+          in: query
+          description: 対象期間の開始時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: endtime
+          in: query
+          description: 対象期間の終了時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: kind
+          in: query
+          description: "1:SELECT 2:UPDATE 3:DELETE 4:INSERT"
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: number
+      responses:
+        '200':
+          description: リクエストが成功しました。
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/AverageQueryTime'
+        '400':
+          description: リクエストの形式が不正です。
+        '500':
+          description: 内部エラーです。
+  /visualization/hit-rate:  
+    get:
+      tags:
+        - visualization
+      summary: キャッシュヒット率を取得する
+      description: 対象期間におけるキャッシュヒット率を返します。
+      parameters:
+        - name: starttime
+          in: query
+          description: 対象期間の開始時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: endtime
+          in: query
+          description: 対象期間の終了時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: dbname
+          in: query
+          description: データベース名
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: リクエストが成功しました。
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/HitRate'
+        '400':
+          description: リクエストの形式が不正です。
+        '500':
+          description: 内部エラーです。
+  /visualization/slow-query-counts:  
+    get:
+      tags:
+        - visualization
+      summary: スロークエリ数を取得する
+      description: 対象期間において，実行時間が指定時間以上かかったクエリの数を返します。
+      parameters:
+        - name: starttime
+          in: query
+          description: 対象期間の開始時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: endtime
+          in: query
+          description: 対象期間の終了時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: querytime
+          in: query
+          description: スロークエリと判定する閾値（秒）
+          required: true
+          explode: true
+          schema:
+            type: number
+            format: double
+      responses:
+        '200':
+          description: リクエストが成功しました。
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/SlowQueryCounts'
+        '400':
+          description: リクエストの形式が不正です。
+        '500':
+          description: 内部エラーです。
+  /visualization/mem-usage:  
+    get:
+      tags:
+        - visualization
+      summary: プロセスメモリの使用率の推移を取得する
+      description: 対象期間において，Postgresが使用するメモリのうち共有バッファを除いたプロセスメモリ使用率の推移を返します。
+      parameters:
+        - name: starttime
+          in: query
+          description: 対象期間の開始時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: endtime
+          in: query
+          description: 対象期間の終了時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: リクエストが成功しました。
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/MemUsage'
+        '400':
+          description: リクエストの形式が不正です。
+        '500':
+          description: 内部エラーです。
+  /visualization/dead-tup:  
+    get:
+      tags:
+        - visualization
+      summary: デッドタプル数の推移を取得する
+      description: 対象期間におけるデッドタプル数の推移を返します。
+      parameters:
+        - name: starttime
+          in: query
+          description: 対象期間の開始時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: endtime
+          in: query
+          description: 対象期間の終了時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: リクエストが成功しました。
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/DeadTup'
+        '400':
+          description: リクエストの形式が不正です。
+        '500':
+          description: 内部エラーです。
+  /visualization/dead-lock:  
+    get:
+      tags:
+        - visualization
+      summary: デッドロックの発生回数を取得する
+      description: 対象期間におけるデッドロックの発生回数を返します。
+      parameters:
+        - name: starttime
+          in: query
+          description: 対象期間の開始時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: endtime
+          in: query
+          description: 対象期間の終了時刻(YYYYMMddhhmmss)
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+        - name: dbName
+          in: query
+          description: データベース名
+          required: true
+          explode: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: リクエストが成功しました。
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/DeadLock'
+        '400':
+          description: リクエストの形式が不正です。
+        '500':
+          description: 内部エラーです。
+
+components:
+  schemas:
+    CpuUsage:
+      required:
+        - starttime
+        - endtime
+        - data
+      type: object
+      properties:
+        starttime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        endtime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:30
+        data:
+          type: array
+          items:
+           $ref: '#/components/schemas/CpuData'   
+    CpuData:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        usage:
+            type: number
+            format: doble
+            example: 58.91
+    Processes:
+      type: object
+      properties:
+        masterProcess:
+            type: boolean
+            format: boolean
+            example: true
+        walWriter:
+            type: boolean
+            format: boolean
+            example: true
+        writer:
+            type: boolean
+            format: boolean
+            example: true
+        checkPointer:
+            type: boolean
+            format: boolean
+            example: true
+        statisticsCollector:
+            type: boolean
+            format: boolean
+            example: true
+        autoVacuumLauncher:
+            type: boolean
+            format: boolean
+            example: true
+        autoVacuumWorker:
+            type: boolean
+            format: boolean
+            example: false
+    AverageQueryTime:
+      required:
+        - starttime
+        - endtime
+        - kind
+        - time
+      type: object
+      properties:
+        starttime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        endtime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:30
+        kind:
+          type: number
+          format: integer
+          example: 1
+        time:
+          type: number
+          format: doble
+          example: 10.56891891891892
+    HitRate:
+      required:
+        - starttime
+        - endtime
+        - dbname
+        - hitrate
+      type: object
+      properties:
+        starttime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        endtime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:30
+        dbname:
+          type: string
+          format: string
+          example: explorer
+        hitrate:
+          type: number
+          format: doble
+          example: 0.47058823529411764
+    SlowQueryCounts:
+      required:
+        - starttime
+        - endtime
+        - querytime
+        - counts
+      type: object
+      properties:
+        starttime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        endtime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:30
+        querytime:
+          type: number
+          format: double
+          example: 70
+        counts:
+          type: number
+          format: integer
+          example: 3
+    MemUsage:
+      required:
+        - starttime
+        - endtime
+        - workMem
+        - maxConnections
+        - data
+      type: object
+      properties:
+        starttime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        endtime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:30
+        workMem:
+          type: number
+          format: double
+          example: 4.0
+        maxConnections:
+          type: number
+          format: integer
+          example: 100
+        data:
+          type: array
+          items:
+           $ref: '#/components/schemas/MemData' 
+    MemData:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        memUsage:
+            type: number
+            format: int
+            example: 50 #KB
+        memUsageRatio:
+            type: number
+            format: double
+            example: 10 #percent
+        connections:
+            type: number
+            format: integer
+            example: 2
+    DeadTup:
+      required:
+        - starttime
+        - endtime
+        - deadTupData
+      type: object
+      properties:
+        starttime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        endtime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:30
+        deadTupData:
+          type: array
+          items:
+           $ref: '#/components/schemas/DeadTupData' 
+    DeadTupData:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        deadTupCount:
+            type: number
+            format: int
+            example: 50 #KB
+        deadTupRatio:
+            type: number
+            format: double
+            example: 2.0
+    DeadLock:
+      required:
+        - starttime
+        - endtime
+        - dbName
+        - deadlocks
+      type: object
+      properties:
+        starttime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:20
+        endtime:
+          type: string
+          format: date-time
+          example: 2023/05/01 00:01:30
+        dbName:
+          type: string
+          format: string
+          example: explorer
+        deadlocks:
+          type: number
+          format: long
+          example: 5
+  requestBodies:
+    Visualization:
+      content:
+        application/json:
+          schema:
+            $ref: '#components/schemas/Visualization'
