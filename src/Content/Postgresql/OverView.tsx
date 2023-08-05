@@ -432,7 +432,7 @@ const Overview: React.FC<OverViewProps> = ({ starttime, endtime }) => {
           <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
               <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
-                Query Process Status: 
+                Query Processing Status: 
               </Typography>
               {queryProcessStatus === "OK" ? 
                 <CheckCircleIcon style={{ color: green[500] }} /> 

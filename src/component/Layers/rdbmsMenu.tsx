@@ -15,6 +15,7 @@ import DeadTuple from '../../Content/Postgresql/Deadtuple';
 import PostgresMemoryUsageRatio from '../../Content/Postgresql/PostgresMemoryUsageRatio';
 import DeadTupleRatio from '../../Content/Postgresql/DeadtupleRatio';
 import PostgresMemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
+import ErrorLogDisplay from '../../Content/Postgresql/ErrorLog';
 
 
 const RdbmsMenu: React.FC = () => {
@@ -41,6 +42,9 @@ const RdbmsMenu: React.FC = () => {
           <DeadTupleRatio starttime={starttime} endtime={endtime} />
           <Box sx={{ width: '1.5vh'}}></Box>
           <DeadTuple starttime={starttime} endtime={endtime} />
+        </Box>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+          <ErrorLogDisplay starttime={starttime} endtime={endtime} />
         </Box>
       </Box>
     </div>
