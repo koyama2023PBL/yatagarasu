@@ -11,9 +11,9 @@ import PostgresProcessStatus from '../../Content/Postgresql/ProcessCheck';
 import { useState } from 'react';
 import { RootState } from '../Redux/StateStore';
 import { useSelector } from 'react-redux';
-import DeadTuple from '../../Content/Postgresql/DeadTuple';
+import DeadTuple from '../../Content/Postgresql/Deadtuple';
 import PostgresMemoryUsageRatio from '../../Content/Postgresql/PostgresMemoryUsageRatio';
-import DeadTupleRatio from '../../Content/Postgresql/DeadTupleRatio';
+import DeadTupleRatio from '../../Content/Postgresql/DeadtupleRatio';
 import PostgresMemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 
 

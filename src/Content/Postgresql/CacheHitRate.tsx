@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import instance from '../../Axios/AxiosInstance';
-import { getDate, padZero} from '../../Component/Common/Util';
+import { getDate, padZero, roundToTwoDecimalPlaces} from '../../Component/Common/Util';
 import { Card, CardContent, Typography, IconButton, Popover, Grid, Box, CircularProgress } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -117,7 +117,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' , marginTop: '-5px'}}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            キャッシュヒット率
+            Cache Hit Rate (%)
           </Typography>
           {cacheHitRateData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
@@ -173,7 +173,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
                     <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
                     <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>
                       <Typography variant="h5" component="div" align="center" sx={{ display: 'inline' }}>
-                        {cacheHitRateData.hitRate === -1 ? "-" : `${cacheHitRateData.hitRate * 100}%`}
+                        {cacheHitRateData.hitRate === -1 ? "-" : `${roundToTwoDecimalPlaces(cacheHitRateData.hitRate * 100)}%`}
                       </Typography>
                     </Box>
                     <Typography variant="body2" component="div" align="right" sx={{ marginTop: '1vh', marginBottom: '-1.3vh'}}>

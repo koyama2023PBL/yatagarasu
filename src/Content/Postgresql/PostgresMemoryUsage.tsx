@@ -220,9 +220,8 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '-15px', marginTop: '-5px', width: '100%' }}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            Postgresメモリ使用量(MiB)
+            PostgresSQL Memory Usage(MiB)
           </Typography>
-          {chartData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
             <HelpOutlineIcon fontSize="small" />
           </IconButton>
@@ -241,7 +240,7 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
           >
             <Typography sx={{ p: 2 , alignItems: 'center'}} style={{ width: '600px', whiteSpace: 'pre-line' }}>
               <HelpOutlineIcon fontSize="small" sx={{ marginBottom: '-5px', marginLeft: '3px', marginRight: '3px'}}/>
-              Postgresが使用するメモリのうち、共有バッファを除いたプロセスメモリの使用量を表示します。
+              PostgresSQLが使用するメモリのうち、共有バッファを除いたプロセスメモリの使用量を表示します。
               クエリ実行のために使用するメモリの最大値は「ワークメモリのサイズ」×「同時接続可能数」となります。
               この最大値がマシンのリソース内に収まるよう適切に設定してください。
             </Typography>

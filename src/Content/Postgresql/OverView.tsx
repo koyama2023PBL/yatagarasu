@@ -1,14 +1,21 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import { Card, CardContent, CircularProgress, Typography } from '@mui/material';
+import { Card, CardContent, CircularProgress, IconButton, Popover, Typography } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import OpenInNew from '@mui/icons-material/OpenInNew';
 import { green, yellow, red } from '@mui/material/colors';
 import { DateTostring, getDate, roundToThreeDecimalPlaces } from '../../Component/Common/Util';
 import instance from '../../Axios/AxiosInstance';
 import { useEffect, useState } from 'react';
 import { Thresholds } from '../../Component/Threshold/Threshold';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelected } from '../../Component/Redux/MenuState'; 
+import { RootState } from '../../Component/Redux/StateStore'; 
+import { useTheme } from '@mui/system';
+import {useMediaQuery} from '@mui/material';
 
 interface OverViewProps {
   starttime: Date;
@@ -163,7 +170,8 @@ const fetchFromAPI = async (endpoint: string) => {
 }
 
 
-const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
+
+const Overview: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   const [deadLocksData, setDeadLocksData] = useState<DeadLocksData | null>(null);
   const [postgresProcessStatus, setPostgresProcessStatus] = useState<PostgresProcessApiResponse | null>(null);
   const [dbStatusCode, setDbStatusCode] = useState<string | null>("");
@@ -172,6 +180,16 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   const [slowQueryStatus, setSlowQueryStatus] = useState<string>("");
   const [averageTimeStatus, setAverageTimeStatus] = useState<string>("");
   const [rdbmsStatus, setRdbmsStatus] = useState<string>("");
+  const [queryProcessStatus, setQueryProcessStatus] = useState<string>("");
+
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget)};
+  const handlePopoverClose = () => {setAnchorEl(null)};
+  const open = Boolean(anchorEl);
+  const dispatch = useDispatch();
 
   const [avgQueryTimes, setAvgQueryTimes] = useState<{[key: string]: number | string | null}>({
     "startTime": null,
@@ -181,6 +199,18 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
     "UPDATE": null,
     "DELETE": null,
   });
+
+  const handleServerCardClick = () => {
+    dispatch(setSelected('os'));
+  };
+
+  const handleDBCardClick = () => {
+    dispatch(setSelected('rdbms'));
+  };
+
+  const handleTableCardClick = () => {
+    dispatch(setSelected('table'));
+  };
 
   useEffect(() => {
     const fetchDeadLocksData = async () => {
@@ -301,6 +331,24 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   }, []);
 
   useEffect(() => {
+    const fetchQueryProcessStatus = async () => {
+      if (averageTimeStatus === "OK" &&
+        deadlockStatus === "OK" &&
+        slowQueryStatus === "OK") {
+        setQueryProcessStatus("OK");
+      } else if (
+        averageTimeStatus === "ERROR" ||
+        deadlockStatus === "ERROR" ||
+        slowQueryStatus === "ERROR"){
+        setQueryProcessStatus("ERROR");
+      } else {
+        setQueryProcessStatus("");
+      }
+    };
+    fetchQueryProcessStatus();
+  }, [averageTimeStatus, deadlockStatus, slowQueryStatus]); 
+
+  useEffect(() => {
     const fetchDbStatus = async () => {
       const endpoint = "/database-explorer/api/information/dbhealthcheck";
       const { status }: {status: number} = await fetchFromAPI(endpoint);
@@ -311,17 +359,40 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   }, []);
 
   return (
-  <Card sx={{ height: '16vh'}}>
+    <Card sx={{ height: '16vh' }}>
     <CardContent>
-      <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-        Status Overview
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+        <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
+          Status Overview
+        </Typography>
+        <IconButton onClick={handlePopoverOpen} size="small" sx={{ marginLeft: '-3px', marginRight: '-1px' }}>
+          <HelpOutlineIcon fontSize="small" />
+        </IconButton>
+      </Box>
+      <Popover
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handlePopoverClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <Typography sx={{ p: 2 , alignItems: 'center'}} style={{ width: '600px', whiteSpace: 'pre-line' }}>
+          <HelpOutlineIcon fontSize="small" sx={{ marginBottom: '-5px', marginLeft: '3px', marginRight: '3px'}}/>
+          全体概況を表示しています。
+        </Typography>
+      </Popover>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh',marginLeft: '2vw' }}>
-        <Card sx={{backgroundColor: dbStatusCode === "OK" ? '#e8f5e9' : dbStatusCode === "STABLE" ? '#fffde7' : dbStatusCode === "ERROR" ? '#ffebee' : ''}}>
+        <Card onClick={handleServerCardClick} sx={{cursor: 'pointer', width: '25vw', backgroundColor: dbStatusCode === "OK" ? '#e8f5e9' : dbStatusCode === "STABLE" ? '#fffde7' : dbStatusCode === "ERROR" ? '#ffebee' : ''}}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
-              <Typography variant="h6">
-                DB-Server:
+              <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
+                DB Server Status:
               </Typography>
               {dbStatusCode === "OK" ? 
                 <CheckCircleIcon style={{ color: green[500] }} /> 
@@ -330,17 +401,18 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
                 : dbStatusCode === "ERROR" ? 
                 <ErrorIcon style={{ color: red[500] }} />
                 :
-                <CircularProgress/>
+                <CircularProgress size={isSmallScreen ? 20 : 30}/>
               }
+              <OpenInNew sx={{marginLeft: '1vw'}}/> 
             </Box>
           </CardContent>
         </Card>
         <Box sx={{ width: '1.5vh'}}></Box>
-        <Card sx={{backgroundColor: rdbmsStatus === "OK" ? '#e8f5e9' : rdbmsStatus === "STABLE" ? '#fffde7' : rdbmsStatus === "ERROR" ? '#ffebee' : ''}}>
+        <Card onClick={handleDBCardClick} sx={{cursor: 'pointer', width: '25vw', backgroundColor: rdbmsStatus === "OK" ? '#e8f5e9' : rdbmsStatus === "STABLE" ? '#fffde7' : rdbmsStatus === "ERROR" ? '#ffebee' : ''}}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
-              <Typography variant="h6">
-                RDBMS:   
+              <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
+                RDBMS Status:   
               </Typography>
               {rdbmsStatus === "OK" ? 
                 <CheckCircleIcon style={{ color: green[500] }} /> 
@@ -349,65 +421,30 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
                 : rdbmsStatus === "ERROR" ? 
                 <ErrorIcon style={{ color: red[500] }} />
                 :
-                <CircularProgress/>
+                <CircularProgress size={isSmallScreen ? 20 : 30} />
               }
+              <OpenInNew sx={{marginLeft: '1vw'}}/> 
             </Box>
           </CardContent>
         </Card>
         <Box sx={{ width: '1.5vh'}}></Box>
-        <Card sx={{backgroundColor: deadlockStatus === "OK" ? '#e8f5e9' : deadlockStatus === "STABLE" ? '#fffde7' : deadlockStatus === "ERROR" ? '#ffebee' : ''}}>
+        <Card onClick={handleTableCardClick} sx={{ cursor: 'pointer', width: '25vw', backgroundColor: queryProcessStatus === "OK" ? '#e8f5e9' : queryProcessStatus === "STABLE" ? '#fffde7' : queryProcessStatus === "ERROR" ? '#ffebee' : ''}}>
           <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
-              <Typography variant="h6">
-                Deadlocks: 
+              <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
+                Query Process Status: 
               </Typography>
-              {deadlockStatus === "OK" ? 
+              {queryProcessStatus === "OK" ? 
                 <CheckCircleIcon style={{ color: green[500] }} /> 
-                : deadlockStatus === "STABLE" ? 
+                : queryProcessStatus === "STABLE" ? 
                 <WarningIcon style={{ color: yellow[700] }} /> 
-                : deadlockStatus === "ERROR" ? 
+                : queryProcessStatus === "ERROR" ? 
                 <ErrorIcon style={{ color: red[500] }} />
                 :
-                <CircularProgress/>
+                //<CircularProgress sx={{fontSize: 'small'}}/>
+                <CircularProgress size={isSmallScreen ? 20 : 30} />
               }
-            </Box>
-          </CardContent>
-        </Card>
-        <Box sx={{ width: '1.5vh'}}></Box>
-        <Card sx={{backgroundColor: slowQueryStatus === "OK" ? '#e8f5e9' : slowQueryStatus === "STABLE" ? '#fffde7' : slowQueryStatus === "ERROR" ? '#ffebee' : ''}}>
-          <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
-              <Typography variant="h6">
-                SlowQuery: 
-              </Typography>
-              {slowQueryStatus === "OK" ? 
-                <CheckCircleIcon style={{ color: green[500] }} /> 
-                : slowQueryStatus === "STABLE" ? 
-                <WarningIcon style={{ color: yellow[700] }} /> 
-                : slowQueryStatus === "ERROR" ? 
-                <ErrorIcon style={{ color: red[500] }} />
-                :
-                <CircularProgress/>
-              }
-            </Box>
-          </CardContent>
-        </Card>
-        <Box sx={{ width: '1.5vh'}}></Box>
-        <Card sx={{backgroundColor: averageTimeStatus === "OK" ? '#e8f5e9' : averageTimeStatus === "STABLE" ? '#fffde7' : averageTimeStatus === "ERROR" ? '#ffebee' : ''}}>
-          <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', height: '3vh' }}>
-              <Typography variant="h6">
-                Avg-Time Query: 
-              </Typography>
-              {averageTimeStatus === "OK" ? 
-                <CheckCircleIcon style={{ color: green[500] }} /> 
-                : averageTimeStatus === "STABLE" ? 
-                <WarningIcon style={{ color: yellow[700] }} /> 
-                : averageTimeStatus === "ERROR" ? 
-                <ErrorIcon style={{ color: red[500] }} />
-                :
-                <CircularProgress/>
-              }
+              <OpenInNew sx={{marginLeft: '1vw'}}/> 
             </Box>
           </CardContent>
         </Card>
@@ -417,4 +454,6 @@ const OverView: React.FC<OverViewProps> = ({ starttime, endtime }) => {
   );
 }
 
-export default OverView;
+export default Overview;
+
+

@@ -23,6 +23,7 @@ import Terminal from '@mui/icons-material/Terminal';
 import Storage from '@mui/icons-material/Storage';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import Settings from '@mui/icons-material/Settings';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelected } from '../Redux/MenuState'; 
@@ -45,6 +46,8 @@ import DatabaseInformation from '../../Content/Postgresql/DatabaseInformation';
 import ApiInfoMenu from '../Layers/ApiInfoMenu';
 import BackendApiDescription from '../Description/BackendApiDescription';
 import { Api } from '@mui/icons-material';
+import TerminalDescription from '../Description/TerminalDescription';
+import TerminalMenu from '../Layers/TerminalMenu';
 
 const drawerWidth = 300;
 
@@ -144,6 +147,8 @@ export default function BaseDisplayMenu() {
         return <ApiInfoMenu />;
       case 'settings':
         return <SettingMenu />;
+      case 'terminalcomponent':
+        return <TerminalMenu />;
       default:
         return null;
     }
@@ -166,6 +171,8 @@ export default function BaseDisplayMenu() {
         return <BackendApiDescription/>;
       case 'settings':
         return <SettingsDesc />;
+      case 'terminalcomponent':
+        return <TerminalDescription />;
       default:
         return <DatabaseInformation />;
     }
@@ -211,7 +218,7 @@ export default function BaseDisplayMenu() {
               fontFamily: 'Oxygen',
               fontWeight: 850,
               alignItems: 'center',
-              letterSpacing: '.0.95rem',
+              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -233,7 +240,7 @@ export default function BaseDisplayMenu() {
             }}
           >
             <Typography variant="body2" align="right">
-                © 2023 Advanced Institute of Industrial Technology, Koyama Lab. All rights reserved. Released under the MIT license.
+                © 2023 Advanced Institute of Industrial Technology, Koyama Lab. All rights reserved. Released under the MIT license.(仮)
             </Typography>
         </Box>
         </Toolbar>
@@ -247,11 +254,12 @@ export default function BaseDisplayMenu() {
         <Divider />
         <List>
         {[{ id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
-          { id: 'os', text: 'OS', icon: <Terminal style={{ fontSize: 40 }}/> },
+          { id: 'os', text: 'OS', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
           { id: 'rdbms', text: 'RDBMS', icon: <Storage style={{ fontSize: 40 }}/> },
           { id: 'table', text: 'Table & Query', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
           { id: 'apiinfo', text: 'Backend APIs', icon: <Api style={{ fontSize: 40 }}/> },
-          { id: 'settings', text: 'Settings', icon: <Settings style={{ fontSize: 40 }}/> },
+          { id: 'settings', text: 'Settings(Beta)', icon: <Settings style={{ fontSize: 40 }}/> },
+          { id: 'terminalcomponent', text: 'Terminal(Beta)', icon: <Terminal style={{ fontSize: 40 }}/> },
         ].map((item) => (
           <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
             <ListItemButton

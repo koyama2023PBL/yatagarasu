@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
 import { Typography } from '@mui/material';
+import ThresholdsTable from '../../Content/Setting/ThresholdSetting';
 
 
 const SettingMenu: React.FC = () => {
@@ -18,7 +19,7 @@ const SettingMenu: React.FC = () => {
 
   return (
     <div>
-      <Typography>developing...</Typography>
+      <ThresholdsTable/>
     </div>
   );
 }

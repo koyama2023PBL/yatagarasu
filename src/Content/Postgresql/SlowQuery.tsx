@@ -114,7 +114,7 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: '-5px' }}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            スロークエリ数
+            Slow Query Count
           </Typography>
           {slowQueryCountData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
@@ -146,7 +146,7 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
               <Card sx={{ width: '30%' , marginRight: '1vw'}}>
                 <CardContent>
                   <Typography variant="body2" align="left" sx={{ fontWeight: 'bold', marginTop: '-1vh' }}>
-                    スロークエリ閾値
+                    Threshold
                   </Typography>
                   <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
                   <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>
@@ -163,7 +163,7 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
                 <CardContent>
                   <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', marginTop: '-1vh' }}>
                     <Typography variant="body2" align="left" sx={{ fontWeight: 'bold' }}>
-                      スロークエリ数
+                      Count
                     </Typography>
                     <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
                     <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>
@@ -172,7 +172,7 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
                       </Typography>
                     </Box>
                     <Typography variant="body2" component="div" align="right" sx={{ marginTop: '1vh', marginBottom: '-1.3vh'}}>
-                      測定時間: {slowQueryCountData.startTime} - {slowQueryCountData.endTime}
+                      Time: {slowQueryCountData.startTime} - {slowQueryCountData.endTime}
                     </Typography>
                   </Box>
                 </CardContent>

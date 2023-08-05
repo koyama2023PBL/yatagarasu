@@ -46,6 +46,12 @@ export function roundToThreeDecimalPlaces(value: number): number {
   return Math.round(value * factor) / factor;
 }
 
+//小数点以下2桁丸め
+export function roundToTwoDecimalPlaces(value: number): number {
+  const factor = Math.pow(10, 2);
+  return Math.round(value * factor) / factor;
+}
+
 //先頭ゼロ付加
 export function padZero(num: number) {
   return (num < 10 ? "0" : "") + num;

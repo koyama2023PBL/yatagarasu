@@ -83,7 +83,7 @@ const DatabaseInformation: React.FC = () => {
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' , marginTop: '-5px'}}>
           <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-            DatabaseInformation
+            Database Information
           </Typography>
           {response && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>

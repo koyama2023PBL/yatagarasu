@@ -139,7 +139,7 @@ const AverageQueryTime: React.FC<AvgQueryTimeProps> = ({ starttime, endtime }) =
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' , marginTop: '-5px'}}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            平均クエリ時間（種別）
+            Average Query Time
           </Typography>
           {avgQueryTimes && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>

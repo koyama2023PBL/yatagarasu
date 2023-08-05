@@ -220,7 +220,7 @@ const QueryCounts: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '-15px', marginTop: '-5px', width: '100%' }}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            総クエリ数(個)
+            Total Query Count
           </Typography>
           {chartData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>

@@ -11,9 +11,9 @@ import PostgresProcessStatus from '../../Content/Postgresql/ProcessCheck';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
-import OverView from '../../Content/Postgresql/OverView';
+import OverView from '../../Content/Postgresql/Overview';
 import MemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
-import DeadTuple from '../../Content/Postgresql/DeadTuple';
+import DeadTuple from '../../Content/Postgresql/Deadtuple';
 
 
 const OverViewMenu: React.FC = () => {

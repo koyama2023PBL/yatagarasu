@@ -51,7 +51,7 @@ const fetchFromAPIwithRequest = async (
   }
 };
 
-const PostgresProcessStatus: React.FC<PostgresProcessCheckProps> = ({ starttime, endtime }) => {
+const ErrorLogDisplay: React.FC<PostgresProcessCheckProps> = ({ starttime, endtime }) => {
   const [postgresProcessStatus, setPostgresProcessStatus] = useState<PostgresProcessApiResponse | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -108,7 +108,7 @@ const PostgresProcessStatus: React.FC<PostgresProcessCheckProps> = ({ starttime,
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%', marginTop: '-5px'}}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            PostgresSQL Process Status
+            PostgresSQLプロセスチェック
           </Typography>
           {postgresProcessStatus && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
@@ -187,4 +187,4 @@ const PostgresProcessStatus: React.FC<PostgresProcessCheckProps> = ({ starttime,
   );
 };
 
-export default PostgresProcessStatus;
+export default ErrorLogDisplay;
