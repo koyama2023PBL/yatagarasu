@@ -163,7 +163,7 @@ const SlowQueryCount: React.FC<SlowQueryCountProps> = ({starttime, endtime, quer
                 <CardContent>
                   <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', marginTop: '-1vh' }}>
                     <Typography variant="body2" align="left" sx={{ fontWeight: 'bold' }}>
-                      Count
+                      Slow Query Count
                     </Typography>
                     <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
                     <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>

@@ -155,7 +155,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
               <Card sx={{ width: '30%', marginRight: '1vw'}}>
                 <CardContent>
                   <Typography variant="body2" align="left" sx={{ fontWeight: 'bold' , marginTop: '-1vh'}}>
-                    データベース名
+                    Database Name
                   </Typography>
                   <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1.5vh' }}>
                     <Typography variant="h5" component="div" align="center" sx={{ display: 'inline' }}>
@@ -168,7 +168,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
                 <CardContent>
                   <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' , marginTop: '-1vh'}}>
                     <Typography variant="body2" align="left" sx={{ fontWeight: 'bold' }}>
-                      キャッシュヒット率
+                      Cache Hit Rate
                     </Typography>
                     <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
                     <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>
@@ -177,7 +177,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
                       </Typography>
                     </Box>
                     <Typography variant="body2" component="div" align="right" sx={{ marginTop: '1vh', marginBottom: '-1.3vh'}}>
-                        測定時間: {cacheHitRateData.startTime} - {cacheHitRateData.endTime}
+                        Time: {cacheHitRateData.startTime} - {cacheHitRateData.endTime}
                     </Typography>
                   </Box>
                 </CardContent>

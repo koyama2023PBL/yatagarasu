@@ -10,8 +10,8 @@ const TerminalComponent: React.FC = () => {
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      setHistory([...history, `$ ${input}`]);
-      setInput(""); 
+      setHistory([...history, `# ${input}`]);
+      setInput("");
     }
   };
 
@@ -19,11 +19,11 @@ const TerminalComponent: React.FC = () => {
     <div style={{ backgroundColor: "#000", color: "#fff", padding: "10px", width: "100%", height: "100%" }}>
       <div>
         {history.map((line, index) => (
-          <div key={index}>{line}</div>
+          <div key={index} style={{ fontSize: "120px" }}>{line}</div> // 入力後の文字列のサイズを設定
         ))}
       </div>
       <div style={{ display: "flex", alignItems: "left" }}>
-        <span style={{ flexShrink: 0 }}>$</span>
+        <span style={{ flexShrink: 0 }}>#</span>
         <input
           type="text"
           value={input}
@@ -34,7 +34,6 @@ const TerminalComponent: React.FC = () => {
       </div>
     </div>
   );
-  
 };
 
 export default TerminalComponent;

@@ -267,7 +267,7 @@ const Overview: React.FC<OverViewProps> = ({ starttime, endtime }) => {
       };
 
       const { data: response }: {status: number, data: SlowQueryCountApiResponse} = await fetchFromSlowQueryCountAPIwithRequest(endpoint, requestBody);
-      response.count < Thresholds.querycounts.watch ? setSlowQueryStatus("OK") : setSlowQueryStatus("ERROR");
+      response.count < Thresholds.slowquery.watch ? setSlowQueryStatus("OK") : setSlowQueryStatus("ERROR");
     };
 
     fetchSlowQueryCountData();

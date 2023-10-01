@@ -49,6 +49,10 @@ export const Thresholds = {
     ok: 0,
     watch: 1
   },
+  slowquery: {
+    ok: 0,
+    watch: 1
+  },
 };
 
 export const statusColors = {

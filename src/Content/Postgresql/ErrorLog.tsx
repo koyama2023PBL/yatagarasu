@@ -8,6 +8,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { green, yellow, red } from '@mui/material/colors';
+import { error } from "console";
 
 interface ErrorLogDisplayProps {
   starttime: Date;
@@ -40,9 +41,10 @@ const ErrorLogDisplay: React.FC<ErrorLogDisplayProps> = ({ starttime, endtime })
 
       try {
         const response = await instance.get<ErrorLogApiResponse>(
-          `/error-log?starttime=${startTimeString}&endtime=${endTimeString}`
+          `/database-explorer/api/visualization/error-log?starttime=${startTimeString}&endtime=${endTimeString}`
         );
         setErrorLogs(response.data.erroLogList);
+        console.log("response:", response.data.erroLogList);
         setStatusCode(response.status);
       } catch (err) {
         console.log("err:", err);
@@ -116,8 +118,6 @@ const ErrorLogDisplay: React.FC<ErrorLogDisplayProps> = ({ starttime, endtime })
         {errorLogs === null ? (
           <CircularProgress />
         ) : errorLogs.length > 0 ? (
-          // ここにエラーログに基づいて表示したい内容を追加
-          // 例:
           <Typography variant="body1">
             エラーログが見つかりました。
           </Typography>
