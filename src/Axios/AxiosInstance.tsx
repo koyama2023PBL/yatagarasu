@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:7777',
+  baseURL: 'http://www.koakjo.com:50250',
   headers: {
     post: {
       'Content-Type': 'application/json;charset=utf-8',

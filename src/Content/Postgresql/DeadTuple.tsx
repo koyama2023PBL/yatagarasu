@@ -71,7 +71,7 @@ ChartJS.register(
   Legend
 );
 
-const DeadTuples: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
+const DeadTuple: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
   const [yAxisFixed, setYAxisFixed] = useState<boolean>(true);
@@ -305,4 +305,4 @@ const DeadTuples: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
   );
 };
 
-export default DeadTuples;
+export default DeadTuple;
