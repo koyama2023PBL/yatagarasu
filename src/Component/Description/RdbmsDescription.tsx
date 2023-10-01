@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-const rdbms = () => {
+const RdbmsDescription = () => {
 
   return(
     <Card sx={{ width: '55vw'}}>
@@ -20,4 +20,4 @@ const rdbms = () => {
   );
 }
 
-export default rdbms;
+export default RdbmsDescription;

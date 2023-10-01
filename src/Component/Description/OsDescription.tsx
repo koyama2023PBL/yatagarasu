@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@mui/material';
 import Typography from '@mui/material/Typography';
 
-const os = () => {
+const OsDescription = () => {
 
   return(
     <Card sx={{ width: '55vw'}}>
@@ -20,4 +20,4 @@ const os = () => {
   )
 }
 
-export default os;
+export default OsDescription;

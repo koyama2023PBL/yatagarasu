@@ -224,7 +224,7 @@ export default function BaseDisplayMenu() {
             }}
           >
           <img src={icon} alt="icon" style={{ height: '50px', marginRight: '12px' }} />
-          DatabaseExplorer
+          Yatagarasu
           </Typography>
           <Box sx={{ 
             display: 'flex', 
