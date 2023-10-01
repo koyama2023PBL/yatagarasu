@@ -7,7 +7,7 @@ const rdbms = () => {
     <Card sx={{ width: '55vw'}}>
       <CardContent>
         <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-            【仮】Configuration Menu
+            (Beta) Configuration Menu
         </Typography>
           <Typography variant="body1"  sx={{display: 'flex',marginLeft: '2vw', marginTop: '1.5vh'}}>
             This is area for display Configuration Menu.

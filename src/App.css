@@ -1,6 +1,6 @@
 .App {
   display: flex;
-  background-color: #e8eaf6;
+  background-color: #DDE1E1;
   text-align: center;
 }
 
@@ -13,6 +13,23 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+@font-face {
+  font-family: 'Oxygen';
+  src: url('/public/fonts/Oxygen-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Noto Sans', 'Oxygen', sans-serif;
+  unicode-range: U+3000-9FFF;
+}
+
+body {
+  font-family: 'Oxygen', sans-serif;
+  unicode-range: U+0020-007F;
 }
 
 .App-header {
@@ -37,4 +54,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.code {
+  font-family: Oxygen, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }

@@ -2,17 +2,17 @@ import * as React from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-import CacheHitRate from '../../Content/CacheHitRate';
-import CPUusage from '../../Content/CPUusage';
-import SlowQueryCount from '../../Content/SlowQuery';
-import AverageQueryTime from '../../Content/AvgQueryTime';
-import PostgresProcessStatus from '../../Content/ProcessCheck';
+import CacheHitRate from '../../Content/Postgresql/CacheHitRate';
+import CPUusage from '../../Content/Postgresql/CPUusage';
+import SlowQueryCount from '../../Content/Postgresql/SlowQuery';
+import AverageQueryTime from '../../Content/Postgresql/AvgQueryTime';
+import PostgresProcessStatus from '../../Content/Postgresql/ProcessCheck';
 
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
-import DeadLocks from '../../Content/DeadLock';
-import QueryCounts from '../../Content/QueryCounts';
+import DeadLocks from '../../Content/Postgresql/DeadLock';
+import QueryCounts from '../../Content/Postgresql/QueryCounts';
 
 
 const TableMenu: React.FC = () => {

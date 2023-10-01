@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import icon from '../../img/icon.png';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -22,6 +23,7 @@ import Terminal from '@mui/icons-material/Terminal';
 import Storage from '@mui/icons-material/Storage';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import Settings from '@mui/icons-material/Settings';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setSelected } from '../Redux/MenuState'; 
@@ -40,7 +42,12 @@ import TableDesc from '../Description/TableDescription';
 import SettingsDesc from '../Description/SettingsDescription';
 
 import TimePicker from '../Common/TimePicker';
-import DatabaseInformation from '../../Content/DatabaseInformation';
+import DatabaseInformation from '../../Content/Postgresql/DatabaseInformation';
+import ApiInfoMenu from '../Layers/ApiInfoMenu';
+import BackendApiDescription from '../Description/BackendApiDescription';
+import { Api } from '@mui/icons-material';
+import TerminalDescription from '../Description/TerminalDescription';
+import TerminalMenu from '../Layers/TerminalMenu';
 
 const drawerWidth = 300;
 
@@ -136,8 +143,12 @@ export default function BaseDisplayMenu() {
         return <RdbmsMenu />;
       case 'table':
         return <TableMenu />;
+      case 'apiinfo':
+        return <ApiInfoMenu />;
       case 'settings':
         return <SettingMenu />;
+      case 'terminalcomponent':
+        return <TerminalMenu />;
       default:
         return null;
     }
@@ -148,15 +159,31 @@ export default function BaseDisplayMenu() {
       case 'dashboard':
         return <DatabaseInformation />;
       case 'os':
-        return <OSDesc />;
+        return <DatabaseInformation />
+        //return <OSDesc />;
       case 'rdbms':
-        return <RDBMSDesc />;
+        return <DatabaseInformation/>;
+        //return <RDBMSDesc />;
       case 'table':
-        return <TableDesc />;
+        return <DatabaseInformation/>;
+        //return <TableDesc />;
+      case 'apiinfo':
+        return <BackendApiDescription/>;
       case 'settings':
         return <SettingsDesc />;
+      case 'terminalcomponent':
+        return <TerminalDescription />;
       default:
         return <DatabaseInformation />;
+    }
+  };
+
+  const renderDatePicker = () => {
+    switch (selected) {
+      case 'apiinfo':
+        return;
+      default:
+        return <TimePicker/>;
     }
   };
 
@@ -177,21 +204,26 @@ export default function BaseDisplayMenu() {
           >
           <MenuIcon />
           </IconButton>
+          
           <Typography
-            variant="h5"
+            variant="h6"
             noWrap
             component="a"
             href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.0.7rem',
+              flexDirection: 'flex',
+              //fontFamily: 'M PLUS Rounded 1c',
+              fontFamily: 'Oxygen',
+              fontWeight: 850,
+              alignItems: 'center',
+              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
+          <img src={icon} alt="icon" style={{ height: '50px', marginRight: '12px' }} />
           DatabaseExplorer
           </Typography>
           <Box sx={{ 
@@ -208,7 +240,7 @@ export default function BaseDisplayMenu() {
             }}
           >
             <Typography variant="body2" align="right">
-                © 2023 Advanced Institute of Industrial Technology, Koyama Lab. All rights reserved.
+                © 2023 Advanced Institute of Industrial Technology, Koyama Lab. All rights reserved. Released under the MIT license.(仮)
             </Typography>
         </Box>
         </Toolbar>
@@ -221,11 +253,13 @@ export default function BaseDisplayMenu() {
         </DrawerHeader>
         <Divider />
         <List>
-        {[{ id: 'dashboard', text: 'ダッシュボード', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
-          { id: 'os', text: 'OS情報', icon: <Terminal style={{ fontSize: 40 }}/> },
-          { id: 'rdbms', text: 'RDBMS情報', icon: <Storage style={{ fontSize: 40 }}/> },
-          { id: 'table', text: 'テーブル・クエリ情報', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
-          { id: 'settings', text: '設定', icon: <Settings style={{ fontSize: 40 }}/> },
+        {[{ id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
+          { id: 'os', text: 'OS', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
+          { id: 'rdbms', text: 'RDBMS', icon: <Storage style={{ fontSize: 40 }}/> },
+          { id: 'table', text: 'Table & Query', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
+          { id: 'apiinfo', text: 'Backend APIs', icon: <Api style={{ fontSize: 40 }}/> },
+          { id: 'settings', text: 'Settings(Beta)', icon: <Settings style={{ fontSize: 40 }}/> },
+          { id: 'terminalcomponent', text: 'Terminal(Beta)', icon: <Terminal style={{ fontSize: 40 }}/> },
         ].map((item) => (
           <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
             <ListItemButton
@@ -267,7 +301,7 @@ export default function BaseDisplayMenu() {
               }}>
               {renderContentDesc()}
               <Box sx={{ width: '1.5vh'}}></Box>
-              <TimePicker/>
+              {renderDatePicker()}
             </Box>
               {renderContentMain()}
           </Box>
