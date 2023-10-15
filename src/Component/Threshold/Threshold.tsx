@@ -53,6 +53,10 @@ export const Thresholds = {
     ok: 0,
     watch: 1
   },
+  cacheHitCount: {
+    ok: 23741411,
+    watch: 13741411
+  },
 };
 
 export const statusColors = {
@@ -60,4 +64,3 @@ export const statusColors = {
   watch: yellow[700],
   alert: red[500]
 };
-

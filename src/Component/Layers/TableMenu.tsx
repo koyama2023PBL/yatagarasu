@@ -13,6 +13,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
 import DeadLocks from '../../Content/Postgresql/DeadLock';
 import QueryCounts from '../../Content/Postgresql/QueryCounts';
+import CacheHitCount from '../../Content/Postgresql/CacheHitCount'; 
 
 
 const TableMenu: React.FC = () => {
@@ -33,6 +34,11 @@ const TableMenu: React.FC = () => {
         </Box>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <DeadLocks starttime={starttime} endtime={endtime} />
+          <Box sx={{ width: '1.5vh'}}></Box>
+          <QueryCounts starttime={starttime} endtime={endtime} />
+        </Box>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+          <CacheHitCount start={starttime} end={endtime} />
           <Box sx={{ width: '1.5vh'}}></Box>
           <QueryCounts starttime={starttime} endtime={endtime} />
         </Box>

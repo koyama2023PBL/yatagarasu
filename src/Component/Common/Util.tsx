@@ -9,6 +9,12 @@ export function getDate(date: Date) {
   return res;
 }
 
+//Unix時間変換
+export function getUnixTime(date: Date) {
+  return Math.floor(date.getTime() / 1000);
+}
+
+
 //Date型変換->[YYYY/MM/DD HH:mm:SS]
 export function DateTostring(date: Date): string {
   const year = date.getFullYear();
