@@ -1,0 +1,33 @@
+version: '3'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: yatagarasu
+      POSTGRES_USER: yatagarasu
+      POSTGRES_PASSWORD: yatagarasu
+    ports:
+      - "5432:5432"
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+
+  node-exporter:
+    container_name: node-exporter
+    image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
+
+  postgres_exporter:
+    container_name: postgres_exporter
+    image: wrouesnel/postgres_exporter:latest
+    environment:
+      DATA_SOURCE_NAME: "postgresql://yatagarasu:yatagarasu@host.docker.internal:5432/yatagarasu?sslmode=disable"
+    ports:
+      - "9187:9187"
