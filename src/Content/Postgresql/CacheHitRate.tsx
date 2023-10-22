@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import instance from '../../Axios/AxiosInstance';
-import { getDate, padZero, roundToTwoDecimalPlaces} from '../../Component/Common/Util';
+import { getDate, padZero, roundToTwoDecimalPlaces, ApiResponse, ApiRequest, getUnixTime} from '../../Component/Common/Util';
 import { Card, CardContent, Typography, IconButton, Popover, Grid, Box, CircularProgress } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -33,10 +33,10 @@ interface CacheHitRateProps {
   endtime: Date;
 }
 
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CacheHitRateApiRequest) => {
+const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: ApiRequest) => {
   try {
-      const startTimeString = getDate(queryParameters.starttime);
-      const endTimeString = getDate(queryParameters.endtime);
+      const startTimeString = getUnixTime(queryParameters.start);
+      const endTimeString = getUnixTime(queryParameters.end);
 
       const response = await instance.get<CacheHitRateApiResponse>(
         `${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}&dbname=${queryParameters.dbname}`
