@@ -1,19 +1,6 @@
 import * as React from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
-import CacheHitRate from '../../Content/Postgresql/CacheHitRate';
-import CPUusage from '../../Content/Postgresql/CPUusage';
-import SlowQueryCount from '../../Content/Postgresql/SlowQuery';
-import AverageQueryTime from '../../Content/Postgresql/AvgQueryTime';
-import PostgresProcessStatus from '../../Content/Postgresql/ProcessCheck';
-
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../Redux/StateStore';
-import DeadLocks from '../../Content/Postgresql/DeadLock';
-import QueryCounts from '../../Content/Postgresql/QueryCounts';
-import { Terminal } from '@mui/icons-material';
 import TerminalComponent from '../../Content/Terminal/Terminal';
 
 

@@ -8,7 +8,6 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { green, yellow, red } from '@mui/material/colors';
-import { error } from "console";
 
 interface ErrorLogDisplayProps {
   starttime: Date;

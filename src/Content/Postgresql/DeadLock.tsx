@@ -10,18 +10,16 @@ import {
   BarElement,
   Tooltip,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
 
 import instance from '../../Axios/AxiosInstance';
-import { getDate, rgbToRgba} from '../../Component/Common/Util';
-import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
+import { getDate } from '../../Component/Common/Util';
+import { Box, Card, CardContent, CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
-import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
 
 interface DeadLocksData {
   startTime: string;
@@ -35,13 +33,13 @@ interface DeadLockApiResponse {
   endtime: string;
   dbName: string;
   deadlocks: number;
-};
+}
 
 interface DeadLockApiRequest {
   starttime: Date;
   endtime: Date;
   dbname: string;
-};
+}
 
 interface DeadLocksProps {
   starttime: Date;
