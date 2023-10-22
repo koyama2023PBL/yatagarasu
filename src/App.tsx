@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import { store } from './Component/Redux/StateStore'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { FetchOnInit } from "./Component/Common/FetchOnInit";
+import { fetchPrometheusSettings } from "./Component/Redux/PrometheusSettings";
 
 const theme = createTheme({
   palette: {
@@ -23,16 +25,18 @@ const theme = createTheme({
 
 const App: FC = () => {
   return (
-    <Provider store={store as Store}>
-      <ThemeProvider theme={theme}>
-      <CssBaseline />
-        <div className="App" style={{ display: 'flex' }} >
-          <code>
-            <BaseDisplayMenu />
-          </code>
-        </div>
-      </ThemeProvider>
-    </Provider>
+    <FetchOnInit tasks={[fetchPrometheusSettings]}>
+      <Provider store={store as Store}>
+        <ThemeProvider theme={theme}>
+        <CssBaseline />
+          <div className="App" style={{ display: 'flex' }} >
+            <code>
+              <BaseDisplayMenu />
+            </code>
+          </div>
+        </ThemeProvider>
+      </Provider>
+    </FetchOnInit>
   );
 }
 
