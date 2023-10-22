@@ -28,7 +28,7 @@ interface MemUsageData {
   memUsage: number;
   memUsageRatio: number;
   connections: number;
-};
+}
   
 interface MemUsageApiResponse {
   starttime: string;
@@ -36,12 +36,12 @@ interface MemUsageApiResponse {
   workMem: number;
   maxConnections: number;
   data: MemUsageData[];
-};
+}
   
 interface MemUsageApiRequest {
   starttime: Date;
   endtime: Date;
-};
+}
 
 interface MemoryUsageProps {
   starttime: Date;

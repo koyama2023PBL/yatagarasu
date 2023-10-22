@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+// @ts-ignore
 import icon from '../../img/icon.png';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -35,10 +36,6 @@ import RdbmsMenu from '../Layers/RdbmsMenu';
 import TableMenu from '../Layers/TableMenu';
 import SettingMenu from '../Layers/SettingMenu';
 
-import About from '../Description/AboutDescription';
-import OSDesc from '../Description/OsDescription';
-import RDBMSDesc from '../Description/RdbmsDescription';
-import TableDesc from '../Description/TableDescription';
 import SettingsDesc from '../Description/SettingsDescription';
 
 import TimePicker from '../Common/TimePicker';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Card, CardContent, CircularProgress, IconButton, Popover, Typography } from "@mui/material";
 import instance from '../../Axios/AxiosInstance';
-import { getDate, rgbToRgba } from "../../Component/Common/Util";
+import { getDate } from "../../Component/Common/Util";
 
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';

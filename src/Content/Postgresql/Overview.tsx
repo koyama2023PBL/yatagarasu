@@ -11,9 +11,8 @@ import { DateTostring, getDate, roundToThreeDecimalPlaces } from '../../Componen
 import instance from '../../Axios/AxiosInstance';
 import { useEffect, useState } from 'react';
 import { Thresholds } from '../../Component/Threshold/Threshold';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setSelected } from '../../Component/Redux/MenuState'; 
-import { RootState } from '../../Component/Redux/StateStore'; 
 import { useTheme } from '@mui/system';
 import {useMediaQuery} from '@mui/material';
 
@@ -35,13 +34,13 @@ interface DeadLockApiResponse {
   endtime: string;
   dbName: string;
   deadlocks: number;
-};
+}
 
 interface DeadLockApiRequest {
   starttime: Date;
   endtime: Date;
   dbname: string;
-};
+}
 
 const fetchFromDeadLockAPIwithRequest = async (endpoint: string, queryParameters: DeadLockApiRequest) => {
   try {
@@ -250,7 +249,7 @@ const Overview: React.FC<OverViewProps> = ({ starttime, endtime }) => {
       };
 
       const { data: response }: {status: number, data: PostgresProcessApiResponse} = await fetchFromProcessCheckAPIwithRequest(endpoint, requestBody);
-      response.masterProcess === true ? setRdbmsStatus("OK") : setRdbmsStatus("ERROR");
+      response.masterProcess ? setRdbmsStatus("OK") : setRdbmsStatus("ERROR");
     };
 
     fetchProcessStatus();

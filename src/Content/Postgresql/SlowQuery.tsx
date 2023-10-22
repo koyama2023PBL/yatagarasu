@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import instance from '../../Axios/AxiosInstance';
-import { getDate, padZero} from '../../Component/Common/Util';
+import { getDate } from '../../Component/Common/Util';
 import { Box, Card, CardContent, CircularProgress, IconButton, Popover, Typography } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';

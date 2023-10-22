@@ -27,18 +27,18 @@ interface DeadTupData {
   timestamp: string;
   deadTupCount: number;
   deadTupRatio: number;
-};
+}
 
 interface DeadTupApiResponse {
   starttime: string;
   endtime: string;
   deadTupData: DeadTupData[];
-};
+}
 
 interface DeadTupApiRequest {
   starttime: Date;
   endtime: Date;
-};
+}
 
 interface DeadTuplesProps {
   starttime: Date;
