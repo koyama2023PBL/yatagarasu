@@ -21,6 +21,11 @@ export function DateTostring(date: Date): string {
   return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 }
 
+//Unix時間変換
+export function getUnixTime(date: Date) {
+  return Math.floor(date.getTime() / 1000);
+}
+
 //分以下切り捨て
 export function truncateMinutes(date: Date): Date {
   const year = date.getFullYear();
@@ -60,4 +65,35 @@ export function padZero(num: number) {
 //MUIカラーポンポーネントをRGBへ変換
 export function rgbToRgba(rgb: any, alpha: number) {
   return rgb.replace(')', `, ${alpha})`).replace('rgb', 'rgba');
+}
+
+//APIレスポンスの基本形
+export interface ApiResponse{
+  data: ResponseData;
+  status: string;
+}
+
+export interface ResponseData{
+  resultType: string;
+  result: ResponseResult[];
+}
+
+export interface ResponseResult{
+  metric: ResponseMetric;
+  values: [number, string][];
+}
+
+export interface ResponseMetric{
+  __name__: string;
+  datid: string;
+  datname: string;
+  instance: string;
+  job: string;
+}
+
+export interface ApiRequest{
+  query: string;
+  start: number;
+  end: number; 
+  step: string;
 }
