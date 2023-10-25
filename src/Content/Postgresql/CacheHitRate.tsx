@@ -1,45 +1,77 @@
 import React, { useEffect, useState } from 'react';
 import instance from '../../Axios/AxiosInstance';
-import { getDate, padZero, roundToTwoDecimalPlaces, ApiResponse, ApiRequest, getUnixTime} from '../../Component/Common/Util';
+import { roundToTwoDecimalPlaces} from '../../Component/Common/Util';
 import { Card, CardContent, Typography, IconButton, Popover, Grid, Box, CircularProgress } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { green, yellow, red } from '@mui/material/colors';
+import { prometheusSettings } from '../../Component/Redux/PrometheusSettings';
 
-interface CacheHitRateData {
-  startTime: string;
-  endTime: string;
-  databaseName: string;
-  hitRate: number;
-}
+// interface CacheHitRateData {
+//   startTime: string;
+//   endTime: string;
+//   databaseName: string;
+//   hitRate: number;
+// }
 
-interface CacheHitRateApiResponse {
-  starttime: string;
-  endtime: string;
-  dbname: string;
-  hitrate: number;
-}
+// interface CacheHitRateApiResponse {
+//   starttime: string;
+//   endtime: string;
+//   dbname: string;
+//   hitrate: number;
+// }
 
-interface CacheHitRateApiRequest {
-  starttime: Date;
-  endtime: Date;
-  dbname: string;
-}
+// interface CacheHitRateApiRequest {
+//   starttime: Date;
+//   endtime: Date;
+//   dbname: string;
+// }
 
 interface CacheHitRateProps {
   starttime: Date;
   endtime: Date;
 }
 
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: ApiRequest) => {
+//APIレスポンスの基本形
+export interface CacheHitRateApiResponse{
+  data: CacheHitRateResponseData;
+  status: string;
+}
+
+export interface CacheHitRateResponseData{
+  resultType: string;
+  result: CacheHitRateResponseResult[];
+}
+
+export interface CacheHitRateResponseResult{
+  metric: CacheHitRateResponseMetric;
+  values: [number, number][];
+}
+
+export interface CacheHitRateResponseMetric{
+  __name__: string;
+  datid: string;
+  datname: string;
+  instance: string;
+  job: string;
+}
+
+export interface CacheHitRateApiRequest{
+  //query: string;
+  start: Date;
+  end: Date;
+  datname: string;
+}
+
+const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CacheHitRateApiRequest) => {
   try {
-      const startTimeString = getUnixTime(queryParameters.start);
-      const endTimeString = getUnixTime(queryParameters.end);
+      const startTimeString = queryParameters.start.toString();
+      const endTimeString = queryParameters.end.toString();
 
       const response = await instance.get<CacheHitRateApiResponse>(
-        `${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}&dbname=${queryParameters.dbname}`
+        `${endpoint}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval}`
       );
       return { status: response.status, data: response.data };
   } catch (err) {
@@ -49,8 +81,9 @@ const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: ApiReq
 }
 
 const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
-  const [cacheHitRateData, setCacheHitRateData] = useState<CacheHitRateData | null>(null);
+  const [cacheHitRateData, setCacheHitRateData] = useState<CacheHitRateResponseData | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [datname, setDatname] = useState<string>('explorer');
 
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget);};
@@ -59,12 +92,12 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchCacheHitRateData = async () => {
-      const endpoint = '/database-explorer/api/visualization/hit-rate';
+      const endpoint = '/api/v1/query_range?query=pg_stat_database_blks_hit{datname="explorer"}%2F(pg_stat_database_blks_hit{datname="explorer"}%2Bpg_stat_database_blks_read{datname="explorer"})';
 
       const requestBody: CacheHitRateApiRequest = {
-        starttime: starttime,
-        endtime: endtime,
-        dbname: 'databaseexplorer',
+        start: new Date(starttime),
+        end: new Date(endtime),
+        datname: datname,
       };
 
       const { status, data: response }: {status: number, data: CacheHitRateApiResponse}  = await fetchFromAPIwithRequest(
@@ -73,16 +106,11 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
       );
       setStatusCode(status);
 
-      setCacheHitRateData({
-        startTime: response.starttime,
-        endTime: response.endtime,
-        databaseName: response.dbname,
-        hitRate: response.hitrate,
-      });
+      setCacheHitRateData(response.data);
     };
 
     fetchCacheHitRateData();
-  }, [starttime, endtime]);
+  }, [starttime, endtime, datname]);
 
   const getIcon = () => {
     if (statusCode === null) {
@@ -159,7 +187,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
                   </Typography>
                   <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1.5vh' }}>
                     <Typography variant="h5" component="div" align="center" sx={{ display: 'inline' }}>
-                      {cacheHitRateData.databaseName}
+                      {datname}
                     </Typography>
                   </Box>
                 </CardContent>
@@ -173,11 +201,11 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
                     <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
                     <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>
                       <Typography variant="h5" component="div" align="center" sx={{ display: 'inline' }}>
-                        {cacheHitRateData.hitRate === -1 ? "-" : `${roundToTwoDecimalPlaces(cacheHitRateData.hitRate * 100)}%`}
+                        {cacheHitRateData.result[0].values[0][1] === -1 ? "-" : `${roundToTwoDecimalPlaces(cacheHitRateData.result[0].values[0][1] * 100)}%`}
                       </Typography>
                     </Box>
                     <Typography variant="body2" component="div" align="right" sx={{ marginTop: '1vh', marginBottom: '-1.3vh'}}>
-                        Time: {cacheHitRateData.startTime} - {cacheHitRateData.endTime}
+                        Time: {cacheHitRateData.result[0].values[1][0]} - {cacheHitRateData.result[0].values[-1][0]}
                     </Typography>
                   </Box>
                 </CardContent>
