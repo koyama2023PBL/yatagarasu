@@ -1,12 +1,8 @@
-import React from 'react';
-import { green, yellow, red } from '@mui/material/colors';
-
 //Date型変換->[yyyymmddhhmmss]
 export function getDate(date: Date) {
-  var now = date;
-  var res = "" + now.getFullYear() + padZero(now.getMonth() + 1) + padZero(now.getDate()) + padZero(now.getHours()) + 
+  let now = date;
+  return "" + now.getFullYear() + padZero(now.getMonth() + 1) + padZero(now.getDate()) + padZero(now.getHours()) +
       padZero(now.getMinutes()) + padZero(now.getSeconds());
-  return res;
 }
 
 //Date型変換->[YYYY/MM/DD HH:mm:SS]
@@ -26,22 +22,25 @@ export function getUnixTime(date: Date) {
   return Math.floor(date.getTime() / 1000);
 }
 
+//Unix時間をDate型に変換
+export function unixTimeToDate(unixTime: number) {
+  return new Date(unixTime * 1000);
+}
+
 //分以下切り捨て
 export function truncateMinutes(date: Date): Date {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
   const hours = date.getHours();
-  
+
   return new Date(year, month, day, hours, 0, 0);
 }
 
 //分以下丸め込み
 export function roundMinutes(date: Date): Date {
-  
   const coeff = 1000 * 60 * 5;
-  const rounded = new Date(Math.floor(date.getTime() / coeff) * coeff);
-  return rounded;
+  return new Date(Math.floor(date.getTime() / coeff) * coeff);
   
 }
 
@@ -67,33 +66,11 @@ export function rgbToRgba(rgb: any, alpha: number) {
   return rgb.replace(')', `, ${alpha})`).replace('rgb', 'rgba');
 }
 
-//APIレスポンスの基本形
-export interface ApiResponse{
-  data: ResponseData;
-  status: string;
-}
-
-export interface ResponseData{
-  resultType: string;
-  result: ResponseResult[];
-}
-
-export interface ResponseResult{
-  metric: ResponseMetric;
-  values: [number, string][];
-}
-
-export interface ResponseMetric{
-  __name__: string;
-  datid: string;
-  datname: string;
-  instance: string;
-  job: string;
-}
-
-export interface ApiRequest{
-  query: string;
-  start: number;
-  end: number; 
-  step: string;
+//平均を算出するための関数
+export function calcAverage(values: [number, string][]){
+  let sum = 0;
+  for (let i = 0; i < values.length; i++) {
+    sum += Number(values[i][1]);
+  }
+  return sum / values.length;
 }
