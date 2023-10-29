@@ -35,13 +35,6 @@ export const fetchPrometheusSettings = async () => {
   const nodeScrapeConfig       = parsed.scrape_configs.find((config: any) => config.job_name === 'node_exporter');
   const postgresqlScrapeConfig = parsed.scrape_configs.find((config: any) => config.job_name === 'postgres_exporter');
 
-<<<<<<< HEAD
-  prometheusSettings = {
-    nodeScrapeInterval:       nodeScrapeConfig.scrape_interval,
-    postgresqlScrapeInterval: postgresqlScrapeConfig.scrape_interval,
-    //nodeScrapeInterval:       nodeScrapeConfig ? nodeScrapeConfig.scrape_interval : "15s",
-    //postgresqlScrapeInterval: postgresqlScrapeConfig ? postgresqlScrapeConfig.scrape_interval : "15s",
-=======
   if (nodeScrapeConfig && postgresqlScrapeConfig) {
     prometheusSettings = {
         nodeScrapeInterval:       nodeScrapeConfig.scrape_interval,
@@ -49,9 +42,8 @@ export const fetchPrometheusSettings = async () => {
     }
   } else {
     prometheusSettings = {
-      nodeScrapeInterval:       '15',
-      postgresqlScrapeInterval: '15',
+      nodeScrapeInterval:       '15s',
+      postgresqlScrapeInterval: '15s',
     }
->>>>>>> main
   }
 };
