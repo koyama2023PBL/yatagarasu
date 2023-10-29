@@ -35,9 +35,6 @@ export const fetchPrometheusSettings = async () => {
   const nodeScrapeConfig       = parsed.scrape_configs.find((config: any) => config.job_name === 'node-exporter');
   const postgresqlScrapeConfig = parsed.scrape_configs.find((config: any) => config.job_name === 'postgres_exporter');
 
-  console.log("parsed: " + parsed);
-  console.log("nodeScrapeConfig: " + nodeScrapeConfig);
-
   if (nodeScrapeConfig && postgresqlScrapeConfig) {
     prometheusSettings = {
         nodeScrapeInterval:       nodeScrapeConfig.scrape_interval,
