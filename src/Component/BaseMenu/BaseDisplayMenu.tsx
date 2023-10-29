@@ -19,6 +19,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
+import SummarizeIcon from '@mui/icons-material/Summarize';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Terminal from '@mui/icons-material/Terminal';
 import Storage from '@mui/icons-material/Storage';
@@ -45,6 +46,8 @@ import BackendApiDescription from '../Description/BackendApiDescription';
 import { Api } from '@mui/icons-material';
 import TerminalDescription from '../Description/TerminalDescription';
 import TerminalMenu from '../Layers/TerminalMenu';
+import ReportingInfo from "../../Content/AnalysisReport/ReportingInfo";
+import AnalysisReportMenu from "../Layers/AnalysisReportMenu";
 
 const drawerWidth = 300;
 
@@ -132,6 +135,8 @@ export default function BaseDisplayMenu() {
 
   const renderContentMain = () => {
     switch (selected) {
+      case 'analysisreport':
+        return <AnalysisReportMenu />;
       case 'dashboard':
         return <OverViewMenu />;
       case 'os':
@@ -153,6 +158,8 @@ export default function BaseDisplayMenu() {
 
   const renderContentDesc = () => {
     switch (selected) {
+      case 'analysisreport':
+        return <ReportingInfo />;
       case 'dashboard':
         return <DatabaseInformation />;
       case 'os':
@@ -250,7 +257,8 @@ export default function BaseDisplayMenu() {
         </DrawerHeader>
         <Divider />
         <List>
-        {[{ id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
+        {[{ id: 'analysisreport', text: 'Analysis Report', icon: <SummarizeIcon style={{ fontSize: 40 }}/> },
+          { id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
           { id: 'os', text: 'OS', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
           { id: 'rdbms', text: 'RDBMS', icon: <Storage style={{ fontSize: 40 }}/> },
           { id: 'table', text: 'Table & Query', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
