@@ -32,7 +32,7 @@ export const fetchPrometheusSettings = async () => {
   const response: PrometheusAPIResponse = await fetchPrometheusStatusConfig();
   const parsed: any = YAML.load(response.data.yaml);
 
-  const nodeScrapeConfig       = parsed.scrape_configs.find((config: any) => config.job_name === 'node-exporter');
+  const nodeScrapeConfig       = parsed.scrape_configs.find((config: any) => config.job_name === 'node_exporter');
   const postgresqlScrapeConfig = parsed.scrape_configs.find((config: any) => config.job_name === 'postgres_exporter');
 
   if (nodeScrapeConfig && postgresqlScrapeConfig) {

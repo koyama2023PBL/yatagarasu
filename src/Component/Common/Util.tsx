@@ -29,6 +29,16 @@ export function truncateMinutes(date: Date): Date {
 }
 */
 
+//Unix時間変換
+export function getUnixTime(date: Date) {
+  return Math.floor(date.getTime() / 1000);
+}
+
+//Unix時間をDate型に変換
+export function unixTimeToDate(unixTime: number) {
+  return new Date(unixTime * 1000);
+}
+
 //分以下丸め込み
 export function roundMinutes(date: Date): Date {
   const coeff = 1000 * 60 * 5;
@@ -56,4 +66,13 @@ export function padZero(num: number) {
 //MUIカラーポンポーネントをRGBへ変換
 export function rgbToRgba(rgb: any, alpha: number) {
   return rgb.replace(')', `, ${alpha})`).replace('rgb', 'rgba');
+}
+
+//平均を算出するための関数
+export function calcAverage(values: [number, string][]){
+  let sum = 0;
+  for (let i = 0; i < values.length; i++) {
+    sum += Number(values[i][1]);
+  }
+  return sum / values.length;
 }
