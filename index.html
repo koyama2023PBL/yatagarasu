@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/public/icon-normal.png" type="image/png" media="(prefers-color-scheme: no-preference)">
+    <link rel="icon" href="/public/icon-normal.png" type="image/png" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="/public/icon-dark.png" type="image/png" media="(prefers-color-scheme: dark)">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="Yatagarasu"
+      content="for Database Observability"
+    />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="/manifest.json" />
+    <title>Yatagarasu</title>
+    <!--<script src="http://localhost:8097"></script>-->
+  </head>
+  <body>
+    <noscript></noscript>
+    <div id="root"></div>
+    <script>window.global = window;</script>
+    <script type="module" src="/@vite/client"></script>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>

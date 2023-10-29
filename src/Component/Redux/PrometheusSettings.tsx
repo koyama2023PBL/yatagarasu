@@ -18,6 +18,7 @@ interface PrometheusAPIResponse {
 const fetchPrometheusStatusConfig = async () => {
   try {
     const response = await instance.get('/api/v1/status/config');
+    console.log(response)
     return response.data;
   } catch (err) {
     console.log("err:", err);
@@ -34,8 +35,18 @@ export const fetchPrometheusSettings = async () => {
   const nodeScrapeConfig       = parsed.scrape_configs.find((config: any) => config.job_name === 'node-exporter');
   const postgresqlScrapeConfig = parsed.scrape_configs.find((config: any) => config.job_name === 'postgres_exporter');
 
-  prometheusSettings = {
-    nodeScrapeInterval:       nodeScrapeConfig.scrape_interval,
-    postgresqlScrapeInterval: postgresqlScrapeConfig.scrape_interval,
+  console.log("parsed: " + parsed);
+  console.log("nodeScrapeConfig: " + nodeScrapeConfig);
+
+  if (nodeScrapeConfig && postgresqlScrapeConfig) {
+    prometheusSettings = {
+        nodeScrapeInterval:       nodeScrapeConfig.scrape_interval,
+        postgresqlScrapeInterval: postgresqlScrapeConfig.scrape_interval,
+    }
+  } else {
+    prometheusSettings = {
+      nodeScrapeInterval:       '15',
+      postgresqlScrapeInterval: '15',
+    }
   }
 };
