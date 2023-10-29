@@ -18,7 +18,6 @@ interface PrometheusAPIResponse {
 const fetchPrometheusStatusConfig = async () => {
   try {
     const response = await instance.get('/api/v1/status/config');
-    console.log(response)
     return response.data;
   } catch (err) {
     console.log("err:", err);
@@ -32,6 +31,7 @@ export const fetchPrometheusSettings = async () => {
   const response: PrometheusAPIResponse = await fetchPrometheusStatusConfig();
   const parsed: any = YAML.load(response.data.yaml);
 
+  // TODO: ジョブ名はユーザーが設定できるようにする。
   const nodeScrapeConfig       = parsed.scrape_configs.find((config: any) => config.job_name === 'node_exporter');
   const postgresqlScrapeConfig = parsed.scrape_configs.find((config: any) => config.job_name === 'postgres_exporter');
 
