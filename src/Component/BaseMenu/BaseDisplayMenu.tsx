@@ -220,7 +220,7 @@ export default function BaseDisplayMenu() {
               textDecoration: 'none',
             }}
           >
-          <img src={icon} alt="icon" style={{ height: '50px', marginRight: '12px' }} />
+          <img src={icon} alt="icon" style={{ height: '60px', marginRight: '12px' }} />
           Yatagarasu
           </Typography>
           <Box sx={{ 
