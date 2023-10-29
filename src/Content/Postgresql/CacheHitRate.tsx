@@ -64,14 +64,13 @@ const fetchFromAPIwithRequest = async (
   query: string
 ) => {
   try {
-    const startTimeString = queryParameters.start.toISOString().toString();
-    const endTimeString = queryParameters.end.toISOString().toString();
+    const startTimeString = queryParameters.start.toISOString();
+    const endTimeString = queryParameters.end.toISOString();
 
     const response = await instance.get<CacheHitRateApiResponse>(
       `${endpoint}${encodeURIComponent(
         query
-      )}&start=${startTimeString}&end=${endTimeString}&step=${
-        prometheusSettings?.postgresqlScrapeInterval
+      )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
       }`
     );
     return { status: response.status, data: response.data };
@@ -303,9 +302,9 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
                         {cacheHitRateData.result[0].values.length === 0
                           ? "-"
                           : `${roundToTwoDecimalPlaces(
-                              calcAverage(cacheHitRateData.result[0].values) *
-                                100
-                            )}%`}
+                            calcAverage(cacheHitRateData.result[0].values) *
+                            100
+                          )}%`}
                       </Typography>
                     </Box>
                     <Typography
@@ -321,7 +320,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
                       -{" "}
                       {unixTimeToDate(
                         cacheHitRateData.result[0].values[
-                          cacheHitRateData.result[0].values.length - 1
+                        cacheHitRateData.result[0].values.length - 1
                         ][0]
                       ).toLocaleString()}
                     </Typography>

@@ -29,11 +29,6 @@ export function truncateMinutes(date: Date): Date {
 }
 */
 
-//Unix時間変換
-export function getUnixTime(date: Date) {
-  return Math.floor(date.getTime() / 1000);
-}
-
 //Unix時間をDate型に変換
 export function unixTimeToDate(unixTime: number) {
   return new Date(unixTime * 1000);
