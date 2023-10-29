@@ -19,7 +19,7 @@ const theme = createTheme({
     }
   },
   typography: {
-    fontFamily: 'Oxygen, meiryo ui,Arial, sans-serif', 
+    fontFamily: 'Noto SansJP, meiryo ui,Arial, sans-serif', 
   },
 });
 

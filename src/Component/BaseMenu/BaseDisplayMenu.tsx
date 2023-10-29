@@ -215,7 +215,7 @@ export default function BaseDisplayMenu() {
               display: { xs: 'none', md: 'flex' },
               flexDirection: 'flex',
               //fontFamily: 'M PLUS Rounded 1c',
-              fontFamily: 'Oxygen',
+              fontFamily: 'Noto Sans',
               fontWeight: 850,
               alignItems: 'center',
               letterSpacing: '.1rem',

@@ -16,19 +16,19 @@
 }
 
 @font-face {
-  font-family: 'Oxygen';
-  src: url('/public/fonts/Oxygen-Regular.ttf') format('truetype');
+  font-family: 'Noto Sans';
+  src: url('/fonts/NotoSansJP-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 body {
-  font-family: 'Noto Sans', 'Oxygen', sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   unicode-range: U+3000-9FFF;
 }
 
 body {
-  font-family: 'Oxygen', sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   unicode-range: U+0020-007F;
 }
 
@@ -57,6 +57,6 @@ body {
 }
 
 .code {
-  font-family: Oxygen, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: Noto Sans, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
