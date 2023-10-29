@@ -42,8 +42,8 @@ export const fetchPrometheusSettings = async () => {
     }
   } else {
     prometheusSettings = {
-      nodeScrapeInterval:       '15',
-      postgresqlScrapeInterval: '15',
+      nodeScrapeInterval:       '15s',
+      postgresqlScrapeInterval: '15s',
     }
   }
 };
