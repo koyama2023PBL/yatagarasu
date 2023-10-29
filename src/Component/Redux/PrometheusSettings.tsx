@@ -1,5 +1,6 @@
 import * as YAML from "js-yaml";
 import instance from "../../Axios/AxiosInstance";
+import yatagarasuSettings from "./YatagarasuSettings";
 
 interface PrometheusSettings {
   nodeScrapeInterval: string;
@@ -32,8 +33,8 @@ export const fetchPrometheusSettings = async () => {
   const parsed: any = YAML.load(response.data.yaml);
 
   // TODO: ジョブ名はユーザーが設定できるようにする。
-  const nodeScrapeConfig       = parsed.scrape_configs.find((config: any) => config.job_name === 'node_exporter');
-  const postgresqlScrapeConfig = parsed.scrape_configs.find((config: any) => config.job_name === 'postgres_exporter');
+  const nodeScrapeConfig       = parsed.scrape_configs.find((config: any) => config.job_name === yatagarasuSettings.nodeExporterJobName);
+  const postgresqlScrapeConfig = parsed.scrape_configs.find((config: any) => config.job_name === yatagarasuSettings.postgresExporterJobName);
 
   if (nodeScrapeConfig && postgresqlScrapeConfig) {
     prometheusSettings = {
