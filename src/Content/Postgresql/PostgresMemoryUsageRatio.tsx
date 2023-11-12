@@ -13,7 +13,7 @@ import {
 import { Bar } from "react-chartjs-2";
 
 import instance from '../../Axios/AxiosInstance';
-import { getDate, rgbToRgba} from '../../Component/Common/Util';
+import { getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -22,37 +22,69 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
+import { prometheusSettings } from "../../Component/Redux/PrometheusSettings";
 
-interface MemUsageData {
-  timestamp: string;
-  memUsage: number;
-  memUsageRatio: number;
-  connections: number;
+export interface MemUsageRatioApiResponse {
+  data: MemUsageRatioResponseData;
+  status: string;
 }
-  
-interface MemUsageApiResponse {
-  starttime: string;
-  endtime: string;
-  workMem: number;
-  maxConnections: number;
-  data: MemUsageData[];
+
+export interface MemUsageRatioResponseData {
+  resultType: string;
+  result: MemUsageRatioResponseResult[];
 }
+
+export interface MemUsageRatioResponseResult {
+  metric: MemUsageRatioResponseMetric;
+  values: [number, string][];
+}
+
+export interface MemUsageRatioResponseMetric {
+  instance: string;
+  job: string;
+}
+
+export interface MemUsageRatioApiRequest {
+  //query: string;
+  start: Date;
+  end: Date;
+}
+
+// interface MemUsageData {
+//   timestamp: string;
+//   memUsage: number;
+//   memUsageRatio: number;
+//   connections: number;
+// }
   
-interface MemUsageApiRequest {
+// interface MemUsageApiResponse {
+//   starttime: string;
+//   endtime: string;
+//   workMem: number;
+//   maxConnections: number;
+//   data: MemUsageData[];
+// }
+  
+// interface MemUsageApiRequest {
+//   starttime: Date;
+//   endtime: Date;
+// }
+
+interface MemoryUsageRatioProps {
   starttime: Date;
   endtime: Date;
 }
 
-interface MemoryUsageProps {
-  starttime: Date;
-  endtime: Date;
-}
-
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: MemUsageApiRequest) => {
+const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: MemUsageRatioApiRequest, query: string) => {
   try {
-      const startTimeString = getDate(queryParameters.starttime);
-      const endTimeString = getDate(queryParameters.endtime);
-      const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}`);
+      const startTimeString = queryParameters.start.toISOString();
+      const endTimeString = queryParameters.end.toISOString();
+      const response = await instance.get<MemUsageRatioApiResponse>(
+        `${endpoint}${encodeURIComponent(
+          query
+        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
+        }`
+      );
       return { status: response.status, data: response.data };
   } catch (err) {
       console.log("err:", err);
@@ -72,7 +104,7 @@ ChartJS.register(
   Legend
 );
 
-const PostgresMemoryUsageRatio: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
+const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
   const [yAxisFixed, setYAxisFixed] = useState<boolean>(true);
@@ -83,42 +115,43 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageProps> = ({ starttime, endti
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/database-explorer/api/visualization/mem-usage";
-      const requestBody: MemUsageApiRequest = {
-        starttime: new Date(starttime),
-        endtime: new Date(endtime)
+    const endpoint = "/api/v1/query_range?query=";
+      const query = '100*(1-(node_memory_MemAvailable_bytes/node_memory_MemTotal_bytes))'
+      const requestBody: MemUsageRatioApiRequest = {
+        start: new Date(starttime),
+        end: new Date(endtime)
       };
-  
-      const { status, data: response }: {status: number, data: MemUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
-      setStatusCode(status);
-
-      const labels = response.data.map((item) => item.timestamp);
-      const data = response.data.map((item) => item.memUsageRatio);
-      const memUsage = response.data.map((item) => item.memUsage);
-      const connections = response.data.map((item) => item.connections);
-      const borderColor = data.map((value) => {
-        let status: Status;
-        if (value <= Thresholds.memory_ratio.ok) {
-          status = 'ok';
-        } else if (value <= Thresholds.memory_ratio.watch) {
-          status = 'watch';
-        } else {
-          status = 'alert';
-        }
-        return rgbToRgba(statusColors[status], 1);
-      });
-      const backgroundColor = data.map((value) => {
-        let status: Status;
-        if (value <= Thresholds.memory_ratio.ok) {
-          status = 'ok';
-        } else if (value <= Thresholds.memory_ratio.watch) {
-          status = 'watch';
-        } else {
-          status = 'alert';
-        }
-        return rgbToRgba(statusColors[status], 0.1);
-      });
+    
+      const { status, data: response }: {status: number, data: MemUsageRatioApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody, query);
+      const labels = response.data.result.flatMap(data => data.values).map(value => unixTimeToDate(value[0]));
+      const backgroundColor = response.data.result.flatMap(data => 
+        data.values.map(value => {
+          let status: Status;
+          if (Number(value[1]) <= Thresholds.memory.ok) {
+            status = 'ok';
+          } else if (Number(value[1]) <= Thresholds.memory.watch) {
+            status = 'watch';
+          } else {
+            status = 'alert';
+          }
+          return rgbToRgba(statusColors[status], 0.1);
+        })
+        );
+      const borderColor = response.data.result.flatMap(data => 
+        data.values.map(value => {
+          let status: Status;
+          if (Number(value[1]) <= Thresholds.memory.ok) {
+            status = 'ok';
+          } else if (Number(value[1]) <= Thresholds.memory.watch) {
+            status = 'watch';
+          } else {
+            status = 'alert';
+          }
+          return rgbToRgba(statusColors[status], 1);
+        })
+        );
       const length = labels.length;
+      const data = response.data.result.flatMap(data => data.values).map(value => Number(value[1]));
   
       setChartData({
         labels: labels,
@@ -245,7 +278,7 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageProps> = ({ starttime, endti
               <HelpOutlineIcon fontSize="small" sx={{ marginBottom: '-5px', marginLeft: '3px', marginRight: '3px'}}/>
               PostgresSQLが使用するメモリのうち、共有バッファを除いたプロセスメモリの使用率を表示します。
               クエリ実行のために使用するメモリの最大値は「ワークメモリのサイズ」×「同時接続可能数」となります。
-              この最大値がマシンのリソース内に収まるよう適切に設定してください。
+              この最大値がマシンのリソース内に収まるよう適切に設定してください。(TODO:定義が変わっているので要変更)
             </Typography>
           </Popover>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 'auto', marginBottom: '-15px', marginTop: '-15px' }}>

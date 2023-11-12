@@ -6,6 +6,7 @@ import { RootState } from '../Redux/StateStore';
 
 import CPUusage from '../../Content/Postgresql/CPUusage';
 import MemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
+import MemoryUsageRatio from '../../Content/Postgresql/PostgresMemoryUsageRatio';
 
 const OsMenu: React.FC = () => {
 
@@ -22,6 +23,9 @@ const OsMenu: React.FC = () => {
         </Box>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <MemoryUsage starttime={starttime} endtime={endtime} />
+        </Box>
+        <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
+          <MemoryUsageRatio starttime={starttime} endtime={endtime} />
         </Box>
       </Box>
     </div>
