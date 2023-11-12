@@ -1,6 +1,3 @@
-/**
- * 診断レポートの概況を表示するコンポーネント
- */
 import React from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -8,18 +5,13 @@ import {green, red, yellow} from "@mui/material/colors";
 import WarningIcon from "@mui/icons-material/Warning";
 import ErrorIcon from "@mui/icons-material/Error";
 import {getPerformanceStatus} from "./PerformanceReport";
-
-
-/**
- * 診断レポート内共通のステータス
- */
-type StatusType = 'OK' | 'WARNING' | 'ERROR';
+import {StatusType} from "./AnalysisReportUtil";
 
 /**
  * ステータスに応じたアイコンを返す
  * @param status
  */
-const getStatusIcon = (status: StatusType | null): React.JSX.Element => {
+export const getStatusIcon = (status: StatusType | null): React.JSX.Element => {
   if (status === null) {
     return <CircularProgress sx={{marginTop: '7vh'}}/>;
   }
@@ -36,7 +28,7 @@ const getStatusIcon = (status: StatusType | null): React.JSX.Element => {
 /**
  * 診断レポートの概況を表示するコンポーネント
  */
-const ReportingOverview: React.FC = () => {
+export const ReportingOverview: React.FC = () => {
   return (
     <Card sx={{ height: '24vh' }}>
       <CardContent>
@@ -61,6 +53,3 @@ const ReportingOverview: React.FC = () => {
     </Card>
   );
 };
-
-export default ReportingOverview;
-export type { StatusType };

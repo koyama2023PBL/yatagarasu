@@ -1,11 +1,8 @@
-/**
- * 診断レポート画面のメニューを表示するコンポーネント
- */
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import {useSelector} from "react-redux";
 import {RootState} from "../Redux/StateStore";
-import ReportingOverview from "../../Content/AnalysisReport/ReportingOverview";
+import {ReportingOverview} from "../../Content/AnalysisReport/ReportingOverview";
 import {PerformanceReport} from "../../Content/AnalysisReport/PerformanceReport";
 import {MemorySwapIOProvider} from "../../Content/AnalysisReport/DataProvider/MemorySwapIOProvider";
 import {prometheusSettings} from "../Redux/PrometheusSettings";
@@ -15,7 +12,7 @@ import {CheckpointProgressProvider} from "../../Content/AnalysisReport/DataProvi
 /**
  * 診断レポート画面のメニューのJSX
  */
-const AnalysisReportMenu: React.FC = () => {
+export const AnalysisReportMenu: React.FC = () => {
   const { from, to } = useSelector((state: RootState) => state.date);
   const starttime = new Date(from);
   const endtime = new Date(to);
@@ -41,5 +38,3 @@ const AnalysisReportMenu: React.FC = () => {
     </div>
   );
 }
-
-export default AnalysisReportMenu;

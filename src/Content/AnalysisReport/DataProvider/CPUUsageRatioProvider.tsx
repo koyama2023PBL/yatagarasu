@@ -1,10 +1,6 @@
-/**
- * CPU使用率のデータプロバイダ
- */
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {getRange, unixTimeToDate} from "../../../Component/Common/Util";
 import instance from "../../../Axios/AxiosInstance";
-
 
 /**
  * データプロバイダのプロパティ
@@ -134,4 +130,4 @@ export const CPUUsageRatioProvider: React.FC<CPUUsageRatioProps> = ({children, s
   );
 }
 
-export const userCPUUsageRatio = () => useContext(DataContext);
+export const useCPUUsageRatio = () => useContext(DataContext);

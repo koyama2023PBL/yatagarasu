@@ -1,39 +1,30 @@
-/**
- * 診断レポート機能のパフォーマンス診断部分のコンポーネント
- */
 import React from "react";
-import {StatusType} from "./ReportingOverview";
 import {Box, Card, CardContent, Typography} from "@mui/material";
-import {CPUUsageRatio} from "./ReportingItem/CPUUsageRatio";
+import {CPUUsageRatio, getCPUUsageRatioStatus} from "./ReportingItem/CPUUsageRatio";
 import {MemorySwapIO, getMemorySwapIOStatus} from "./ReportingItem/MemorySwapIO";
-import {CheckPointProgress} from "./ReportingItem/CheckpointProgress";
-
+import {CheckPointProgress, getCheckPointProgressStatus} from "./ReportingItem/CheckpointProgress";
+import {StatusType} from "./AnalysisReportUtil";
 
 /**
  * パフォーマンスのステータスを取得する
  */
-const getPerformanceStatus = (): StatusType | null => {
-  const memorySwapIOStatus: StatusType | null = getMemorySwapIOStatus();
+export const getPerformanceStatus = (): StatusType | null => {
+  const statusList: (StatusType | null)[] = [
+    getMemorySwapIOStatus(),
+    getCPUUsageRatioStatus(),
+    getCheckPointProgressStatus(),
+  ];
 
-  if ([memorySwapIOStatus].includes(null)) {
-    return null;
-  }
-
-  if ([memorySwapIOStatus].includes('ERROR')) {
-    return 'ERROR';
-  }
-
-  if ([memorySwapIOStatus].includes('WARNING')) {
-    return 'WARNING';
-  }
-
+  if (statusList.includes(null))      return null;
+  if (statusList.includes('ERROR'))   return 'ERROR';
+  if (statusList.includes('WARNING')) return 'WARNING';
   return 'OK';
 }
 
 /**
  * パフォーマンス診断部分のJSX
  */
-const PerformanceReport: React.FC = () => {
+export const PerformanceReport: React.FC = () => {
   return (
     <Card sx={{ marginTop: '1vh' }}>
       <CardContent>
@@ -51,5 +42,3 @@ const PerformanceReport: React.FC = () => {
     </Card>
   );
 };
-
-export {PerformanceReport, getPerformanceStatus};
