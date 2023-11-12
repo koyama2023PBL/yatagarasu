@@ -78,3 +78,11 @@ export function getRange(scrapeInterval: string): string {
     return String(num * 2);
   });
 }
+
+export function calcSum(values: [number, string][]){
+  let sum = 0;
+  for (let i = 0; i < values.length; i++) {
+    sum += Number(values[i][1]);
+  }
+  return sum;
+}
