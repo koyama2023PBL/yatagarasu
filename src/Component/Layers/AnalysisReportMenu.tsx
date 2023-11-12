@@ -8,6 +8,9 @@ import {MemorySwapIOProvider} from "../../Content/AnalysisReport/DataProvider/Me
 import {prometheusSettings} from "../Redux/PrometheusSettings";
 import {CPUUsageRatioProvider} from "../../Content/AnalysisReport/DataProvider/CPUUsageRatioProvider";
 import {CheckpointProgressProvider} from "../../Content/AnalysisReport/DataProvider/CheckpointProgressProvider";
+import {DiskBusyRatioProvider} from "../../Content/AnalysisReport/DataProvider/DiskBusyRatioProvider";
+import {DiskUsageProvider} from "../../Content/AnalysisReport/DataProvider/DiskUsageProvider";
+import {DiskReport} from "../../Content/AnalysisReport/DiskReport";
 
 /**
  * 診断レポート画面のメニューのJSX
@@ -21,9 +24,11 @@ export const AnalysisReportMenu: React.FC = () => {
 
   return (
       <div>
-        <MemorySwapIOProvider  starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
-        <CPUUsageRatioProvider starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
+        <MemorySwapIOProvider       starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
+        <CPUUsageRatioProvider      starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
         <CheckpointProgressProvider starttime={starttime} endtime={endtime} scrapeInterval={postgresScrapeInterval}>
+        <DiskBusyRatioProvider      starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
+        <DiskUsageProvider          starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
           <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh'}}>
             <ReportingOverview />
           </Box>
@@ -32,6 +37,13 @@ export const AnalysisReportMenu: React.FC = () => {
               <PerformanceReport />
             </Box>
           </Box>
+          <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw', marginRight: 'auto', marginLeft: 'auto'}}>
+            <Box sx={{p: 1, display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: '-1vh'}}>
+              <DiskReport />
+            </Box>
+          </Box>
+        </DiskUsageProvider>
+        </DiskBusyRatioProvider>
         </CheckpointProgressProvider>
         </CPUUsageRatioProvider>
         </MemorySwapIOProvider>

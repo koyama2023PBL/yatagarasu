@@ -1,0 +1,92 @@
+import {Chart, Filler} from "chart.js";
+import {DiskBusyRatioData, useDiskBusyRatio} from "../DataProvider/DiskBusyRatioProvider";
+import React, {useEffect, useState} from "react";
+import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
+import {Bar} from "react-chartjs-2";
+import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+
+Chart.register(Filler);
+
+/**
+ * ディスクビジー率のステータスを取得する
+ */
+export const getDiskBusyRatioStatus = (): StatusType | null => {
+  const data: DiskBusyRatioData[] | null = useDiskBusyRatio();
+  if (!data) return null;
+  if (data.find((item) => item.ratio > 80)) return 'ERROR';
+  if (data.find((item) => item.ratio > 50)) return 'WARNING';
+  return 'OK';
+}
+
+/**
+ * ディスクビジー率のコンポーネント
+ */
+export const DiskBusyRatio: React.FC = () => {
+  const [chartData, setChartData] = useState<any | null>(null);
+  const data: DiskBusyRatioData[] | null = useDiskBusyRatio();
+
+  useEffect(() => {
+    const fetchChartData = async () => {
+      if (data) {
+        const labels = data.map((item) => item.datetime);
+        const length = labels.length;
+        const ratio = data.map((item) => item.ratio);
+
+        setChartData({
+          labels: labels,
+          length: length,
+          datasets: [
+            {
+              label: 'ディスクビジー率',
+              data: ratio,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgb(54, 162, 235)',
+              type: 'line'
+            },
+          ]
+        });
+      }
+    }
+    void fetchChartData();
+  }, [data]);
+
+  const options = () => ({
+    scales: {
+      x: {
+        ticks: {
+          stacked: true,
+          autoSkip: false,
+          maxRotation: 0,
+          minRotation: 0,
+          callback: function(_value : any, index : any , _values : any) {
+            return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
+          }
+        },
+        grid: {
+          display: false,
+          drawBorder: false
+        }
+      },
+      y: {
+        stacked: true,
+      }
+    },
+  });
+
+  return (
+    <Card sx={{width: '95vw', marginTop: '1vh' }}>
+      <CardContent sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h6" align="left" sx={getItemTitleSx(getDiskBusyRatioStatus())}>
+            ディスクビジー率
+          </Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <div>
+              {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
+            </div>
+          </Box>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+}

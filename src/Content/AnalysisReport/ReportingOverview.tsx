@@ -6,6 +6,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import ErrorIcon from "@mui/icons-material/Error";
 import {getPerformanceStatus} from "./PerformanceReport";
 import {StatusType} from "./AnalysisReportUtil";
+import {getDiskStatus} from "./DiskReport";
 
 /**
  * ステータスに応じたアイコンを返す
@@ -13,15 +14,15 @@ import {StatusType} from "./AnalysisReportUtil";
  */
 export const getStatusIcon = (status: StatusType | null): React.JSX.Element => {
   if (status === null) {
-    return <CircularProgress sx={{marginTop: '7vh'}}/>;
+    return <CircularProgress style={{ width: "80%", height: "80%" }} sx={{ marginTop: '3vh' }}/>;
   }
   switch (status) {
     case 'OK':
-      return <CheckCircleIcon sx={{ color: green[500], height: '10vh' }} />;
+      return <CheckCircleIcon style={{ width: "50%", height: "50%" }} sx={{ color: green[500], height: '10vh' }} />;
     case 'WARNING':
-      return <WarningIcon sx={{ color: yellow[700], height: '10vh'}} />;
+      return <WarningIcon style={{ width: "50%", height: "50%" }} sx={{ color: yellow[700], height: '10vh'}} />;
     case 'ERROR':
-      return <ErrorIcon sx={{ color: red[500], height: '10vh'}} />;
+      return <ErrorIcon style={{ width: "50%", height: "50%" }} sx={{ color: red[500], height: '10vh'}} />;
   }
 };
 
@@ -30,7 +31,7 @@ export const getStatusIcon = (status: StatusType | null): React.JSX.Element => {
  */
 export const ReportingOverview: React.FC = () => {
   return (
-    <Card sx={{ height: '24vh' }}>
+    <Card>
       <CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
@@ -40,11 +41,21 @@ export const ReportingOverview: React.FC = () => {
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh',marginLeft: '2vw' }}>
           <Card sx={{width: '15vw'}}>
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '10vh' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
                   パフォーマンス
                 </Typography>
                 {getStatusIcon(getPerformanceStatus())}
+              </Box>
+            </CardContent>
+          </Card>
+          <Card sx={{width: '15vw', marginLeft: '2vw' }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
+                  ディスク
+                </Typography>
+                {getStatusIcon(getDiskStatus())}
               </Box>
             </CardContent>
           </Card>
