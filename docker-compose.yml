@@ -19,15 +19,18 @@ services:
       - "9090:9090"
 
   node-exporter:
-    container_name: node-exporter
+    container_name: node_exporter
     image: prom/node-exporter:latest
     ports:
       - "9100:9100"
 
   postgres_exporter:
     container_name: postgres_exporter
-    image: wrouesnel/postgres_exporter:latest
+    image: quay.io/prometheuscommunity/postgres-exporter
     environment:
       DATA_SOURCE_NAME: "postgresql://yatagarasu:yatagarasu@host.docker.internal:5432/yatagarasu?sslmode=disable"
+    command:
+      - "--collector.stat_activity_autovacuum"
+      - "--collector.stat_statements"
     ports:
       - "9187:9187"

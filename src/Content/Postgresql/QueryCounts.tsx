@@ -13,7 +13,7 @@ import {
 import { Bar } from "react-chartjs-2";
 
 import instance from '../../Axios/AxiosInstance';
-import { getDate, rgbToRgba} from '../../Component/Common/Util';
+import {getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -22,37 +22,58 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
+import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
+import {CacheHitRateApiRequest, CacheHitRateApiResponse, CacheHitRateResponseData} from "./CacheHitRate";
+import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
 
-interface MemUsageData {
-  timestamp: string;
-  memUsage: number;
-  memUsageRatio: number;
-  connections: number;
-};
-  
-interface MemUsageApiResponse {
-  starttime: string;
-  endtime: string;
-  workMem: number;
-  maxConnections: number;
-  data: MemUsageData[];
-};
-  
 interface MemUsageApiRequest {
-  starttime: Date;
-  endtime: Date;
-};
+  start: Date;
+  end: Date;
+  datname: string;
+}
 
 interface MemoryUsageProps {
   starttime: Date;
   endtime: Date;
 }
 
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: MemUsageApiRequest) => {
+interface MemUsageApiResponse {
+  data: MemUsageApiResponseData;
+  status: string;
+};
+
+export interface MemUsageApiResponseData {
+  resultType: string;
+  result: MemUsageApiResponseResult[];
+}
+
+interface MemUsageApiResponseResult {
+  metric: MemUsageApiResponseMetric;
+  values: [number, string][];
+}
+
+interface MemUsageApiResponseMetric {
+  __name__: string;
+  datid: string;
+  datname: string;
+  instance: string;
+  job: string;
+}
+
+const fetchFromAPIwithRequest = async (
+    endpoint: string,
+    queryParameters: MemUsageApiRequest,
+    query: string
+)=> {
   try {
-      const startTimeString = getDate(queryParameters.starttime);
-      const endTimeString = getDate(queryParameters.endtime);
-      const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}`);
+      const startTimeString = queryParameters.start.toISOString();
+      const endTimeString = queryParameters.end.toISOString();
+      const response = await instance.get<CacheHitRateApiResponse>(
+        `${endpoint}${encodeURIComponent(
+            query
+        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
+        }`
+    );
       return { status: response.status, data: response.data };
   } catch (err) {
       console.log("err:", err);
@@ -74,7 +95,10 @@ ChartJS.register(
 
 const QueryCounts: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
+  const [MemUsageApiData, setMemUsageApiData] =
+      useState<MemUsageApiResponseData | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [datname, setDatname] = useState<string | null>(null);
   const [yAxisFixed, setYAxisFixed] = useState<boolean>(true);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget)};
@@ -83,33 +107,43 @@ const QueryCounts: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/database-explorer/api/visualization/mem-usage";
-      const requestBody: MemUsageApiRequest = {
-        starttime: new Date(starttime),
-        endtime: new Date(endtime)
+      const endpoint = "/api/v1/query_range?query=";
+      const query =
+          'pg_stat_activity_count{datname="' +
+          yatagarasuSettings.dbname +
+          '",state="active"}';
+
+      const requestBody: CacheHitRateApiRequest = {
+        start: new Date(starttime),
+        end: new Date(endtime),
+        datname: yatagarasuSettings.dbname,
       };
   
-      const { status, data: response }: {status: number, data: MemUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
+      const { status, data: response }: {status: number, data: MemUsageApiResponse}
+          = await fetchFromAPIwithRequest(endpoint, requestBody, query);
       setStatusCode(status);
+      setMemUsageApiData(response.data);
 
-      const labels = response.data.map((item) => item.timestamp);
-      const data = response.data.map((item) => item.connections);
-      const borderColor = data.map((value) => {
+      const queryCounts = response.data.result.flatMap((data) =>
+          data.values.map(([_, queryCounts]) => queryCounts));
+      const labels = response.data.result.flatMap((data) =>
+          data.values.map(([labels, _]) => labels)).map(value => {let v = unixTimeToDate(value).toLocaleString(); return v;});
+      const borderColor = queryCounts.map((value)=> {
         let status: Status;
-        if (value <= Thresholds.querycounts.ok) {
+        if (Number(value) <= Thresholds.querycounts.ok) {
           status = 'ok';
-        } else if (value <= Thresholds.querycounts.watch) {
+        } else if (Number(value) <= Thresholds.querycounts.watch) {
           status = 'watch';
         } else {
           status = 'alert';
         }
         return rgbToRgba(statusColors[status], 1);
       });
-      const backgroundColor = data.map((value) => {
+      const backgroundColor = queryCounts.map((value) => {
         let status: Status;
-        if (value <= Thresholds.querycounts.ok) {
+        if (Number(value) <= Thresholds.querycounts.ok) {
           status = 'ok';
-        } else if (value <= Thresholds.querycounts.watch) {
+        } else if (Number(value) <= Thresholds.querycounts.watch) {
           status = 'watch';
         } else {
           status = 'alert';
@@ -122,7 +156,7 @@ const QueryCounts: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
         labels: labels,
         datasets: [
           {
-            data: data,
+            data: queryCounts,
             borderColor: borderColor,
             backgroundColor: backgroundColor
           }
