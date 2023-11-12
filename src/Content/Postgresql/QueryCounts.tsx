@@ -26,33 +26,33 @@ import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
 import {CacheHitRateApiRequest, CacheHitRateApiResponse, CacheHitRateResponseData} from "./CacheHitRate";
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
 
-interface MemUsageApiRequest {
+interface QueryCountsApiRequest {
   start: Date;
   end: Date;
   datname: string;
 }
 
-interface MemoryUsageProps {
+interface QueryCountsProps {
   starttime: Date;
   endtime: Date;
 }
 
-interface MemUsageApiResponse {
-  data: MemUsageApiResponseData;
+interface QueryCountsApiResponse {
+  data: QueryCountsApiResponseData;
   status: string;
 };
 
-export interface MemUsageApiResponseData {
+export interface QueryCountsApiResponseData {
   resultType: string;
-  result: MemUsageApiResponseResult[];
+  result: QueryCountsApiResponseResult[];
 }
 
-interface MemUsageApiResponseResult {
-  metric: MemUsageApiResponseMetric;
+interface QueryCountsApiResponseResult {
+  metric: QueryCountsApiResponseMetric;
   values: [number, string][];
 }
 
-interface MemUsageApiResponseMetric {
+interface QueryCountsApiResponseMetric {
   __name__: string;
   datid: string;
   datname: string;
@@ -62,7 +62,7 @@ interface MemUsageApiResponseMetric {
 
 const fetchFromAPIwithRequest = async (
     endpoint: string,
-    queryParameters: MemUsageApiRequest,
+    queryParameters: QueryCountsApiRequest,
     query: string
 )=> {
   try {
@@ -93,12 +93,9 @@ ChartJS.register(
   Legend
 );
 
-const QueryCounts: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
+const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
-  const [MemUsageApiData, setMemUsageApiData] =
-      useState<MemUsageApiResponseData | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
-  const [datname, setDatname] = useState<string | null>(null);
   const [yAxisFixed, setYAxisFixed] = useState<boolean>(true);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget)};
@@ -119,11 +116,9 @@ const QueryCounts: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
         datname: yatagarasuSettings.dbname,
       };
   
-      const { status, data: response }: {status: number, data: MemUsageApiResponse}
+      const { status, data: response }: {status: number, data: QueryCountsApiResponse}
           = await fetchFromAPIwithRequest(endpoint, requestBody, query);
       setStatusCode(status);
-      setMemUsageApiData(response.data);
-
       const queryCounts = response.data.result.flatMap((data) =>
           data.values.map(([_, queryCounts]) => queryCounts));
       const labels = response.data.result.flatMap((data) =>
