@@ -71,3 +71,10 @@ export function calcAverage(values: [number, string][]){
   }
   return sum / values.length;
 }
+
+export function getRange(scrapeInterval: string): string {
+  return scrapeInterval.replace(/\d+/g, (match) => {
+    const num = parseInt(match, 10);
+    return String(num * 2);
+  });
+}
