@@ -1,14 +1,38 @@
+/**
+ * 診断レポート機能のパフォーマンス診断部分のコンポーネント
+ */
 import React from "react";
 import {StatusType} from "./ReportingOverview";
 import {Box, Card, CardContent, Typography} from "@mui/material";
 import {CPUUsageRatio} from "./ReportingItem/CPUUsageRatio";
-import {MemorySwapIO} from "./ReportingItem/MemorySwapIO";
+import {MemorySwapIO, getMemorySwapIOStatus} from "./ReportingItem/MemorySwapIO";
 import {CheckPointProgress} from "./ReportingItem/CheckpointProgress";
 
-const getPerformanceStatus = (): StatusType => {
+
+/**
+ * パフォーマンスのステータスを取得する
+ */
+const getPerformanceStatus = (): StatusType | null => {
+  const memorySwapIOStatus: StatusType | null = getMemorySwapIOStatus();
+
+  if ([memorySwapIOStatus].includes(null)) {
+    return null;
+  }
+
+  if ([memorySwapIOStatus].includes('ERROR')) {
+    return 'ERROR';
+  }
+
+  if ([memorySwapIOStatus].includes('WARNING')) {
+    return 'WARNING';
+  }
+
   return 'OK';
 }
 
+/**
+ * パフォーマンス診断部分のJSX
+ */
 const PerformanceReport: React.FC = () => {
   return (
     <Card sx={{ marginTop: '1vh' }}>
