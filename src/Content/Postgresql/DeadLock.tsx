@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 
 import instance from '../../Axios/AxiosInstance';
-import { getDate } from '../../Component/Common/Util';
+import {calcAverage, calcSum, getDate, roundToTwoDecimalPlaces, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -20,6 +20,43 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
+import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
+import {CacheHitRateApiResponse} from "./CacheHitRate";
+import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
+
+interface DeadLocksApiRequest {
+  start: Date;
+  end: Date;
+  datname: string;
+}
+
+interface DeadLocksProps {
+  starttime: Date;
+  endtime: Date;
+}
+
+interface DeadLocksApiResponse {
+  data: DeadLocksApiResponseData;
+  status: string;
+};
+
+export interface DeadLocksApiResponseData {
+  resultType: string;
+  result: DeadLocksApiResponseResult[];
+}
+
+interface DeadLocksApiResponseResult {
+  metric: DeadLocksApiResponseMetric;
+  values: [number, string][];
+}
+
+interface DeadLocksApiResponseMetric {
+  __name__: string;
+  datid: string;
+  datname: string;
+  instance: string;
+  job: string;
+}
 
 interface DeadLocksData {
   startTime: string;
@@ -28,33 +65,23 @@ interface DeadLocksData {
   deadlocks: number;
 }
 
-interface DeadLockApiResponse {
-  starttime: string;
-  endtime: string;
-  dbName: string;
-  deadlocks: number;
-}
-
-interface DeadLockApiRequest {
-  starttime: Date;
-  endtime: Date;
-  dbname: string;
-}
-
-interface DeadLocksProps {
-  starttime: Date;
-  endtime: Date;
-}
-
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: DeadLockApiRequest) => {
+const fetchFromAPIwithRequest = async (
+    endpoint: string,
+    queryParameters: DeadLocksApiRequest,
+    query: string
+) => {
   try {
-      const startTimeString = getDate(queryParameters.starttime);
-      const endTimeString = getDate(queryParameters.endtime);
-      const dbName = queryParameters.dbname;
+    const startTimeString = queryParameters.start.toISOString();
+    const endTimeString = queryParameters.end.toISOString();
+    const dbName = queryParameters.datname;
 
-      const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}&dbName=${dbName}`);
-
-      return { status: response.status, data: response.data };
+    const response = await instance.get<DeadLocksApiResponse>(
+        `${endpoint}${encodeURIComponent(
+            query
+        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
+        }`
+    );
+    return { status: response.status, data: response.data };
 
   } catch (err) {
       console.log("err:", err);
@@ -75,9 +102,11 @@ ChartJS.register(
 );
 
 const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
-  const [deadLocksData, setDeadLocksData] = useState<DeadLocksData | null>(null);
-  const [statusCode, setStatusCode] = useState<number | null>(null);
 
+  const [deadLocksData, setDeadLocksData] =
+      useState<DeadLocksApiResponseData | null>(null);
+  const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [datname, setDatname] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -90,26 +119,20 @@ const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchDeadLocksData = async () => {
-      const endpoint = '/database-explorer/api/visualization/dead-lock';
-
-      const requestBody: DeadLockApiRequest = {
-        starttime: starttime,
-        endtime: endtime,
-        dbname: 'databaseexplorer',
+      const endpoint = "/api/v1/query_range?query=";
+      const query =
+          'pg_stat_database_deadlocks{datname="' +
+          yatagarasuSettings.dbname + '"}';
+      const requestBody: DeadLocksApiRequest = {
+        start: starttime,
+        end: endtime,
+        datname: yatagarasuSettings.dbname,
       };
-
-      const { status, data: response }: {status: number, data: DeadLockApiResponse}  = await fetchFromAPIwithRequest(
-        endpoint,
-        requestBody
-      );
+      const { status, data: response }: {status: number, data: DeadLocksApiResponse}
+          = await fetchFromAPIwithRequest(endpoint, requestBody, query);
       setStatusCode(status);
-
-      setDeadLocksData({
-        startTime: response.starttime,
-        endTime: response.endtime,
-        dbName: response.dbName,
-        deadlocks: response.deadlocks,
-      });
+      setDatname(yatagarasuSettings.dbname);
+      setDeadLocksData(response.data);
     };
 
     fetchDeadLocksData();
@@ -184,7 +207,7 @@ const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
                   </Typography>
                   <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1.5vh' }}>
                     <Typography variant="h5" component="div" align="center" sx={{ display: 'inline' }}>
-                      {deadLocksData.dbName}
+                      {datname}
                     </Typography>
                   </Box>
                 </CardContent>
@@ -198,10 +221,27 @@ const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
                     <Box sx={{width: '100%' ,height: '0.5vh'}}></Box>
                     <Box sx={{justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: '1vh' }}>
                       <Typography variant="h5" component="div" align="center" sx={{ display: 'inline' }}>
-                        {deadLocksData.deadlocks === -1 ? "0" : `${deadLocksData.deadlocks}`}
+                        {deadLocksData.result[0].values.length === 0
+                            ? "-"
+                            : `${calcSum(deadLocksData.result[0].values)}`}
                       </Typography>
-                      <Typography variant="body2" component="div" align="right" sx={{ marginTop: '1vh', marginBottom: '-1.3vh'}}>
-                          Time: {deadLocksData.startTime} - {deadLocksData.endTime}
+                      <Typography
+                          variant="body2"
+                          component="div"
+                          align="right"
+                          sx={{ marginTop: "1vh", marginBottom: "-1.3vh" }}
+                      >
+                        Time:{" "}
+                        {unixTimeToDate(
+                            deadLocksData.result[0].values[1][0]
+                        ).toLocaleString()}{" "}
+                        -{" "}
+                        {unixTimeToDate(
+                            deadLocksData.result[0].values[
+                            deadLocksData.result[0].values.length - 1
+                                ][0]
+                        ).toLocaleString()}
+
                       </Typography>
                     </Box>
                   </Box>
