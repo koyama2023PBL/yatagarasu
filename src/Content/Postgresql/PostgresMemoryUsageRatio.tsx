@@ -127,9 +127,9 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
       const backgroundColor = response.data.result.flatMap(data => 
         data.values.map(value => {
           let status: Status;
-          if (Number(value[1]) <= Thresholds.memory.ok) {
+          if (Number(value[1]) <= Thresholds.memory_ratio.ok) {
             status = 'ok';
-          } else if (Number(value[1]) <= Thresholds.memory.watch) {
+          } else if (Number(value[1]) <= Thresholds.memory_ratio.watch) {
             status = 'watch';
           } else {
             status = 'alert';
@@ -140,9 +140,9 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
       const borderColor = response.data.result.flatMap(data => 
         data.values.map(value => {
           let status: Status;
-          if (Number(value[1]) <= Thresholds.memory.ok) {
+          if (Number(value[1]) <= Thresholds.memory_ratio.ok) {
             status = 'ok';
-          } else if (Number(value[1]) <= Thresholds.memory.watch) {
+          } else if (Number(value[1]) <= Thresholds.memory_ratio.watch) {
             status = 'watch';
           } else {
             status = 'alert';
