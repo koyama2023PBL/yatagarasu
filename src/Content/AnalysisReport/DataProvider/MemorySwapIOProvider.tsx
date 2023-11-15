@@ -1,6 +1,3 @@
-/**
- * メモリスワップI/Oのデータプロバイダ
- */
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import {getRange, unixTimeToDate} from "../../../Component/Common/Util";
 import instance from "../../../Axios/AxiosInstance";
