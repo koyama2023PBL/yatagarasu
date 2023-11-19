@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_レイヤー_2" data-name="レイヤー 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1410 570">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.18em;
+      }
+
+      .cls-2 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        fill: none;
+      }
+
+      .cls-3, .cls-4, .cls-8, .cls-9, .cls-10, .cls-6, .cls-11, .cls-7 {
+        stroke: #000;
+      }
+
+      .cls-3, .cls-8, .cls-9, .cls-10 {
+        stroke-width: 1.5px;
+      }
+
+      .cls-3, .cls-6, .cls-7 {
+        stroke-miterlimit: 10;
+      }
+
+      .cls-12, .cls-13, .cls-14, .cls-15, .cls-16, .cls-17, .cls-18, .cls-19 {
+        isolation: isolate;
+      }
+
+      .cls-12, .cls-13, .cls-14, .cls-15, .cls-16, .cls-17, .cls-19 {
+        font-family: KozGoPr6N-Regular-83pv-RKSJ-H, 'Kozuka Gothic Pr6N';
+      }
+
+      .cls-12, .cls-13, .cls-15 {
+        font-size: 16px;
+      }
+
+      .cls-20 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-13 {
+        letter-spacing: -.98em;
+      }
+
+      .cls-21 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-22 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-23 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-24 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-25 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-4, .cls-8, .cls-9, .cls-10, .cls-11 {
+        stroke-linejoin: bevel;
+      }
+
+      .cls-26 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-27 {
+        letter-spacing: -.08em;
+      }
+
+      .cls-28 {
+        letter-spacing: -.08em;
+      }
+
+      .cls-29 {
+        letter-spacing: -.08em;
+      }
+
+      .cls-30 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-31 {
+        letter-spacing: -.08em;
+      }
+
+      .cls-32 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-5, .cls-33, .cls-34, .cls-35, .cls-36, .cls-37, .cls-38, .cls-39 {
+        stroke-width: 0px;
+      }
+
+      .cls-40 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-41 {
+        letter-spacing: -.08em;
+      }
+
+      .cls-42 {
+        letter-spacing: -.13em;
+      }
+
+      .cls-43 {
+        letter-spacing: -.13em;
+      }
+
+      .cls-44 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-45 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-46 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-47 {
+        letter-spacing: -.14em;
+      }
+
+      .cls-48 {
+        letter-spacing: -.14em;
+      }
+
+      .cls-49 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-50 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-51 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-52 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-53 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-54 {
+        letter-spacing: -.06em;
+      }
+
+      .cls-55 {
+        letter-spacing: -.14em;
+      }
+
+      .cls-56 {
+        letter-spacing: -.14em;
+      }
+
+      .cls-57 {
+        letter-spacing: -.14em;
+      }
+
+      .cls-58 {
+        letter-spacing: -.14em;
+      }
+
+      .cls-8 {
+        fill: #cbf4ff;
+      }
+
+      .cls-9 {
+        fill: #ffffdf;
+      }
+
+      .cls-10 {
+        fill: #efdeff;
+      }
+
+      .cls-14 {
+        font-size: 21px;
+      }
+
+      .cls-59 {
+        letter-spacing: -.16em;
+      }
+
+      .cls-60 {
+        letter-spacing: -.16em;
+      }
+
+      .cls-61 {
+        letter-spacing: -.16em;
+      }
+
+      .cls-62 {
+        letter-spacing: -.17em;
+      }
+
+      .cls-63 {
+        letter-spacing: -.11em;
+      }
+
+      .cls-64 {
+        letter-spacing: -.11em;
+      }
+
+      .cls-15 {
+        letter-spacing: .25em;
+      }
+
+      .cls-16 {
+        letter-spacing: .21em;
+      }
+
+      .cls-16, .cls-19 {
+        font-size: 14px;
+      }
+
+      .cls-65 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-66 {
+        letter-spacing: -.1em;
+      }
+
+      .cls-67 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-68 {
+        letter-spacing: -.1em;
+      }
+
+      .cls-69 {
+        letter-spacing: -.1em;
+      }
+
+      .cls-70 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-71 {
+        letter-spacing: -.1em;
+      }
+
+      .cls-72 {
+        letter-spacing: -.1em;
+      }
+
+      .cls-73 {
+        letter-spacing: -.1em;
+      }
+
+      .cls-74 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-75 {
+        letter-spacing: -.1em;
+      }
+
+      .cls-76 {
+        letter-spacing: -.05em;
+      }
+
+      .cls-77 {
+        letter-spacing: -.09em;
+      }
+
+      .cls-78 {
+        letter-spacing: -.09em;
+      }
+
+      .cls-79 {
+        letter-spacing: -.09em;
+      }
+
+      .cls-80 {
+        letter-spacing: -.09em;
+      }
+
+      .cls-81 {
+        letter-spacing: -.09em;
+      }
+
+      .cls-17 {
+        font-size: 18px;
+      }
+
+      .cls-82 {
+        letter-spacing: -.15em;
+      }
+
+      .cls-83 {
+        letter-spacing: -.15em;
+      }
+
+      .cls-84 {
+        letter-spacing: -.27em;
+      }
+
+      .cls-85 {
+        letter-spacing: -.15em;
+      }
+
+      .cls-86 {
+        letter-spacing: -.15em;
+      }
+
+      .cls-87 {
+        letter-spacing: 0em;
+      }
+
+      .cls-88 {
+        letter-spacing: 0em;
+      }
+
+      .cls-89 {
+        letter-spacing: 0em;
+      }
+
+      .cls-90 {
+        letter-spacing: 0em;
+      }
+
+      .cls-91 {
+        letter-spacing: -.49em;
+      }
+
+      .cls-11 {
+        fill: #f9f2ff;
+      }
+
+      .cls-92 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-93 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-34 {
+        fill: #dce3ea;
+      }
+
+      .cls-35 {
+        fill: #b19dab;
+      }
+
+      .cls-36 {
+        fill: #ece8ec;
+      }
+
+      .cls-37 {
+        fill: #fff;
+      }
+
+      .cls-38 {
+        fill: #f0e6e4;
+      }
+
+      .cls-39 {
+        fill: #f5f7f8;
+      }
+
+      .cls-94 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-95 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-96 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-97 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-98 {
+        letter-spacing: -.07em;
+      }
+
+      .cls-7 {
+        stroke-dasharray: 0 0 12.12 12.12;
+      }
+    </style>
+  </defs>
+  <g id="_レイヤー_1-2" data-name="レイヤー 1">
+    <g>
+      <rect class="cls-39" x="213.5" y="1.5" width="932" height="478"/>
+      <path class="cls-34" d="m1145,2v477H214V2h931m1-1H213v479h933V1h0Z"/>
+    </g>
+    <path class="cls-11" d="m318.76,283.03h182.91c16.12,0,29.19,42.14,29.19,94.11h0c0,51.98-13.07,94.11-29.19,94.11h-182.91c-16.12,0-29.19-42.14-29.19-94.11h0c0-51.97,13.07-94.11,29.19-94.11Z"/>
+    <rect class="cls-8" x="278.57" y="216.77" width="211.29" height="37.5"/>
+    <g>
+      <rect class="cls-39" x="1176.5" y=".5" width="233" height="478"/>
+      <path class="cls-34" d="m1409,1v477h-232V1h232m1-1h-234v479h234V0h0Z"/>
+    </g>
+    <g>
+      <rect class="cls-39" x="213.5" y="497.5" width="1196" height="72"/>
+      <path class="cls-34" d="m1409,498v71H214v-71h1195m1-1H213v73h1197v-73h0Z"/>
+    </g>
+    <rect class="cls-5" x="230.81" y="15.67" width="329.76" height="33.33"/>
+    <text class="cls-14" transform="translate(230.81 34.15)"><tspan x="0" y="0">PostgreSQLインスタンス</tspan></text>
+    <rect class="cls-5" x="230.38" y="507.1" width="294.05" height="27.38"/>
+    <text class="cls-14" transform="translate(230.38 525.58)"><tspan x="0" y="0">OS</tspan></text>
+    <rect class="cls-5" x="1185" y="9.71" width="225" height="29.29"/>
+    <text class="cls-14" transform="translate(1183.95 28.19)"><tspan class="cls-85" x="0" y="0">ファイル</tspan></text>
+    <g>
+      <rect class="cls-36" x="2.5" y="1.5" width="194" height="72"/>
+      <path class="cls-35" d="m196,2v71H3V2h193m1-1H2v73h195V1h0Z"/>
+    </g>
+    <g>
+      <path class="cls-37" d="m197,560c0,5.5-4.5,10-10,10H10c-5.5,0-10-4.5-10-10v-260c0-5.5,4.5-10,10-10h177c5.5,0,10,4.5,10,10v260Z"/>
+      <path class="cls-33" d="m187,290h-12v1h12v-1h0Zm-24,0h-12v1h12v-1h0Zm-24,0h-12v1h12v-1h0Zm-24,0h-12v1h12v-1h0Zm-24,0h-12v1h12v-1h0Zm-24,0h-12v1h12v-1h0Zm-24,0h-12v1h12v-1h0Zm-24,0h-9.8c-.67.07-1.31.2-1.94.4l.3.95c.86-.27,1.75-.4,2.66-.4h9v-.95h-.22ZM.02,299.3H.02v.02H.02v.02H.02v.02H.02v.02H.02c-.01.11-.01.21-.01.31H.01v.03H.01v.03H.01v.02H.01v.02H.01v.02H.01v.02H.01v.02H.01v.02H.01v.02H.01v.02H.01v.02H.01v.02H.01v11.31h1v-11.26c0-.21.01-.42.02-.63l-1.01-.07H.02Zm.98,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm0,24H0v12h1v-12h0Zm.49,23.61l-.95.33s0,.01.01.02h0s.01.03.02.04h0s.01.03.01.04h0s.01.04.02.05h0s.01.03.01.04h0s.01.03.01.04h0v.02h0s0,.01.01.01h0v.02h0s.01.02.01.03h0v.02h0s0,.01.01.01h0v.02h0s0,.01.01.01h0v.02h0s0,.01.01.01h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02s0,.01.01.01h0v.02h0v.02h0v.02h0v.02h0v.02h0v.02s0,.01.01.01h0v.02h0s.01.02.01.03h0v.02h0s0,.01.01.01h0v.02h0s.01.02.01.03h0s.01.03.01.04h0v.02h0s.01.01.01.02h0v.02h0s.01.02.01.03h0s.01.03.01.04h0s.01.04.02.05h0s.01.03.02.04h0s.03.06.04.09h0s.02.03.03.05h0c1.62,3.08,4.79,5.23,8.46,5.38l.04-1c-3.4-.12-6.68-2.57-7.88-6.06h0Zm32.11,6.09h-12v1h12v-1h0Zm24,0h-12v1h12v-1h0Zm24,0h-12v1h12v-1h0Zm24,0h-12v1h12v-1h0Zm24,0h-12v1h12v-1h0Zm24,0h-12v1h12v-1h0Zm24,0h-12v1h12v-1h0Zm18.35-8.01c-.4,3.66-3.07,6.75-6.63,7.71l.26.97c.58-.16,1.14-.36,1.68-.62h0s.03-.01.04-.02h0s.03-.01.04-.02h0s.03-.01.04-.02h0s.02-.01.03-.02h0s.02-.01.03-.02h0s.03-.01.04-.02h0s.02-.01.03-.01h.02s0-.01.02-.01h.02s0-.01.02-.01h.05s0,0,0-.01h.05s0,0,0-.01h.05s0,0,0-.01h.05s0,0,0-.01h.04s0,0,0-.01h.02s0,0,0-.01h.02s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s.02-.01.02-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s0,0,0-.01h0s.02-.01.02-.02h0s0,0,0-.01h0s.02-.02.04-.02h0s.03-.02.05-.03h0s.02-.02.04-.02h0s.02-.02.04-.02h0s.03-.02.05-.03h0s.03-.02.04-.02h0s.02-.02.04-.02h0s.03-.02.05-.03h0c2.37-1.61,4.03-4.21,4.36-7.19l-.97-.26h0Zm1.05-23.89h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm0-24h-1v12h1v-12h0Zm-.42-23.96l-.96.29c.25.83.38,1.7.38,2.57v9.1h1v-9.1h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.02h0v-.03h0v-.03h0v-.04h0v-.03h0v-.04h0v-.04h0s0-.03,0-.04h0v-.03h0s0-.03,0-.04h0v-.03h0c-.15-.61-.25-1.11-.4-1.59h0Zm-9.58-7.14v1c.24,0,.48.01.72.03l.08-1s-.07-.01-.1-.01h-.05c-.17-.01-.34-.02-.51-.02h-.14Z"/>
+    </g>
+    <rect class="cls-5" x="13.95" y="16.1" width="170.05" height="24.9"/>
+    <text class="cls-14" transform="translate(13.11 34.58)"><tspan class="cls-81" x="0" y="0">アプリケーション</tspan></text>
+    <rect class="cls-5" x="13.98" y="305.61" width="170.05" height="24.9"/>
+    <text class="cls-14" transform="translate(13.98 324.09)"><tspan x="0" y="0">凡例</tspan></text>
+    <g>
+      <path class="cls-38" d="m181,536.5c0,5.5-4.5,10-10,10H36c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h135c5.5,0,10,4.5,10,10v17.5Z"/>
+      <path class="cls-3" d="m181,536.5c0,5.5-4.5,10-10,10H36c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h135c5.5,0,10,4.5,10,10v17.5Z"/>
+    </g>
+    <rect class="cls-8" x="25.45" y="340.11" width="155" height="37.5"/>
+    <path class="cls-10" d="m43.8,395.11h117.5c10.36,0,18.75,8.39,18.75,18.75h0c0,10.36-8.39,18.75-18.75,18.75H43.8c-10.36,0-18.75-8.39-18.75-18.75h0c0-10.36,8.39-18.75,18.75-18.75Z"/>
+    <polygon class="cls-9" points="40.45 451.5 180 451.11 163.45 488.5 25 488.61 40.45 451.5"/>
+    <rect class="cls-5" x="64.57" y="348.61" width="77.43" height="24.9"/>
+    <text class="cls-17" transform="translate(63.67 364.45)"><tspan class="cls-40" x="0" y="0">プロセス</tspan></text>
+    <rect class="cls-5" x="74.28" y="404.5" width="58.72" height="24.9"/>
+    <text class="cls-17" transform="translate(73.56 420.35)"><tspan class="cls-74" x="0" y="0">メモ</tspan></text>
+    <text class="cls-17" transform="translate(63.38 476.35)"><tspan class="cls-82" x="0" y="0">ファイル</tspan></text>
+    <rect class="cls-5" x="73.95" y="518.22" width="77.43" height="24.9"/>
+    <text class="cls-17" transform="translate(73.59 534.06)"><tspan class="cls-40" x="0" y="0">その他</tspan></text>
+    <rect class="cls-8" x="268.71" y="207.77" width="211.29" height="37.5"/>
+    <rect class="cls-8" x="239.57" y="61.77" width="211.29" height="37.5"/>
+    <rect class="cls-5" x="278.95" y="217.17" width="150.05" height="24.9"/>
+    <text class="cls-17" transform="translate(278.95 233.01)"><tspan class="cls-88" x="0" y="0">サーバープロセス</tspan></text>
+    <rect class="cls-5" x="249.95" y="71.17" width="150.05" height="24.9"/>
+    <text class="cls-17" transform="translate(249.95 87.01)"><tspan class="cls-50" x="0" y="0">マスタープロセス</tspan></text>
+    <path class="cls-11" d="m305.9,274.77h182.91c16.12,0,29.19,42.14,29.19,94.11h0c0,51.98-13.07,94.11-29.19,94.11h-182.91c-16.12,0-29.19-42.14-29.19-94.11h0c0-51.97,13.07-94.11,29.19-94.11Z"/>
+    <path class="cls-10" d="m318.97,323.77h145.77c12.85,0,23.26,8.39,23.26,18.75h0c0,10.36-10.41,18.75-23.26,18.75h-145.77c-12.85,0-23.26-8.39-23.26-18.75h0c0-10.35,10.42-18.75,23.26-18.75Z"/>
+    <path class="cls-10" d="m318.85,407.77h145.87c12.86,0,23.28,8.39,23.28,18.75h0c0,10.36-10.42,18.75-23.28,18.75h-145.87c-12.86,0-23.28-8.39-23.28-18.75h0c0-10.35,10.42-18.75,23.28-18.75Z"/>
+    <path class="cls-10" d="m319.35,365.77h145.44c12.82,0,23.21,8.39,23.21,18.75h0c0,10.36-10.39,18.75-23.21,18.75h-145.44c-12.82,0-23.21-8.39-23.21-18.75h0c0-10.35,10.39-18.75,23.21-18.75Z"/>
+    <rect class="cls-5" x="310.95" y="334.17" width="103.05" height="24.9"/>
+    <text class="cls-19" transform="translate(310.95 346.49)"><tspan x="0" y="0">work_mem</tspan></text>
+    <rect class="cls-5" x="310.13" y="377" width="223.87" height="24.08"/>
+    <text class="cls-19" transform="translate(310.13 389.32)"><tspan x="0" y="0">maintenance_work_mem</tspan></text>
+    <rect class="cls-5" x="310.13" y="419.17" width="103.05" height="24.9"/>
+    <text class="cls-19" transform="translate(310.13 431.49)"><tspan x="0" y="0">temp_buffers</tspan></text>
+    <rect class="cls-5" x="309.95" y="287.17" width="150.05" height="24.9"/>
+    <text class="cls-17" transform="translate(309.05 303.01)"><tspan class="cls-40" x="0" y="0">プロセスメモリ</tspan><tspan class="cls-2" x="118.44" y="0">ー</tspan></text>
+    <path class="cls-11" d="m600.76,140.91h182.91c16.12,0,29.19,50.61,29.19,113.04h0c0,62.43-13.07,113.04-29.19,113.04h-182.91c-16.12,0-29.19-50.61-29.19-113.04h0c0-62.43,13.07-113.04,29.19-113.04Z"/>
+    <path class="cls-10" d="m619.33,188.77h145.77c12.85,0,23.26,8.39,23.26,18.75h0c0,10.36-10.41,18.75-23.26,18.75h-145.77c-12.85,0-23.26-8.39-23.26-18.75h0c0-10.35,10.42-18.75,23.26-18.75Z"/>
+    <path class="cls-10" d="m619.33,230.77h145.77c12.85,0,23.26,8.39,23.26,18.75h0c0,10.36-10.41,18.75-23.26,18.75h-145.77c-12.85,0-23.26-8.39-23.26-18.75h0c0-10.35,10.42-18.75,23.26-18.75Z"/>
+    <path class="cls-10" d="m619.28,272.77h145.87c12.86,0,23.28,8.39,23.28,18.75h0c0,10.36-10.42,18.75-23.28,18.75h-145.87c-12.86,0-23.28-8.39-23.28-18.75h0c0-10.35,10.42-18.75,23.28-18.75Z"/>
+    <path class="cls-10" d="m619.28,314.77h145.87c12.86,0,23.28,8.39,23.28,18.75h0c0,10.36-10.42,18.75-23.28,18.75h-145.87c-12.86,0-23.28-8.39-23.28-18.75h0c0-10.35,10.42-18.75,23.28-18.75Z"/>
+    <rect class="cls-5" x="608.19" y="200.03" width="164.81" height="24.9"/>
+    <text class="cls-19" transform="translate(608.19 212.35)"><tspan x="0" y="0">shared_buffers</tspan></text>
+    <rect class="cls-5" x="608.19" y="242.03" width="103.05" height="24.9"/>
+    <text class="cls-19" transform="translate(608.19 254.35)"><tspan x="0" y="0">wal_buffers</tspan></text>
+    <rect class="cls-5" x="608.19" y="284.03" width="103.05" height="24.9"/>
+    <text class="cls-19" transform="translate(608.19 296.35)"><tspan x="0" y="0">Free Scan Map</tspan></text>
+    <rect class="cls-5" x="609.19" y="328.03" width="103.05" height="24.9"/>
+    <text class="cls-19" transform="translate(609.19 340.35)"><tspan x="0" y="0">Visibility Map</tspan></text>
+    <rect class="cls-5" x="606.95" y="151.17" width="150.05" height="24.9"/>
+    <text class="cls-17" transform="translate(606.95 167.01)"><tspan x="0" y="0">共有メモリ</tspan></text>
+    <polygon class="cls-9" points="1216.31 55.94 1393 55.11 1372.05 134.77 1196.74 135 1216.31 55.94"/>
+    <polygon class="cls-9" points="1216.31 156.5 1393 156.11 1372.05 193.5 1196.74 193.61 1216.31 156.5"/>
+    <rect class="cls-8" x="269.57" y="137.72" width="211.29" height="37.5"/>
+    <rect class="cls-5" x="279.95" y="147.12" width="150.05" height="24.9"/>
+    <text class="cls-17" transform="translate(278.33 162.96)"><tspan class="cls-43" x="0" y="0">リスナープロセス</tspan></text>
+    <rect class="cls-8" x="881.57" y="61.77" width="211.29" height="37.5"/>
+    <rect class="cls-8" x="881.57" y="120.77" width="211.29" height="37.5"/>
+    <rect class="cls-8" x="881.57" y="422.77" width="211.29" height="37.5"/>
+    <rect class="cls-8" x="881.57" y="181.77" width="211.29" height="37.5"/>
+    <rect class="cls-8" x="881.57" y="242.77" width="211.29" height="37.5"/>
+    <rect class="cls-8" x="881.57" y="302.77" width="211.29" height="37.5"/>
+    <rect class="cls-8" x="881.57" y="363.77" width="211.29" height="37.5"/>
+    <rect class="cls-5" x="889.95" y="72.17" width="229.05" height="24.9"/>
+    <text class="cls-12" transform="translate(889.95 86.25)"><tspan class="cls-65" x="0" y="0">バックグラウンドライター</tspan></text>
+    <rect class="cls-5" x="889.95" y="131.17" width="150.05" height="24.9"/>
+    <text class="cls-12" transform="translate(889.95 145.25)"><tspan x="0" y="0">統計情報ライター</tspan></text>
+    <rect class="cls-5" x="889.95" y="192.17" width="150.05" height="24.9"/>
+    <g class="cls-18">
+      <text class="cls-12" transform="translate(889.95 206.25)"><tspan class="cls-2" x="0" y="0">WALライター</tspan></text>
+    </g>
+    <rect class="cls-5" x="889.95" y="253.17" width="150.05" height="24.9"/>
+    <g class="cls-18">
+      <text class="cls-12" transform="translate(889.95 267.25)"><tspan class="cls-2" x="0" y="0">WALアーカイバー</tspan></text>
+    </g>
+    <rect class="cls-5" x="890.95" y="313.17" width="150.05" height="24.9"/>
+    <text class="cls-12" transform="translate(890.79 327.25)"><tspan class="cls-42" x="0" y="0">チェックポインター</tspan></text>
+    <rect class="cls-5" x="890.95" y="375.17" width="187.05" height="24.9"/>
+    <g class="cls-18">
+      <text class="cls-12" transform="translate(890.63 389.03)"><tspan class="cls-76" x="0" y="0">ロガー(サーバログ)</tspan></text>
+    </g>
+    <rect class="cls-5" x="891.95" y="434.17" width="216.05" height="24.9"/>
+    <text class="cls-12" transform="translate(891.47 448.25)"><tspan class="cls-46" x="0" y="0">自動バキュームランチャー</tspan></text>
+    <rect class="cls-5" x="1217.19" y="65.1" width="114.81" height="75.9"/>
+    <g class="cls-18">
+      <text class="cls-19" transform="translate(1216.91 77.44)"><tspan class="cls-2" x="0" y="0">データファイル</tspan></text>
+      <text class="cls-19" transform="translate(1210.19 101.94)"><tspan class="cls-84" x="0" y="0">・テーブル</tspan></text>
+      <text class="cls-19" transform="translate(1210.19 126.44)"><tspan class="cls-84" x="0" y="0">・インデックス</tspan></text>
+    </g>
+    <rect class="cls-5" x="1217.31" y="169.03" width="164.81" height="24.9"/>
+    <g class="cls-18">
+      <text class="cls-19" transform="translate(1217.31 181.35)"><tspan class="cls-87" x="0" y="0">WALファイル</tspan></text>
+    </g>
+    <polygon class="cls-9" points="1215.8 215.5 1392.49 215.11 1371.54 252.5 1196.24 252.61 1215.8 215.5"/>
+    <rect class="cls-5" x="1216.83" y="228.03" width="164.81" height="24.9"/>
+    <text class="cls-19" transform="translate(1216.27 240.35)"><tspan class="cls-53" x="0" y="0">アーカイブログファイル</tspan></text>
+    <polygon class="cls-9" points="1215.8 274.5 1392.49 274.11 1371.54 311.5 1196.24 311.61 1215.8 274.5"/>
+    <rect class="cls-5" x="1216.83" y="287.03" width="164.81" height="24.9"/>
+    <text class="cls-19" transform="translate(1216.83 299.35)"><tspan class="cls-2" x="0" y="0">サーバーログファイル</tspan></text>
+    <polygon class="cls-9" points="1215.8 333.5 1392.49 333.11 1371.54 370.5 1196.24 370.61 1215.8 333.5"/>
+    <rect class="cls-5" x="1216.83" y="346.03" width="164.81" height="24.9"/>
+    <text class="cls-19" transform="translate(1216.83 358.35)"><tspan x="0" y="0">設定ファイル</tspan></text>
+    <g>
+      <path class="cls-38" d="m534.5,544.89c0,5.5-4.5,10-10,10h-207.79c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h207.79c5.5,0,10,4.5,10,10v17.5Z"/>
+      <path class="cls-3" d="m534.5,544.89c0,5.5-4.5,10-10,10h-207.79c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h207.79c5.5,0,10,4.5,10,10v17.5Z"/>
+    </g>
+    <g>
+      <path class="cls-38" d="m785.11,544.89c0,5.5-4.5,10-10,10h-207.79c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h207.79c5.5,0,10,4.5,10,10v17.5Z"/>
+      <path class="cls-3" d="m785.11,544.89c0,5.5-4.5,10-10,10h-207.79c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h207.79c5.5,0,10,4.5,10,10v17.5Z"/>
+    </g>
+    <g>
+      <path class="cls-38" d="m1034.11,544.89c0,5.5-4.5,10-10,10h-207.79c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h207.79c5.5,0,10,4.5,10,10v17.5Z"/>
+      <path class="cls-3" d="m1034.11,544.89c0,5.5-4.5,10-10,10h-207.79c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h207.79c5.5,0,10,4.5,10,10v17.5Z"/>
+    </g>
+    <g>
+      <path class="cls-38" d="m1284.11,544.89c0,5.5-4.5,10-10,10h-207.79c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h207.79c5.5,0,10,4.5,10,10v17.5Z"/>
+      <path class="cls-3" d="m1284.11,544.89c0,5.5-4.5,10-10,10h-207.79c-5.5,0-10-4.5-10-10v-17.5c0-5.5,4.5-10,10-10h207.79c5.5,0,10,4.5,10,10v17.5Z"/>
+    </g>
+    <rect class="cls-5" x="322.69" y="528.72" width="150.05" height="24.9"/>
+    <g class="cls-18">
+      <text class="cls-12" transform="translate(322.69 542.8)"><tspan x="0" y="0">CPU</tspan></text>
+    </g>
+    <rect class="cls-5" x="573.69" y="528.72" width="150.05" height="24.9"/>
+    <text class="cls-12" transform="translate(573.05 542.8)"><tspan class="cls-65" x="0" y="0">MEMORY</tspan></text>
+    <rect class="cls-5" x="819.69" y="528.72" width="150.05" height="24.9"/>
+    <g class="cls-18">
+      <text class="cls-12" transform="translate(819.69 542.8)"><tspan x="0" y="0">NETWORK</tspan></text>
+    </g>
+    <rect class="cls-5" x="1070.69" y="528.72" width="150.05" height="24.9"/>
+    <g class="cls-18">
+      <text class="cls-12" transform="translate(1070.69 542.8)"><tspan x="0" y="0">DISK</tspan></text>
+    </g>
+    <polyline class="cls-6" points="99 74 99 74 99 226.17 268.71 226.17"/>
+    <g>
+      <path class="cls-6" d="m99.5,156.11s2.16.08,6,.12"/>
+      <path class="cls-7" d="m117.61,156.3c34.76.15,110,.17,139.34.17"/>
+      <path class="cls-6" d="m263,156.47h6"/>
+    </g>
+    <line class="cls-6" x1="450.86" y1="80.52" x2="881" y2="80.52"/>
+    <path class="cls-4" d="m881.57,441.52h-39.57V80.52"/>
+    <line class="cls-4" x1="880.76" y1="383.17" x2="842" y2="383.17"/>
+    <line class="cls-4" x1="881.57" y1="321.17" x2="842" y2="321.17"/>
+    <line class="cls-4" x1="881.57" y1="261.17" x2="842" y2="261.17"/>
+    <line class="cls-4" x1="881.57" y1="200.17" x2="842" y2="200.17"/>
+    <line class="cls-4" x1="881" y1="139.17" x2="842" y2="139.17"/>
+  </g>
+</svg>
