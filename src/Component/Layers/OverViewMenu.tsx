@@ -7,6 +7,7 @@ import PostgresProcessStatus from '../../Content/Postgresql/ProcessCheck';
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
 import OverView from '../../Content/Postgresql/Overview';
+import ArchitectureOverview from '../../Content/Postgresql/ArchitectureOverview';
 import MemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 import DeadTuple from '../../Content/Postgresql/DeadTuple';
 
@@ -22,6 +23,9 @@ const OverViewMenu: React.FC = () => {
     <div>
       <Box sx={{ p: 1, flexDirection: 'column', height: '18vh', alignItems: 'center', marginTop: '-1vh'}}>
         <OverView starttime={starttime} endtime={endtime}/>
+      </Box>
+      <Box sx={{ p: 1, flexDirection: 'column', height: '63vh', alignItems: 'center', marginTop: '-1vh'}}>
+        <ArchitectureOverview starttime={starttime} endtime={endtime}/>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>

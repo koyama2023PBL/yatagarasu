@@ -60,3 +60,6 @@ body {
   font-family: Noto Sans, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.highlight {
+  stroke: red; /* SVGの枠線の色を赤に設定 */
+}
