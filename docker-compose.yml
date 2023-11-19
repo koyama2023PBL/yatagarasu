@@ -30,7 +30,10 @@ services:
     image: quay.io/prometheuscommunity/postgres-exporter
     environment:
       DATA_SOURCE_NAME: "postgresql://yatagarasu:yatagarasu@host.docker.internal:5432/yatagarasu?sslmode=disable"
+    volumes:
+      - ./queries.yaml:/queries.yaml
     command:
+      - "--extend.query-path=/queries.yaml"
       - "--collector.stat_activity_autovacuum"
       - "--collector.stat_statements"
     ports:
