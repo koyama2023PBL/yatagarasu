@@ -41,7 +41,9 @@ export const DiskBusyRatio: React.FC = () => {
               data: ratio,
               backgroundColor: 'rgba(54, 162, 235, 0.5)',
               borderColor: 'rgb(54, 162, 235)',
-              type: 'line'
+              type: 'line',
+              pointRadius: 0,
+              borderWidth: 1,
             },
           ]
         });
@@ -51,6 +53,7 @@ export const DiskBusyRatio: React.FC = () => {
   }, [data]);
 
   const options = () => ({
+    maintainAspectRatio: true,
     scales: {
       x: {
         ticks: {
@@ -68,22 +71,38 @@ export const DiskBusyRatio: React.FC = () => {
         }
       },
       y: {
-        stacked: true,
-      }
+        min: 0,
+        max: 100,
+        ticks: {
+          callback: function(value: any, index: any, ticks: any) {
+            return value + '%';
+          },
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
     },
   });
 
   return (
-    <Card sx={{width: '95vw', marginTop: '1vh' }}>
+    <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
       <CardContent sx={{ display: 'flex' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h6" align="left" sx={getItemTitleSx(getDiskBusyRatioStatus())}>
             ディスクビジー率
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <div>
-              {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
-            </div>
+          <Box sx={{ display: 'flex', marginTop: '3vh' }}>
+            <Box sx={{ display: 'flex', width: '25vw' }}>
+              <div style={{ width: '100%' }}>
+                {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
+              </div>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              概況
+            </Box>
           </Box>
         </Box>
       </CardContent>
