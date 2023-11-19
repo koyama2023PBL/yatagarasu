@@ -1,0 +1,18 @@
+pg_stat_statements:
+  query: |
+    SELECT
+      queryid,
+      query,
+      1 AS queries
+    FROM
+      pg_stat_statements
+  metrics:
+    - queryid:
+        usage: "LABEL"
+        description: "Query ID"
+    - query:
+        usage: "LABEL"
+        description: "Query"
+    - queries:
+        usage: "GAUGE"
+        description: "Dummy Metric for Query"
