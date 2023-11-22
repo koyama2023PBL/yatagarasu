@@ -4,6 +4,7 @@ import {Chart, Filler} from "chart.js";
 import {CPUUsageRatioData, useCPUUsageRatio} from "../DataProvider/CPUUsageRatioProvider";
 import {Bar} from "react-chartjs-2";
 import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
 
@@ -41,18 +42,24 @@ export const CPUUsageRatio: React.FC = () => {
             {
               label: 'ユーザ',
               data: user,
-              backgroundColor: 'rgba(255, 99, 132, 0.5)',
-              borderColor: 'rgb(255, 99, 132)',
+              backgroundColor: 'rgba(136, 204, 238, 1)',
+              borderColor: 'rgb(136, 204, 238)',
               fill: true,
-              type: 'line'
+              type: 'line',
+              pointRadius: 0,
+              borderWidth: 1,
+              pointStyle: 'rect',
             },
             {
               label: 'システム',
               data: system,
-              backgroundColor: 'rgba(54, 162, 235, 0.5)',
-              borderColor: 'rgb(54, 162, 235)',
+              backgroundColor: 'rgba(51, 34, 136, 1)',
+              borderColor: 'rgb(51, 34, 136)',
               fill: true,
-              type: 'line'
+              type: 'line',
+              pointRadius: 0,
+              borderWidth: 1,
+              pointStyle: 'rect',
             }
           ],
         });
@@ -61,7 +68,16 @@ export const CPUUsageRatio: React.FC = () => {
     void fetchChartData();
   }, [data]);
 
+  const analysisResult = (): string | null => {
+    const status: StatusType | null = getCPUUsageRatioStatus();
+    if (!status) return null;
+    if (status === 'ERROR') return 'CPU使用率が非常に高いです。';
+    if (status === 'WARNING') return 'CPU使用率が高いです。';
+    return 'CPU使用率は正常です。';
+  }
+
   const options = () => ({
+    maintainAspectRatio: true,
     scales: {
       x: {
         ticks: {
@@ -71,30 +87,66 @@ export const CPUUsageRatio: React.FC = () => {
           minRotation: 0,
           callback: function(_value : any, index : any , _values : any) {
             return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
-          }
+          },
         },
         grid: {
           display: false,
-          drawBorder: false
+          drawBorder: false,
         }
       },
       y: {
         stacked: true,
+        min: 0,
+        max: 100,
+        ticks: {
+          callback: function(value: any, index: any, ticks: any) {
+            return value + '%';
+          },
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        position: 'bottom' as const,
+        labels: {
+          usePointStyle: true,
+        },
       }
     },
   });
 
   return (
-    <Card sx={{width: '95vw'}}>
+    <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto' }}>
       <CardContent sx={{ display: 'flex' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
           <Typography variant="h6" align="left" sx={getItemTitleSx(getCPUUsageRatioStatus())}>
             CPU使用率
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-            <div>
-              {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
-            </div>
+          <Box sx={{ display: 'flex', marginTop: '3vh' }}>
+            <Box sx={{ display: 'flex', width: '25vw' }}>
+              <div style={{ width: '100%' }}>
+                {chartData ? <Bar options={options()} data={chartData} /> : <CircularProgress sx={{marginTop: '7vh'}}/>}
+              </div>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
+              <Typography variant="body2" align="left" sx={{}}>
+                診断結果
+              </Typography>
+              <Divider />
+              <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
+                {analysisResult()}
+              </Typography>
+              <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
+                チェックポイント
+              </Typography>
+              <Divider />
+              <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
+                <ul>
+                  <li>ユーザープロセスおよびシステムプロセスによるCPU使用率です。</li>
+                  <li>CPU使用率が高騰している時間帯に非効率な処理が行われていた可能性があります。</li>
+                </ul>
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </CardContent>

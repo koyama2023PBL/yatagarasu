@@ -38,7 +38,7 @@ export const ReportingOverview: React.FC = () => {
             概況
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh',marginLeft: '2vw' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '2vw' }}>
           <Card sx={{width: '15vw'}}>
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

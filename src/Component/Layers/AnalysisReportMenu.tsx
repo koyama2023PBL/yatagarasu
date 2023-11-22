@@ -18,8 +18,8 @@ import {DiskReport} from "../../Content/AnalysisReport/DiskReport";
 export const AnalysisReportMenu: React.FC = () => {
   const { from, to } = useSelector((state: RootState) => state.date);
   const starttime = new Date(from);
-  const endtime = new Date(to);
-  const nodeScrapeInterval = prometheusSettings?.nodeScrapeInterval ?? '15s';
+  const endtime   = new Date(to);
+  const nodeScrapeInterval     = prometheusSettings?.nodeScrapeInterval ?? '15s';
   const postgresScrapeInterval = prometheusSettings?.postgresqlScrapeInterval ?? '15s';
 
   return (
@@ -29,15 +29,15 @@ export const AnalysisReportMenu: React.FC = () => {
         <CheckpointProgressProvider starttime={starttime} endtime={endtime} scrapeInterval={postgresScrapeInterval}>
         <DiskBusyRatioProvider      starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
         <DiskUsageProvider          starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
-          <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh'}}>
+          <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
             <ReportingOverview />
           </Box>
-          <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw', marginRight: 'auto', marginLeft: 'auto'}}>
-            <Box sx={{p: 1, display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: '-1vh'}}>
+          <Box sx={{display: 'flex', flexDirection: 'column', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
+            <Box sx={{p: 1, display: 'flex', flexDirection: 'column', marginTop: '-1vh'}}>
               <PerformanceReport />
             </Box>
           </Box>
-          <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw', marginRight: 'auto', marginLeft: 'auto'}}>
+          <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'left', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
             <Box sx={{p: 1, display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: '-1vh'}}>
               <DiskReport />
             </Box>

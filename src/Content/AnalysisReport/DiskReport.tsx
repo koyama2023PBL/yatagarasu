@@ -33,7 +33,7 @@ export const DiskReport: React.FC = () => {
             ディスク
           </Typography>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '2vw' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '1vw' }}>
           <CPUIOWaitRatio />
           <DiskBusyRatio />
           <DiskUsage />
