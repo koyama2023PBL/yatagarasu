@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {Bar} from "react-chartjs-2";
 import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
 
@@ -51,6 +52,14 @@ export const DiskBusyRatio: React.FC = () => {
     }
     void fetchChartData();
   }, [data]);
+
+  const analysisResult = (): string | null => {
+    const status: StatusType | null = getDiskBusyRatioStatus();
+    if (!status) return null;
+    if (status === 'ERROR') return 'ディスクビジー率が非常に高いです。';
+    if (status === 'WARNING') return 'ディスクビジー率が高いです。';
+    return 'ディスクビジー率は正常です。';
+  }
 
   const options = () => ({
     maintainAspectRatio: true,
@@ -100,8 +109,25 @@ export const DiskBusyRatio: React.FC = () => {
                 {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
               </div>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              概況
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
+              <Typography variant="body2" align="left" sx={{}}>
+                診断結果
+              </Typography>
+              <Divider />
+              <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
+                {analysisResult()}
+              </Typography>
+              <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
+                チェックポイント
+              </Typography>
+              <Divider />
+              <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
+                <ul>
+                  <li>ディスクビジー率が50%を頻繁に超えている場合、ディスクがボトルネックとなっている可能性が高いです。</li>
+                  <li>問題となっているのはどのディスクなのか、書き込み／読み込みのどちらで問題が発生しているのかを確認してください。</li>
+                  <li>より詳細な確認はこちらから。</li>
+                </ul>
+              </Typography>
             </Box>
           </Box>
         </Box>

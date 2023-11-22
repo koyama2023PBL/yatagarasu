@@ -4,6 +4,7 @@ import { Chart, Filler } from 'chart.js';
 import {Bar} from "react-chartjs-2";
 import {MemorySwapIOData, useMemorySwapIO} from "../DataProvider/MemorySwapIOProvider";
 import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
 
@@ -70,6 +71,14 @@ export const MemorySwapIO = () => {
     void fetchChartData();
   }, [data]);
 
+  const analysisResult = (): string | null => {
+    const status: StatusType | null = getMemorySwapIOStatus();
+    if (!status) return null;
+    if (status === 'ERROR') return 'メモリが不足している可能性が高いです。';
+    if (status === 'WARNING') return 'メモリが不足している可能性があります。';
+    return 'メモリは充足しています。';
+  }
+
   // noinspection JSUnusedGlobalSymbols, JSUnusedLocalSymbols
   const options = () => ({
     maintainAspectRatio: true,
@@ -123,8 +132,24 @@ export const MemorySwapIO = () => {
                 {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
               </div>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              概況
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw'  }}>
+              <Typography variant="body2" align="left" sx={{}}>
+                診断結果
+              </Typography>
+              <Divider />
+              <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
+                {analysisResult()}
+              </Typography>
+              <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
+                チェックポイント
+              </Typography>
+              <Divider />
+              <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
+                <ul>
+                  <li>スワップインおよびスワップアウトの発生回数です。</li>
+                  <li>メモリスワップが断続的に発生している場合、メモリ不足の可能性が高いです。</li>
+                </ul>
+              </Typography>
             </Box>
           </Box>
         </Box>

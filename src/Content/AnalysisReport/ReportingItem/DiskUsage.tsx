@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {Bar} from "react-chartjs-2";
 import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
 
@@ -52,6 +53,14 @@ export const DiskUsage: React.FC = () => {
     void fetchChartData();
   }, [data]);
 
+  const analysisResult = (): string | null => {
+    const status: StatusType | null = getDiskUsageStatus();
+    if (!status) return null;
+    if (status === 'ERROR') return 'ディスク使用率が非常に高いです。';
+    if (status === 'WARNING') return 'ディスク使用率が高いです。';
+    return 'ディスク使用率は正常です。';
+  }
+
   const options = () => ({
     scales: {
       x: {
@@ -99,12 +108,27 @@ export const DiskUsage: React.FC = () => {
                 <div style={{ width: '100%' }}>
                   {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
                 </div>
-            </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              概況
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
+                <Typography variant="body2" align="left" sx={{}}>
+                  診断結果
+                </Typography>
+                <Divider />
+                <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
+                  {analysisResult()}
+                </Typography>
+                <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
+                  チェックポイント
+                </Typography>
+                <Divider />
+                <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
+                  <ul>
+                    <li>(オブジェクト、VACUUM、インデックスとの関連も含めて整理予定)</li>
+                  </ul>
+                </Typography>
+              </Box>
             </Box>
           </Box>
-        </Box>
         </CardContent>
       </Card>
   );

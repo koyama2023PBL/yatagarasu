@@ -4,6 +4,7 @@ import {Chart, Filler} from "chart.js";
 import {CPUUsageRatioData, useCPUUsageRatio} from "../DataProvider/CPUUsageRatioProvider";
 import {Bar} from "react-chartjs-2";
 import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
 
@@ -67,6 +68,14 @@ export const CPUUsageRatio: React.FC = () => {
     void fetchChartData();
   }, [data]);
 
+  const analysisResult = (): string | null => {
+    const status: StatusType | null = getCPUUsageRatioStatus();
+    if (!status) return null;
+    if (status === 'ERROR') return 'CPU使用率が非常に高いです。';
+    if (status === 'WARNING') return 'CPU使用率が高いです。';
+    return 'CPU使用率は正常です。';
+  }
+
   const options = () => ({
     maintainAspectRatio: true,
     scales: {
@@ -119,8 +128,24 @@ export const CPUUsageRatio: React.FC = () => {
                 {chartData ? <Bar options={options()} data={chartData} /> : <CircularProgress sx={{marginTop: '7vh'}}/>}
               </div>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-              概況
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
+              <Typography variant="body2" align="left" sx={{}}>
+                診断結果
+              </Typography>
+              <Divider />
+              <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
+                {analysisResult()}
+              </Typography>
+              <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
+                チェックポイント
+              </Typography>
+              <Divider />
+              <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
+                <ul>
+                  <li>ユーザープロセスおよびシステムプロセスによるCPU使用率です。</li>
+                  <li>CPU使用率が高騰している時間帯に非効率な処理が行われていた可能性があります。</li>
+                </ul>
+              </Typography>
             </Box>
           </Box>
         </Box>
