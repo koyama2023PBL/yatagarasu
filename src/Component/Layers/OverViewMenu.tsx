@@ -21,9 +21,6 @@ const OverViewMenu: React.FC = () => {
 
   return (
     <div>
-      <Box sx={{ p: 1, flexDirection: 'column', height: '18vh', alignItems: 'center', marginTop: '-1vh'}}>
-        <OverView starttime={starttime} endtime={endtime}/>
-      </Box>
       <Box sx={{ p: 1, flexDirection: 'column', height: '63vh', alignItems: 'center', marginTop: '-1vh'}}>
         <ArchitectureOverview starttime={starttime} endtime={endtime}/>
       </Box>
