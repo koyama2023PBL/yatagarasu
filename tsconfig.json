@@ -18,7 +18,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "types": [ "node", "jest", "@testing-library/jest-dom", "vite-plugin-svgr/client"]
   },
   "include": [
     "src"

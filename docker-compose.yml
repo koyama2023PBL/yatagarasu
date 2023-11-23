@@ -7,6 +7,7 @@ services:
       POSTGRES_DB: yatagarasu
       POSTGRES_USER: yatagarasu
       POSTGRES_PASSWORD: yatagarasu
+    command: "postgres -c shared_preload_libraries=pg_stat_statements"
     ports:
       - "5432:5432"
 
@@ -29,7 +30,10 @@ services:
     image: quay.io/prometheuscommunity/postgres-exporter
     environment:
       DATA_SOURCE_NAME: "postgresql://yatagarasu:yatagarasu@host.docker.internal:5432/yatagarasu?sslmode=disable"
+    volumes:
+      - ./queries.yaml:/queries.yaml
     command:
+      - "--extend.query-path=/queries.yaml"
       - "--collector.stat_activity_autovacuum"
       - "--collector.stat_statements"
     ports:

@@ -13,7 +13,7 @@ import {
 import { Bar } from "react-chartjs-2";
 
 import instance from '../../Axios/AxiosInstance';
-import { getDate, rgbToRgba} from '../../Component/Common/Util';
+import {getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -22,40 +22,60 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
+import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
+import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
 
-interface DeadTupData {
-  timestamp: string;
-  deadTupCount: number;
-  deadTupRatio: number;
+interface DeadTupleApiRequest {
+  start: Date;
+  end: Date;
 }
 
-interface DeadTupApiResponse {
-  starttime: string;
-  endtime: string;
-  deadTupData: DeadTupData[];
-}
-
-interface DeadTupApiRequest {
+interface DeadTupleProps {
   starttime: Date;
   endtime: Date;
 }
 
-interface DeadTuplesProps {
-  starttime: Date;
-  endtime: Date;
+interface DeadTupleApiResponse {
+  data: DeadTupleApiResponseData;
+  status: string;
+};
+
+interface DeadTupleApiResponseData {
+  resultType: string;
+  result: DeadTupleApiResponseResult[];
 }
 
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: DeadTupApiRequest) => {
+interface DeadTupleApiResponseResult {
+  metric: DeadTupleApiResponseMetric;
+  values: [number, string][];
+}
+
+interface DeadTupleApiResponseMetric {
+  __name__: string;
+  datid: string;
+  datname: string;
+  instance: string;
+  job: string;
+}
+
+const fetchFromAPIwithRequest = async (
+    endpoint: string,
+    queryParameters: DeadTupleApiRequest,
+    query: string
+)=> {
   try {
-      const startTimeString = getDate(queryParameters.starttime);
-      const endTimeString = getDate(queryParameters.endtime);
-
-      const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}`);
-
-      return { status: response.status, data: response.data };
+    const startTimeString = queryParameters.start.toISOString();
+    const endTimeString = queryParameters.end.toISOString();
+    const response = await instance.get<DeadTupleApiResponse>(
+        `${endpoint}${encodeURIComponent(
+            query
+        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
+        }`
+    );
+    return { status: response.status, data: response.data };
   } catch (err) {
-      console.log("err:", err);
-      throw err;
+    console.log("err:", err);
+    throw err;
   }
 }
 
@@ -71,7 +91,7 @@ ChartJS.register(
   Legend
 );
 
-const DeadTuple: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
+const DeadTuple: React.FC<DeadTupleProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
   const [yAxisFixed, setYAxisFixed] = useState<boolean>(true);
@@ -82,33 +102,53 @@ const DeadTuple: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/database-explorer/api/visualization/dead-tup";
-      const requestBody: DeadTupApiRequest = {
-        starttime: new Date(starttime),
-        endtime: new Date(endtime)
+      const endpoint = "/api/v1/query_range?query=";
+      const query =
+          'pg_stat_user_tables_n_dead_tup{datname="' +
+          yatagarasuSettings.dbname + '"}';
+
+      const requestBody: DeadTupleApiRequest = {
+        start: starttime,
+        end: endtime,
       };
   
-      const { status, data: response }: {status: number, data: DeadTupApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
+      const { status, data: response }: {status: number, data: DeadTupleApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody, query);
       setStatusCode(status);
-  
-      const labels = response.deadTupData.map((item) => item.timestamp);
-      const data = response.deadTupData.map((item) => item.deadTupCount);
-      const borderColor = data.map((value) => {
+
+      // キーごとに合計するマップ
+      const keySumMap: Record<string, number> = {};
+
+      // 各テーブルのデータを処理
+      response.data.result.forEach((tableResult) => {
+        tableResult.values.forEach(([key, valueStr]) => {
+          const value = parseInt(valueStr, 10);
+          if (!keySumMap[key]) {
+            keySumMap[key] = 0;
+          }
+          keySumMap[key] += value;
+        });
+      });
+
+      // 合計を数字の配列で取得
+      const deadTupleCounts = Object.values(keySumMap);
+      const labels = response.data.result.flatMap((data) =>
+          data.values.map(([labels, _]) => labels)).map(value => {let v = unixTimeToDate(value).toLocaleString(); return v;});
+      const borderColor = deadTupleCounts.map((value)=> {
         let status: Status;
-        if (value <= Thresholds.deadtuple.ok) {
+        if (Number(value) <= Thresholds.deadtuple.ok) {
           status = 'ok';
-        } else if (value <= Thresholds.deadtuple.watch) {
+        } else if (Number(value) <= Thresholds.deadtuple.watch) {
           status = 'watch';
         } else {
           status = 'alert';
         }
         return rgbToRgba(statusColors[status], 1);
       });
-      const backgroundColor = data.map((value) => {
+      const backgroundColor = deadTupleCounts.map((value) => {
         let status: Status;
-        if (value <= Thresholds.deadtuple.ok) {
+        if (Number(value) <= Thresholds.deadtuple.ok) {
           status = 'ok';
-        } else if (value <= Thresholds.deadtuple.watch) {
+        } else if (Number(value) <= Thresholds.deadtuple.watch) {
           status = 'watch';
         } else {
           status = 'alert';
@@ -121,7 +161,7 @@ const DeadTuple: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
         labels: labels,
         datasets: [
           {
-            data: data,
+            data: deadTupleCounts,
             borderColor: borderColor,
             backgroundColor: backgroundColor
           }
@@ -129,8 +169,6 @@ const DeadTuple: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
         length: length
       });
     };
-  
-  
     fetchChartData();
   }, [starttime, endtime]);
 
@@ -186,8 +224,6 @@ const DeadTuple: React.FC<DeadTuplesProps> = ({ starttime, endtime }) => {
       },
     }
   });
-  
-  
   
   const getIcon = () => {
     if (statusCode === null) {

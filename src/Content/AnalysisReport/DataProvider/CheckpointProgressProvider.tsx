@@ -1,6 +1,3 @@
-/**
- * チェックポイント実行状況のデータプロバイダ
- */
 import React, {createContext, useContext, useEffect, useState} from "react";
 import yatagarasuSettings from "../../../Component/Redux/YatagarasuSettings";
 import instance from "../../../Axios/AxiosInstance";
@@ -28,10 +25,6 @@ export interface CheckpointProgressData {
  *
  */
 const DataContext: React.Context<CheckpointProgressData | null> = createContext<CheckpointProgressData | null>(null);
-
-interface MetricsItem {
-
-}
 
 /**
  * APIでデータを取得して整形します。

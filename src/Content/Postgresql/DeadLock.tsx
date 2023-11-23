@@ -58,13 +58,6 @@ interface DeadLocksApiResponseMetric {
   job: string;
 }
 
-interface DeadLocksData {
-  startTime: string;
-  endTime: string;
-  dbName: string;
-  deadlocks: number;
-}
-
 const fetchFromAPIwithRequest = async (
     endpoint: string,
     queryParameters: DeadLocksApiRequest,

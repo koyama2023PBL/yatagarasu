@@ -1,7 +1,7 @@
+import {Chart, Filler} from "chart.js";
+import {DiskBusyRatioData, useDiskBusyRatio} from "../DataProvider/DiskBusyRatioProvider";
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
-import {Chart, Filler} from "chart.js";
-import {CPUUsageRatioData, useCPUUsageRatio} from "../DataProvider/CPUUsageRatioProvider";
 import {Bar} from "react-chartjs-2";
 import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
@@ -9,59 +9,44 @@ import Divider from "@mui/material/Divider";
 Chart.register(Filler);
 
 /**
- * CPU使用率のステータスを取得する
- * TODO: 閾値の設定
+ * ディスクビジー率のステータスを取得する
  */
-export const getCPUUsageRatioStatus = (): StatusType | null => {
-  const data: CPUUsageRatioData[] | null = useCPUUsageRatio();
+export const getDiskBusyRatioStatus = (): StatusType | null => {
+  const data: DiskBusyRatioData[] | null = useDiskBusyRatio();
   if (!data) return null;
-  if (data.find((item) => item.user + item.system > 80)) return 'ERROR';
-  if (data.find((item) => item.user + item.system > 50)) return 'WARNING';
+  if (data.find((item) => item.ratio > 80)) return 'ERROR';
+  if (data.find((item) => item.ratio > 50)) return 'WARNING';
   return 'OK';
 }
 
 /**
- * CPU使用率のJSX
+ * ディスクビジー率のコンポーネント
  */
-export const CPUUsageRatio: React.FC = () => {
+export const DiskBusyRatio: React.FC = () => {
   const [chartData, setChartData] = useState<any | null>(null);
-  const data: CPUUsageRatioData[] | null = useCPUUsageRatio();
+  const data: DiskBusyRatioData[] | null = useDiskBusyRatio();
 
   useEffect(() => {
     const fetchChartData = async () => {
       if (data) {
         const labels = data.map((item) => item.datetime);
         const length = labels.length;
-        const user = data.map((item) => item.user);
-        const system = data.map((item) => item.system);
+        const ratio = data.map((item) => item.ratio);
 
         setChartData({
           labels: labels,
           length: length,
           datasets: [
             {
-              label: 'ユーザ',
-              data: user,
-              backgroundColor: 'rgba(136, 204, 238, 1)',
-              borderColor: 'rgb(136, 204, 238)',
-              fill: true,
+              label: 'ディスクビジー率',
+              data: ratio,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgb(54, 162, 235)',
               type: 'line',
               pointRadius: 0,
               borderWidth: 1,
-              pointStyle: 'rect',
             },
-            {
-              label: 'システム',
-              data: system,
-              backgroundColor: 'rgba(51, 34, 136, 1)',
-              borderColor: 'rgb(51, 34, 136)',
-              fill: true,
-              type: 'line',
-              pointRadius: 0,
-              borderWidth: 1,
-              pointStyle: 'rect',
-            }
-          ],
+          ]
         });
       }
     }
@@ -69,11 +54,11 @@ export const CPUUsageRatio: React.FC = () => {
   }, [data]);
 
   const analysisResult = (): string | null => {
-    const status: StatusType | null = getCPUUsageRatioStatus();
+    const status: StatusType | null = getDiskBusyRatioStatus();
     if (!status) return null;
-    if (status === 'ERROR') return 'CPU使用率が非常に高いです。';
-    if (status === 'WARNING') return 'CPU使用率が高いです。';
-    return 'CPU使用率は正常です。';
+    if (status === 'ERROR') return 'ディスクビジー率が非常に高いです。';
+    if (status === 'WARNING') return 'ディスクビジー率が高いです。';
+    return 'ディスクビジー率は正常です。';
   }
 
   const options = () => ({
@@ -87,15 +72,14 @@ export const CPUUsageRatio: React.FC = () => {
           minRotation: 0,
           callback: function(_value : any, index : any , _values : any) {
             return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
-          },
+          }
         },
         grid: {
           display: false,
-          drawBorder: false,
+          drawBorder: false
         }
       },
       y: {
-        stacked: true,
         min: 0,
         max: 100,
         ticks: {
@@ -107,25 +91,22 @@ export const CPUUsageRatio: React.FC = () => {
     },
     plugins: {
       legend: {
-        position: 'bottom' as const,
-        labels: {
-          usePointStyle: true,
-        },
-      }
+        display: false,
+      },
     },
   });
 
   return (
-    <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto' }}>
+    <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
       <CardContent sx={{ display: 'flex' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h6" align="left" sx={getItemTitleSx(getCPUUsageRatioStatus())}>
-            CPU使用率
+          <Typography variant="h6" align="left" sx={getItemTitleSx(getDiskBusyRatioStatus())}>
+            ディスクビジー率
           </Typography>
           <Box sx={{ display: 'flex', marginTop: '3vh' }}>
             <Box sx={{ display: 'flex', width: '25vw' }}>
               <div style={{ width: '100%' }}>
-                {chartData ? <Bar options={options()} data={chartData} /> : <CircularProgress sx={{marginTop: '7vh'}}/>}
+                {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
               </div>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
@@ -142,8 +123,9 @@ export const CPUUsageRatio: React.FC = () => {
               <Divider />
               <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
                 <ul>
-                  <li>ユーザープロセスおよびシステムプロセスによるCPU使用率です。</li>
-                  <li>CPU使用率が高騰している時間帯に非効率な処理が行われていた可能性があります。</li>
+                  <li>ディスクビジー率が50%を頻繁に超えている場合、ディスクがボトルネックとなっている可能性が高いです。</li>
+                  <li>問題となっているのはどのディスクなのか、書き込み／読み込みのどちらで問題が発生しているのかを確認してください。</li>
+                  <li>より詳細な確認はこちらから。</li>
                 </ul>
               </Typography>
             </Box>

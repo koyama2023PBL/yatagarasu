@@ -47,7 +47,7 @@ import { Api } from '@mui/icons-material';
 import TerminalDescription from '../Description/TerminalDescription';
 import TerminalMenu from '../Layers/TerminalMenu';
 import ReportingInfo from "../../Content/AnalysisReport/ReportingInfo";
-import AnalysisReportMenu from "../Layers/AnalysisReportMenu";
+import {AnalysisReportMenu} from "../Layers/AnalysisReportMenu";
 
 const drawerWidth = 300;
 

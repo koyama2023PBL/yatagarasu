@@ -1,18 +1,18 @@
-import React from "react";
+import {getDiskUsageStatus, DiskUsage} from "./ReportingItem/DiskUsage";
+import {DiskBusyRatio, getDiskBusyRatioStatus} from "./ReportingItem/DiskBusyRatio";
+import {CPUIOWaitRatio, getCPUIOWaitRatioStatus} from "./ReportingItem/CPUIOWaitRatio";
 import {Box, Card, CardContent, Typography} from "@mui/material";
-import {CPUUsageRatio, getCPUUsageRatioStatus} from "./ReportingItem/CPUUsageRatio";
-import {MemorySwapIO, getMemorySwapIOStatus} from "./ReportingItem/MemorySwapIO";
-import {CheckPointProgress, getCheckPointProgressStatus} from "./ReportingItem/CheckpointProgress";
+import React from "react";
 import {StatusType} from "./AnalysisReportUtil";
 
 /**
- * パフォーマンスのステータスを取得する
+ * ディスク診断のステータスを取得する
  */
-export const getPerformanceStatus = (): StatusType | null => {
+export const getDiskStatus = (): StatusType | null => {
   const statusList: (StatusType | null)[] = [
-    getMemorySwapIOStatus(),
-    getCPUUsageRatioStatus(),
-    getCheckPointProgressStatus(),
+    getCPUIOWaitRatioStatus(),
+    getDiskBusyRatioStatus(),
+    getDiskUsageStatus(),
   ];
 
   if (statusList.includes(null))      return null;
@@ -22,23 +22,23 @@ export const getPerformanceStatus = (): StatusType | null => {
 }
 
 /**
- * パフォーマンス診断部分のJSX
+ * ディスク診断部分のコンポーネント
  */
-export const PerformanceReport: React.FC = () => {
+export const DiskReport: React.FC = () => {
   return (
     <Card sx={{ marginTop: '1vh' }}>
       <CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-            パフォーマンス
+            ディスク
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '1vw' }}>
-          <CPUUsageRatio />
-          <MemorySwapIO />
-          <CheckPointProgress />
+          <CPUIOWaitRatio />
+          <DiskBusyRatio />
+          <DiskUsage />
         </Box>
       </CardContent>
     </Card>
   );
-};
+}
