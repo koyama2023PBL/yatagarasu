@@ -13,7 +13,7 @@ import {
 import { Bar } from "react-chartjs-2";
 
 import instance from '../../Axios/AxiosInstance';
-import { getDate, rgbToRgba} from '../../Component/Common/Util';
+import { getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -22,37 +22,72 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
+import { prometheusSettings } from "../../Component/Redux/PrometheusSettings";
 
-interface MemUsageData {
-  timestamp: string;
-  memUsage: number;
-  memUsageRatio: number;
-  connections: number;
+
+export interface MemUsageApiResponse {
+  data: MemUsageResponseData;
+  status: string;
 }
+
+export interface MemUsageResponseData {
+  resultType: string;
+  result: MemUsageResponseResult[];
+}
+
+export interface MemUsageResponseResult {
+  metric: MemUsageResponseMetric;
+  values: [number, string][];
+}
+
+export interface MemUsageResponseMetric {
+  instance: string;
+  job: string;
+}
+
+export interface MemUsageApiRequest {
+  //query: string;
+  start: Date;
+  end: Date;
+}
+
+// interface MemUsageData {
+//   timestamp: string;
+//   memUsage: number;
+//   memUsageRatio: number;
+//   connections: number;
+// }
   
-interface MemUsageApiResponse {
-  starttime: string;
-  endtime: string;
-  workMem: number;
-  maxConnections: number;
-  data: MemUsageData[];
-}
+// interface MemUsageApiResponse {
+//   starttime: string;
+//   endtime: string;
+//   workMem: number;
+//   maxConnections: number;
+//   data: MemUsageData[];
+// }
   
-interface MemUsageApiRequest {
-  starttime: Date;
-  endtime: Date;
-}
+// interface MemUsageApiRequest {
+//   starttime: Date;
+//   endtime: Date;
+// }
 
 interface MemoryUsageProps {
   starttime: Date;
   endtime: Date;
 }
 
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: MemUsageApiRequest) => {
+const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: MemUsageApiRequest, query: string) => {
   try {
-      const startTimeString = getDate(queryParameters.starttime);
-      const endTimeString = getDate(queryParameters.endtime);
-      const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}`);
+    //APIの形式に合わせるためISO時間を使う
+    const startTimeString = queryParameters.start.toISOString();
+    const endTimeString = queryParameters.end.toISOString();
+    
+    const response = await instance.get<MemUsageApiResponse>(
+      `${endpoint}${encodeURIComponent(
+        query
+      )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
+      }`
+    );
       return { status: response.status, data: response.data };
   } catch (err) {
       console.log("err:", err);
@@ -83,41 +118,49 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/database-explorer/api/visualization/mem-usage";
-      const requestBody: MemUsageApiRequest = {
-        starttime: new Date(starttime),
-        endtime: new Date(endtime)
-      };
-  
-      const { status, data: response }: {status: number, data: MemUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
-      setStatusCode(status);
+      const endpoint = "/api/v1/query_range?query=";
+      const query = '(node_memory_MemTotal_bytes-node_memory_MemAvailable_bytes)/(1024*1024)'
 
-      const labels = response.data.map((item) => item.timestamp);
-      const data = response.data.map((item) => item.memUsage / 1024);
-      const borderColor = data.map((value) => {
-        let status: Status;
-        if (value <= Thresholds.memory.ok) {
-          status = 'ok';
-        } else if (value <= Thresholds.memory.watch) {
-          status = 'watch';
-        } else {
-          status = 'alert';
-        }
-        return rgbToRgba(statusColors[status], 1);
-      });
-      const backgroundColor = data.map((value) => {
-        let status: Status;
-        if (value <= Thresholds.memory.ok) {
-          status = 'ok';
-        } else if (value <= Thresholds.memory.watch) {
-          status = 'watch';
-        } else {
-          status = 'alert';
-        }
-        return rgbToRgba(statusColors[status], 0.1);
-      });
+      const requestBody: MemUsageApiRequest = {
+        start: new Date(starttime),
+        end: new Date(endtime)
+      };
+
+
+      const { status, data: response }: {status: number, data: MemUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody, query);
+      const labels = response.data.result.flatMap(data => data.values).map(value => unixTimeToDate(value[0]));
+      const backgroundColor = response.data.result.flatMap(data => 
+        data.values.map(value => {
+          let status: Status;
+          if (Number(value[1]) <= Thresholds.memory.ok) {
+            status = 'ok';
+          } else if (Number(value[1]) <= Thresholds.memory.watch) {
+            status = 'watch';
+          } else {
+            status = 'alert';
+          }
+          return rgbToRgba(statusColors[status], 0.1);
+        })
+        );
+      const borderColor = response.data.result.flatMap(data => 
+        data.values.map(value => {
+          let status: Status;
+          if (Number(value[1]) <= Thresholds.memory.ok) {
+            status = 'ok';
+          } else if (Number(value[1]) <= Thresholds.memory.watch) {
+            status = 'watch';
+          } else {
+            status = 'alert';
+          }
+          return rgbToRgba(statusColors[status], 1);
+        })
+        );
       const length = labels.length;
-  
+      const data = response.data.result.flatMap(data => data.values).map(value => Number(value[1]));
+
+
+
+
       setChartData({
         labels: labels,
         datasets: [
