@@ -6,7 +6,6 @@ import PostgresProcessStatus from '../../Content/Postgresql/ProcessCheck';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
-import OverView from '../../Content/Postgresql/Overview';
 import ArchitectureOverview from '../../Content/Postgresql/ArchitectureOverview';
 import MemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 import DeadTuple from '../../Content/Postgresql/DeadTuple';
