@@ -28,11 +28,14 @@ import OverViewMenu from '../Layers/OverViewMenu';
 import OsMenu from '../Layers/OsMenu';
 import RdbmsMenu from '../Layers/RdbmsMenu';
 import TableMenu from '../Layers/TableMenu';
-import SettingMenu from '../Layers/SettingMenu';
+
 
 import TimePicker from '../Common/TimePicker';
 import { AnalysisReportMenu } from "../Layers/AnalysisReportMenu";
 import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelected } from '../Redux/MenuState';
+import { RootState } from '../Redux/StateStore';
 
 const drawerWidth = 300;
 
@@ -105,6 +108,17 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function BaseDisplayMenu() {
+
+  const dispatch = useDispatch();
+  const selected = useSelector((state: RootState) => state.menu.selected);
+  const location = useLocation();
+
+  React.useEffect(() => {
+    const path = location.pathname.replace('/', '') || 'dashboard';
+    dispatch(setSelected(path));
+  }, [location, dispatch]);
+
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -116,15 +130,12 @@ export default function BaseDisplayMenu() {
     setOpen(false);
   };
 
-  const location = useLocation();
-
   const renderRoutes = () => (
     <Routes>
       <Route path="/" element={<OverViewMenu search={location.search} />} />
       <Route path="/dashboard" element={<OverViewMenu search={location.search} />} />
       <Route path="/server" element={<OsMenu search={location.search}/>} />
       <Route path="/rdbms" element={<RdbmsMenu/>} />
-      <Route path="/settings" element={<SettingMenu/>} />
       <Route path="/analysis-report" element={<AnalysisReportMenu/>}/>
       <Route path="/table-and-queries" element={<TableMenu/>} />
     </Routes>
@@ -150,7 +161,6 @@ export default function BaseDisplayMenu() {
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               flexDirection: 'flex',
-              //fontFamily: 'Noto Sans',
               fontWeight: 850,
               alignItems: 'center',
               letterSpacing: '.0.8rem',
@@ -178,20 +188,21 @@ export default function BaseDisplayMenu() {
           { id: 'server', text: 'Server', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
           { id: 'rdbms', text: 'RDBMS', icon: <Storage style={{ fontSize: 40 }}/> },
           { id: 'table-and-queries', text: 'Table & Query', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
-          { id: 'settings', text: 'Settings(Beta)', icon: <Settings style={{ fontSize: 40 }}/> }
         ].map((item) => (
           <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
-            <Link to={`/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-              <ListItemButton sx={{minHeight: 48,justifyContent: open ? 'initial' : 'center',px: 3}}>
-                <ListItemIcon sx={{minWidth: 0,mr: open ? 3 : 'auto',justifyContent: 'center',}}>
-                  {item.icon}
-                </ListItemIcon>
-                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </Link>
-          </ListItem>
-        ))}
-        </List>
+          <Link to={`/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <ListItemButton sx={{minHeight: 48, justifyContent: open ? 'initial' : 'center', px: 3, 
+                backgroundColor: selected === item.id ? '#DDE1E1' : 'inherit',}}>
+              <ListItemIcon sx={{ minWidth: 0, mr: open ? 3 : 'auto', justifyContent: 'center',
+                  color: selected === item.id ? 'primary.main' : '696969'}}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
+      ))}
+    </List>
       </Drawer>
         <Box sx={{ display: 'grid', gridTemplateRows: '1fr auto', minHeight: '100vh'}}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px`}}>
