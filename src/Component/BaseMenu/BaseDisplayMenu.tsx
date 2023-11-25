@@ -177,7 +177,7 @@ export default function BaseDisplayMenu() {
           { id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
           { id: 'server', text: 'Server', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
           { id: 'rdbms', text: 'RDBMS', icon: <Storage style={{ fontSize: 40 }}/> },
-          { id: 'table', text: 'Table & Query', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
+          { id: 'table-and-queries', text: 'Table & Query', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
           { id: 'settings', text: 'Settings(Beta)', icon: <Settings style={{ fontSize: 40 }}/> }
         ].map((item) => (
           <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
