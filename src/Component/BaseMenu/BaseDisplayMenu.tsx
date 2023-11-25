@@ -12,7 +12,6 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// @ts-ignore
 import icon from '../../img/icon.png';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -21,10 +20,8 @@ import ListItemText from '@mui/material/ListItemText';
 
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import Terminal from '@mui/icons-material/Terminal';
 import Storage from '@mui/icons-material/Storage';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
-import Settings from '@mui/icons-material/Settings';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 
 import OverViewMenu from '../Layers/OverViewMenu';
