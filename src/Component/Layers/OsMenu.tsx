@@ -7,11 +7,17 @@ import { RootState } from '../Redux/StateStore';
 import CPUusage from '../../Content/Postgresql/CPUusage';
 import MemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 import MemoryUsageRatio from '../../Content/Postgresql/PostgresMemoryUsageRatio';
+import { parse } from 'date-fns';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSyncQueryString } from '../Common/DateUpdate';
 
-const OsMenu: React.FC = () => {
+interface OsMenuProps {search: string;}
+
+const OsMenu: React.FC<OsMenuProps> = ({ search }) => {
+  
+  useSyncQueryString();
 
   const { from, to } = useSelector((state: RootState) => state.date);
-
   const starttime = new Date(from);
   const endtime = new Date(to);
 

@@ -24,19 +24,15 @@ import Storage from '@mui/icons-material/Storage';
 import TroubleshootIcon from '@mui/icons-material/Troubleshoot';
 import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { setSelected } from '../Redux/MenuState'; 
-import { RootState } from '../Redux/StateStore';
-
 import OverViewMenu from '../Layers/OverViewMenu';
 import OsMenu from '../Layers/OsMenu';
 import RdbmsMenu from '../Layers/RdbmsMenu';
 import TableMenu from '../Layers/TableMenu';
+import SettingMenu from '../Layers/SettingMenu';
 
 import TimePicker from '../Common/TimePicker';
-import DatabaseInformation from '../../Content/Postgresql/DatabaseInformation';
-import ReportingInfo from "../../Content/AnalysisReport/ReportingInfo";
-import {AnalysisReportMenu} from "../Layers/AnalysisReportMenu";
+import { AnalysisReportMenu } from "../Layers/AnalysisReportMenu";
+import { Link, Route, Routes, useLocation } from 'react-router-dom';
 
 const drawerWidth = 300;
 
@@ -109,8 +105,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function BaseDisplayMenu() {
-  const dispatch = useDispatch();
-  const selected = useSelector((state: RootState) => state.menu.selected);
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
@@ -122,51 +116,19 @@ export default function BaseDisplayMenu() {
     setOpen(false);
   };
 
-  const renderContentMain = () => {
-    switch (selected) {
-      case 'analysisreport':
-        return <AnalysisReportMenu />;
-      case 'dashboard':
-        return <OverViewMenu />;
-      case 'os':
-        return <OsMenu />;
-      case 'rdbms':
-        return <RdbmsMenu />;
-      case 'table':
-        return <TableMenu />;
-      default:
-        return null;
-    }
-  };
+  const location = useLocation();
 
-  const renderContentDesc = () => {
-    switch (selected) {
-      case 'analysisreport':
-        return <ReportingInfo />;
-      case 'dashboard':
-        return <DatabaseInformation />;
-      case 'os':
-        return <DatabaseInformation />
-        //return <OSDesc />;
-      case 'rdbms':
-        return <DatabaseInformation/>;
-        //return <RDBMSDesc />;
-      case 'table':
-        return <DatabaseInformation/>;
-        //return <TableDesc />;
-      default:
-        return <DatabaseInformation />;
-    }
-  };
-
-  const renderDatePicker = () => {
-    switch (selected) {
-      case 'apiinfo':
-        return;
-      default:
-        return <TimePicker/>;
-    }
-  };
+  const renderRoutes = () => (
+    <Routes>
+      <Route path="/" element={<OverViewMenu search={location.search} />} />
+      <Route path="/dashboard" element={<OverViewMenu search={location.search} />} />
+      <Route path="/server" element={<OsMenu search={location.search}/>} />
+      <Route path="/rdbms" element={<RdbmsMenu/>} />
+      <Route path="/settings" element={<SettingMenu/>} />
+      <Route path="/analysis-report" element={<AnalysisReportMenu/>}/>
+      <Route path="/table-and-queries" element={<TableMenu/>} />
+    </Routes>
+  );
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -178,28 +140,20 @@ export default function BaseDisplayMenu() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }),
-            }}
+            sx={{marginRight: 5, ...(open && { display: 'none' })}}
           >
-          <MenuIcon />
+            <MenuIcon />
           </IconButton>
           
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
+          <Typography variant="h6" noWrap component="a" href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               flexDirection: 'flex',
-              //fontFamily: 'M PLUS Rounded 1c',
-              fontFamily: 'Noto Sans',
+              //fontFamily: 'Noto Sans',
               fontWeight: 850,
               alignItems: 'center',
-              letterSpacing: '.1rem',
+              letterSpacing: '.0.8rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
@@ -207,23 +161,8 @@ export default function BaseDisplayMenu() {
           <img src={icon} alt="icon" style={{ height: '50px', marginRight: '12px' }} />
           Yatagarasu
           </Typography>
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            justifyContent: 'flex-end', 
-            alignItems: 'flex-end', 
-            width: '100%', 
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            pr: 0.5,
-            pb: 0.5,
-            }}
-          >
-            <Typography variant="body2" align="right">
-                © 2023 Advanced Institute of Industrial Technology, Koyama Lab. All rights reserved. Released under the MIT license.(仮)
-            </Typography>
-        </Box>
+          <Box sx={{ flexGrow: 1 }} />
+          <TimePicker/>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -234,55 +173,30 @@ export default function BaseDisplayMenu() {
         </DrawerHeader>
         <Divider />
         <List>
-        {[{ id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
-          { id: 'os', text: 'OS', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
+        {[{ id: 'analysis-report', text: 'Analysis Report', icon: <SummarizeIcon style={{ fontSize: 40 }}/> },
+          { id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
+          { id: 'server', text: 'Server', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
           { id: 'rdbms', text: 'RDBMS', icon: <Storage style={{ fontSize: 40 }}/> },
           { id: 'table', text: 'Table & Query', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
-          { id: 'analysisreport', text: 'Analysis Report', icon: <SummarizeIcon style={{ fontSize: 40 }}/> },
+          { id: 'settings', text: 'Settings(Beta)', icon: <Settings style={{ fontSize: 40 }}/> }
         ].map((item) => (
           <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton
-              selected={item.id === selected}
-              onClick={() => dispatch(setSelected(item.id))}
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 3,
-              }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 2 : 'auto',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {item.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-          ))}
+            <Link to={`/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <ListItemButton sx={{minHeight: 48,justifyContent: open ? 'initial' : 'center',px: 3}}>
+                <ListItemIcon sx={{minWidth: 0,mr: open ? 3 : 'auto',justifyContent: 'center',}}>
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </Link>
+          </ListItem>
+        ))}
         </List>
       </Drawer>
         <Box sx={{ display: 'grid', gridTemplateRows: '1fr auto', minHeight: '100vh'}}>
           <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: `${theme.mixins.toolbar.minHeight}px`}}>
-            <Box 
-              sx={{  
-                display: 'flex', 
-                flexDirection: 'row', 
-                alignItems: 'left',
-                flexGrow: 0,
-                p: 1,
-                height: '18vh',
-                width: '95vw',
-                marginTop: '1vh'
-              }}>
-              {renderContentDesc()}
-              <Box sx={{ width: '1.5vh'}}></Box>
-              {renderDatePicker()}
-            </Box>
-              {renderContentMain()}
+            <Box sx={{  display: 'flex', flexDirection: 'row', alignItems: 'left',flexGrow: 0,p: 1,width: '95vw',marginTop: '0.5vh'}}></Box>
+              {renderRoutes()}
           </Box>
       </Box>
     </Box>

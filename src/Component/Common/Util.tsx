@@ -17,6 +17,37 @@ export function DateTostring(date: Date): string {
   return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
 }
 
+//String→Date型変換。
+export function parseDateString (dateString: string): Date | null  {
+  let year = 0, month = 0, day = 0, hours = 0, minutes = 0, seconds = 0;
+
+  // 年月日のみの場合、年月日を取得
+  if (dateString.length >= 8) {
+    year = parseInt(dateString.slice(0, 4));
+    month = parseInt(dateString.slice(4, 6));
+    day = parseInt(dateString.slice(6, 8));
+  }
+
+  // 時間と分がある場合、それらを取得
+  if (dateString.length >= 12) {
+    hours = parseInt(dateString.slice(8, 10));
+    minutes = parseInt(dateString.slice(10, 12));
+  }
+
+  // 秒がある場合、それを取得
+  if (dateString.length === 14) {
+    seconds = parseInt(dateString.slice(12, 14));
+  }
+
+  // 日時が有効かチェック
+  if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+    // JavaScriptのDateは月が0から始まるため、月から1を引く
+    return new Date(year, month - 1, day, hours, minutes, seconds);
+  }
+
+  return null;
+};
+
 /*
 //分以下切り捨て
 export function truncateMinutes(date: Date): Date {

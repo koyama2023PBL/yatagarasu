@@ -8,9 +8,12 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
 import DeadLocks from '../../Content/Postgresql/DeadLock';
 import QueryCounts from '../../Content/Postgresql/QueryCounts';
+import { useSyncQueryString } from '../Common/DateUpdate';
 
 
 const TableMenu: React.FC = () => {
+
+  useSyncQueryString();
 
   const { from, to } = useSelector((state: RootState) => state.date);
 

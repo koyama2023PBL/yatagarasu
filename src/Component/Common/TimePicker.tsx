@@ -8,12 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import ja from 'date-fns/locale/ja'
 import { setFromDate, setToDate } from '../Redux/DateState';
 import Typography from '@mui/material/Typography';
-import { Card, CardContent } from '@mui/material';
 import { RootState } from '../Redux/StateStore';
+import { useNavigate } from 'react-router-dom';
+import { format } from 'date-fns';
 
 const TimePicker = () => {
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { from, to } = useSelector((state: RootState) => state.date);
   const starttime = new Date(from);
@@ -22,89 +24,69 @@ const TimePicker = () => {
   const [temporaryFromDate, setTemporaryFromDate] = useState<Date | null>(starttime);
   const [temporaryToDate, setTemporaryToDate] = useState<Date | null>(endtime);
 
-  const handleFromDateChange = (date: Date | null) => {
-    if (date && temporaryToDate && date > temporaryToDate) {
-      alert("開始時間は終了時間より前に設定してください");
-      return;
-    }
-    setTemporaryFromDate(date);
-  };
-
-  const handleToDateChange = (date: Date | null) => {
-    if (date && temporaryFromDate && date < temporaryFromDate) {
-      alert("終了時間は開始時間より後に設定してください");
-      return;
-    }
-    setTemporaryToDate(date);
-  };
-
   const handleSubmit = () => {
     if (temporaryFromDate && temporaryToDate) {
       if (temporaryFromDate > temporaryToDate) {
         alert("開始時間は終了時間より前に設定してください");
         return;
       }
-      dispatch(setFromDate(temporaryFromDate));
-      dispatch(setToDate(temporaryToDate));
+
+      dispatch(setFromDate(temporaryFromDate.toISOString()));
+      dispatch(setToDate(temporaryToDate.toISOString()));
+
+      const from = format(temporaryFromDate, 'yyyyMMddHHmmss');
+      const to = format(temporaryToDate, 'yyyyMMddHHmmss');
+      navigate({pathname: location.pathname,search: `?from=${from}&to=${to}`});
     }
   };
 
   return (
-    <Card sx={{ width: '44vw' }}>
-      <CardContent>
-        <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' , marginTop: '-5px'}}>
-          Time Configuration
-        </Typography>
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginRight: 'auto',
-            marginLeft: '0.5vw',
-            marginTop: '2vh',
-          }}
-        >
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            adapterLocale={ja}
-            dateFormats={{ monthAndYear: 'yyyy年 MM月' }}
-          >
-            <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-              <Typography variant="body2" marginLeft="0.5vw" marginRight="0.5vw">
-                St.
+        <Box sx={{ display: 'flex', alignItems: 'center'}}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+              <Typography variant="body2" sx={{ mr: 1 }}>
+                From
               </Typography>
               <DateTimePicker
-                label="From"
                 value={starttime}
-                onChange={handleFromDateChange}
                 minutesStep={1}
+                onChange={(newValue) => setTemporaryFromDate(newValue)}
                 maxDate={new Date()}
+                sx={{ backgroundColor: 'white'}}
+                slotProps={{ textField: { size: 'small' } }}
+                views={['year', 'day', 'hours', 'minutes', 'seconds']}
               />
-              <Typography variant="body2" marginLeft="0.5vw" marginRight="0.5vw">
-                Ed.
+              <Typography variant="body2" sx={{ mx: 1 }}>
+                To
               </Typography>
               <DateTimePicker
-                label="To"
                 value={endtime}
-                onChange={handleToDateChange}
                 minutesStep={1}
+                onChange={(newValue) => setTemporaryToDate(newValue)}
                 maxDate={new Date()}
+                sx={{ backgroundColor: 'white'}}
+                slotProps={{ textField: { size: 'small' } }}
+                views={['year', 'day', 'hours', 'minutes', 'seconds']}
               />
             </Box>
           </LocalizationProvider>
-          <Button
-            variant="outlined"
-            onClick={handleSubmit}
-            style={{ marginLeft: '1vw', marginRight: '1vw', height: '4vh' }}
-          >
-            Set
+          <Button 
+            variant="outlined" 
+            onClick={handleSubmit} 
+            sx={{ 
+              borderColor: 'white',
+              color: 'white',
+              height: 'fit-content' ,
+              '&:hover': {
+                borderColor: 'white',
+                backgroundColor: 'rgba(255, 255, 255, 0.25)'
+              },
+            }}>
+            SET
           </Button>
         </Box>
-      </CardContent>
-    </Card>
   );
 };
+
 
 export default TimePicker;

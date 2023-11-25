@@ -9,12 +9,18 @@ import { RootState } from '../Redux/StateStore';
 import ArchitectureOverview from '../../Content/Postgresql/ArchitectureOverview';
 import MemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 import DeadTuple from '../../Content/Postgresql/DeadTuple';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { parse } from 'date-fns';
+import { useEffect } from 'react';
+import { useSyncQueryString } from '../Common/DateUpdate';
 
+interface OverViewMenuProps {search: string;}
 
-const OverViewMenu: React.FC = () => {
+const OverViewMenu: React.FC<OverViewMenuProps> = ({ search }) => {
+
+  useSyncQueryString();
 
   const { from, to } = useSelector((state: RootState) => state.date);
-
   const starttime = new Date(from);
   const endtime = new Date(to);
 
