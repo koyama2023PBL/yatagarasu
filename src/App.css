@@ -61,5 +61,5 @@ body {
     monospace;
 }
 .highlight {
-  stroke: red; /* SVGの枠線の色を赤に設定 */
+  stroke: red;
 }

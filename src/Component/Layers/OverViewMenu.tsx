@@ -6,24 +6,26 @@ import PostgresProcessStatus from '../../Content/Postgresql/ProcessCheck';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
-import OverView from '../../Content/Postgresql/Overview';
 import ArchitectureOverview from '../../Content/Postgresql/ArchitectureOverview';
 import MemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 import DeadTuple from '../../Content/Postgresql/DeadTuple';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { parse } from 'date-fns';
+import { useEffect } from 'react';
+import { useSyncQueryString } from '../Common/DateUpdate';
 
+interface OverViewMenuProps {search: string;}
 
-const OverViewMenu: React.FC = () => {
+const OverViewMenu: React.FC<OverViewMenuProps> = ({ search }) => {
+
+  useSyncQueryString();
 
   const { from, to } = useSelector((state: RootState) => state.date);
-
   const starttime = new Date(from);
   const endtime = new Date(to);
 
   return (
     <div>
-      <Box sx={{ p: 1, flexDirection: 'column', height: '18vh', alignItems: 'center', marginTop: '-1vh'}}>
-        <OverView starttime={starttime} endtime={endtime}/>
-      </Box>
       <Box sx={{ p: 1, flexDirection: 'column', height: '63vh', alignItems: 'center', marginTop: '-1vh'}}>
         <ArchitectureOverview starttime={starttime} endtime={endtime}/>
       </Box>

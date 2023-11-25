@@ -11,12 +11,14 @@ import PostgresMemoryUsageRatio from '../../Content/Postgresql/PostgresMemoryUsa
 import DeadTupleRatio from '../../Content/Postgresql/DeadTupleRatio';
 import PostgresMemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 import ErrorLogDisplay from '../../Content/Postgresql/ErrorLog';
+import { useSyncQueryString } from '../Common/DateUpdate';
 
 
 const RdbmsMenu: React.FC = () => {
 
-  const { from, to } = useSelector((state: RootState) => state.date);
+  useSyncQueryString();
 
+  const { from, to } = useSelector((state: RootState) => state.date);
   const starttime = new Date(from);
   const endtime = new Date(to);
 
