@@ -21,13 +21,11 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
-import {CacheHitRateApiResponse} from "./CacheHitRate";
 import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
 
 interface DeadLocksApiRequest {
   start: Date;
   end: Date;
-  datname: string;
 }
 
 interface DeadLocksProps {
@@ -66,7 +64,6 @@ const fetchFromAPIwithRequest = async (
   try {
     const startTimeString = queryParameters.start.toISOString();
     const endTimeString = queryParameters.end.toISOString();
-    const dbName = queryParameters.datname;
 
     const response = await instance.get<DeadLocksApiResponse>(
         `${endpoint}${encodeURIComponent(
@@ -119,7 +116,6 @@ const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
       const requestBody: DeadLocksApiRequest = {
         start: starttime,
         end: endtime,
-        datname: yatagarasuSettings.dbname,
       };
       const { status, data: response }: {status: number, data: DeadLocksApiResponse}
           = await fetchFromAPIwithRequest(endpoint, requestBody, query);
