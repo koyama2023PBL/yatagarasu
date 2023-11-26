@@ -41,50 +41,50 @@ const TimePicker = () => {
   };
 
   return (
-        <Box sx={{ display: 'flex', alignItems: 'center'}}>
-          <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
-            <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
-              <Typography variant="body2" sx={{ mr: 1 }}>
-                From
-              </Typography>
-              <DateTimePicker
-                value={starttime}
-                minutesStep={1}
-                onChange={(newValue) => setTemporaryFromDate(newValue)}
-                maxDate={new Date()}
-                sx={{ backgroundColor: 'white'}}
-                slotProps={{ textField: { size: 'small' } }}
-                views={['year', 'day', 'hours', 'minutes', 'seconds']}
-              />
-              <Typography variant="body2" sx={{ mx: 1 }}>
-                To
-              </Typography>
-              <DateTimePicker
-                value={endtime}
-                minutesStep={1}
-                onChange={(newValue) => setTemporaryToDate(newValue)}
-                maxDate={new Date()}
-                sx={{ backgroundColor: 'white'}}
-                slotProps={{ textField: { size: 'small' } }}
-                views={['year', 'day', 'hours', 'minutes', 'seconds']}
-              />
-            </Box>
-          </LocalizationProvider>
-          <Button 
-            variant="outlined" 
-            onClick={handleSubmit} 
-            sx={{ 
-              borderColor: 'white',
-              color: 'white',
-              height: 'fit-content' ,
-              '&:hover': {
-                borderColor: 'white',
-                backgroundColor: 'rgba(255, 255, 255, 0.25)'
-              },
-            }}>
-            SET
-          </Button>
+    <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '-1vh', marginBottom: '-2vh'}}>
+      <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ja}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mr: 2 }}>
+          <Typography variant="body2" sx={{ mr: 1 }}>
+            From
+          </Typography>
+          <DateTimePicker
+            value={starttime}
+            minutesStep={1}
+            onChange={(newValue) => setTemporaryFromDate(newValue)}
+            maxDate={new Date()}
+            sx={{ backgroundColor: 'white'}}
+            slotProps={{ textField: { size: 'small' } }}
+            views={['year', 'day', 'hours', 'minutes', 'seconds']}
+          />
+          <Typography variant="body2" sx={{ mx: 1 }}>
+            To
+          </Typography>
+          <DateTimePicker
+            value={endtime}
+            minutesStep={1}
+            onChange={(newValue) => setTemporaryToDate(newValue)}
+            maxDate={new Date()}
+            sx={{ backgroundColor: 'white'}}
+            slotProps={{ textField: { size: 'small' } }}
+            views={['year', 'day', 'hours', 'minutes', 'seconds']}
+          />
         </Box>
+      </LocalizationProvider>
+      <Button 
+        variant="outlined" 
+        onClick={handleSubmit} 
+        sx={{ 
+          borderColor: 'black',
+          color: 'black',
+          height: 'fit-content' ,
+          '&:hover': {
+            borderColor: 'black',
+            backgroundColor: 'rgba(0, 0, 0, 0.2)'
+          },
+        }}>
+        SET
+      </Button>
+    </Box>
   );
 };
 

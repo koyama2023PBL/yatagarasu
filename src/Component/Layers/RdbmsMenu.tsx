@@ -12,6 +12,7 @@ import DeadTupleRatio from '../../Content/Postgresql/DeadTupleRatio';
 import PostgresMemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 import ErrorLogDisplay from '../../Content/Postgresql/ErrorLog';
 import { useSyncQueryString } from '../Common/DateUpdate';
+import { BreadcrumbsBar } from '../Common/BreadcrumbsBar';
 
 
 const RdbmsMenu: React.FC = () => {
@@ -24,6 +25,9 @@ const RdbmsMenu: React.FC = () => {
 
   return (
     <div>
+      <Box sx={{ p: 1, flexDirection: 'column', height: '7vh', alignItems: 'center', marginTop: '-1vh'}}>
+        <BreadcrumbsBar/>
+      </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <CacheHitRate starttime={starttime} endtime={endtime} />

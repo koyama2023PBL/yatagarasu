@@ -10,6 +10,7 @@ import MemoryUsageRatio from '../../Content/Postgresql/PostgresMemoryUsageRatio'
 import { parse } from 'date-fns';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { useSyncQueryString } from '../Common/DateUpdate';
+import { BreadcrumbsBar } from '../Common/BreadcrumbsBar';
 
 interface OsMenuProps {search: string;}
 
@@ -23,6 +24,9 @@ const OsMenu: React.FC<OsMenuProps> = ({ search }) => {
 
   return (
     <div>
+      <Box sx={{ p: 1, flexDirection: 'column', height: '7vh', alignItems: 'center', marginTop: '-1vh'}}>
+        <BreadcrumbsBar/>
+      </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <CPUusage starttime={starttime} endtime={endtime}/>
