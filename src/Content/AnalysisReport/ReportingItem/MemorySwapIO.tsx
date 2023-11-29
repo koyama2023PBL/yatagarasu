@@ -103,7 +103,8 @@ export const MemorySwapIO = () => {
         min: 0,
         max: 10,
         ticks: {
-          callback: function(value: any, index: any, ticks: any) {
+          stepSize: 20,
+          callback: function(value: any, _index: any, _ticks: any) {
             return value + '回';
           },
         },
@@ -123,22 +124,22 @@ export const MemorySwapIO = () => {
     <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
       <CardContent sx={{ display: 'flex' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h6" align="left" sx={getItemTitleSx(getMemorySwapIOStatus())}>
+          <Typography variant="h6" align="left" sx={ getItemTitleSx(getMemorySwapIOStatus()) }>
             メモリ使用状況（スワップI/O発生回数）
           </Typography>
           <Box sx={{ display: 'flex', marginTop: '3vh' }}>
             <Box sx={{ display: 'flex', width: '25vw' }}>
               <div style={{ width: '100%' }}>
-                {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
+                { chartData ? <Bar options={ options() } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
               </div>
             </Box>
-            <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw'  }}>
-              <Typography variant="body2" align="left" sx={{}}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
+              <Typography variant="body2" align="left">
                 診断結果
               </Typography>
               <Divider />
               <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
-                {analysisResult()}
+                { analysisResult() }
               </Typography>
               <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
                 チェックポイント

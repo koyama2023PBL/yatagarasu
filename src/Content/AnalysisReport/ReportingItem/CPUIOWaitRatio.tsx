@@ -39,7 +39,7 @@ export const CPUIOWaitRatio: React.FC = () => {
           length: length,
           datasets: [
             {
-              label: 'I/O待ち率',
+              label: 'I/O待ち比率',
               data: ioWait,
               backgroundColor: 'rgba(54, 162, 235, 0.5)',
               borderColor: 'rgb(54, 162, 235)',
@@ -84,7 +84,8 @@ export const CPUIOWaitRatio: React.FC = () => {
         min: 0,
         max: 100,
         ticks: {
-          callback: function(value: any, index: any, ticks: any) {
+          stepSize: 20,
+          callback: function(value: any, _index: any, _ticks: any) {
             return value + '%';
           },
         },
@@ -101,22 +102,22 @@ export const CPUIOWaitRatio: React.FC = () => {
       <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto' }}>
         <CardContent sx={{ display: 'flex' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography variant="h6" align="left" sx={getItemTitleSx(getCPUIOWaitRatioStatus())}>
-              I/O待ち率
+            <Typography variant="h6" align="left" sx={ getItemTitleSx(getCPUIOWaitRatioStatus()) }>
+              I/O待ち比率
             </Typography>
             <Box sx={{ display: 'flex', marginTop: '3vh' }}>
               <Box sx={{ display: 'flex', width: '25vw' }}>
                 <div style={{ width: '100%' }}>
-                  {chartData ? <Bar options={options()} data={chartData}/> : <CircularProgress sx={{marginTop: '7vh'}}/>}
+                  { chartData ? <Bar options={ options() } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
                 </div>
               </Box>
               <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
-                <Typography variant="body2" align="left" sx={{}}>
+                <Typography variant="body2" align="left">
                   診断結果
                 </Typography>
                 <Divider />
                 <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
-                  {analysisResult()}
+                  { analysisResult() }
                 </Typography>
                 <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
                   チェックポイント
