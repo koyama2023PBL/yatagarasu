@@ -52,3 +52,19 @@ services:
       - '9256:9256'
     privileged: true
     restart: unless-stopped
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana-enterprise
+    environment:
+      - GF_SECURITY_ADMIN_USER=yatagarasu
+      - GF_SECURITY_ADMIN_PASSWORD=yatagarasu
+      - GF_SECURITY_ALLOW_EMBEDDING=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+    volumes:
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
+      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
+      - ./grafana/dashboards/:/var/lib/grafana/dashboards/
+    restart: always
+    ports:
+      - '8080:3000'

@@ -1,0 +1,14 @@
+apiVersion: 1
+
+datasources:
+  - name: default
+    type: prometheus
+    access: proxy
+    orgId: 1
+    uid: prometheus
+    url: http://host.docker.internal:9090
+    password: yatagarasu
+    user: yatagarasu
+    isDefault: true
+    version: 1
+    editable: false
