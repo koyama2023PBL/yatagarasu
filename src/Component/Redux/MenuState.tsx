@@ -5,7 +5,7 @@ interface MenuState {
 }
 
 const initialState: MenuState = {
-  selected: 'dashboard',
+  selected: 'home',
 };
 
 export const menuSlice = createSlice({

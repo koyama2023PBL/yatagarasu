@@ -2,17 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { roundMinutes } from '../Common/Util';
 
 interface DateState {
-  from: Date;
-  to: Date;
+  from: string;
+  to: string;
 }
 
-
 const truncatedNow = roundMinutes(new Date());
-const from = new Date(truncatedNow.getTime() - 15 * 60 * 1000);
-const to = new Date(truncatedNow.getTime());
+const from = new Date(truncatedNow.getTime() - 720 * 60 * 1000).toISOString();
+const to = truncatedNow.toISOString();
 
-
-//TODO きちんとした値がセットされるように変更を行う
 const initialState: DateState = {
   from: from,
   to: to,
@@ -22,10 +19,10 @@ export const dateSlice = createSlice({
   name: 'date',
   initialState,
   reducers: {
-    setFromDate: (state, action: PayloadAction<Date>) => {
+    setFromDate: (state, action: PayloadAction<string>) => {
       state.from = action.payload;
     },
-    setToDate: (state, action: PayloadAction<Date>) => {
+    setToDate: (state, action: PayloadAction<string>) => {
       state.to = action.payload;
     },
   },

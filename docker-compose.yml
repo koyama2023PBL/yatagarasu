@@ -38,3 +38,17 @@ services:
       - "--collector.stat_statements"
     ports:
       - "9187:9187"
+
+  process-exporter:
+    container_name: process_exporter
+    image: ncabatoff/process-exporter
+    command:
+      - '--procfs=/host/proc'
+      - '--config.path=/process-exporter.yml'
+    volumes:
+      - /proc:/host/proc
+      - ./process-exporter.yml:/process-exporter.yml
+    ports:
+      - '9256:9256'
+    privileged: true
+    restart: unless-stopped

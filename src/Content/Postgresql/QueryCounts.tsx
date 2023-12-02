@@ -23,13 +23,11 @@ import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
 import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
-import {CacheHitRateApiRequest, CacheHitRateApiResponse, CacheHitRateResponseData} from "./CacheHitRate";
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
 
 interface QueryCountsApiRequest {
   start: Date;
   end: Date;
-  datname: string;
 }
 
 interface QueryCountsProps {
@@ -68,7 +66,7 @@ const fetchFromAPIwithRequest = async (
   try {
       const startTimeString = queryParameters.start.toISOString();
       const endTimeString = queryParameters.end.toISOString();
-      const response = await instance.get<CacheHitRateApiResponse>(
+      const response = await instance.get<QueryCountsApiResponse>(
         `${endpoint}${encodeURIComponent(
             query
         )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
@@ -110,10 +108,9 @@ const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
           yatagarasuSettings.dbname +
           '",state="active"}';
 
-      const requestBody: CacheHitRateApiRequest = {
+      const requestBody: QueryCountsApiRequest = {
         start: new Date(starttime),
         end: new Date(endtime),
-        datname: yatagarasuSettings.dbname,
       };
   
       const { status, data: response }: {status: number, data: QueryCountsApiResponse}

@@ -131,8 +131,8 @@ const DeadTuple: React.FC<DeadTupleProps> = ({ starttime, endtime }) => {
 
       // 合計を数字の配列で取得
       const deadTupleCounts = Object.values(keySumMap);
-      const labels = response.data.result.flatMap((data) =>
-          data.values.map(([labels, _]) => labels)).map(value => {let v = unixTimeToDate(value).toLocaleString(); return v;});
+      const labels: string[] = Object.keys(keySumMap).map((key) => unixTimeToDate(Number(key)).toLocaleString());
+
       const borderColor = deadTupleCounts.map((value)=> {
         let status: Status;
         if (Number(value) <= Thresholds.deadtuple.ok) {

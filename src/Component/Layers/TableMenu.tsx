@@ -8,9 +8,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../Redux/StateStore';
 import DeadLocks from '../../Content/Postgresql/DeadLock';
 import QueryCounts from '../../Content/Postgresql/QueryCounts';
+import { useSyncQueryString } from '../Common/DateUpdate';
+import { BreadcrumbsBar } from '../Common/BreadcrumbsBar';
 
 
 const TableMenu: React.FC = () => {
+
+  useSyncQueryString();
 
   const { from, to } = useSelector((state: RootState) => state.date);
 
@@ -20,6 +24,9 @@ const TableMenu: React.FC = () => {
 
   return (
     <div>
+      <Box sx={{ p: 1, flexDirection: 'column', height: '7vh', alignItems: 'center', marginTop: '-1vh'}}>
+        <BreadcrumbsBar/>
+      </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <SlowQueryCount starttime={starttime} endtime={endtime} querytime={querytime}/>
