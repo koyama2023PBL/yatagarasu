@@ -3,57 +3,90 @@ import type { SVGProps } from "react";
 const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElement> & { highlight?: string }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    id="PostgresOverview_light_svg___\u30EC\u30A4\u30E4\u30FC_2"
-    data-name="\u30EC\u30A4\u30E4\u30FC 2"
+    id="PostgresOverview"
+    data-name="layer_2"
     viewBox="0 0 1410 570"
     {...props}
   >
     <defs>
       <style>
         {
-          '.PostgresOverview_light_svg__cls-2{letter-spacing:-.01em}.PostgresOverview_light_svg__cls-3,.PostgresOverview_light_svg__cls-5,.PostgresOverview_light_svg__cls-6{fill:none}.PostgresOverview_light_svg__cls-10,.PostgresOverview_light_svg__cls-11,.PostgresOverview_light_svg__cls-3,.PostgresOverview_light_svg__cls-6,.PostgresOverview_light_svg__cls-8,.PostgresOverview_light_svg__cls-9{stroke:#000}.PostgresOverview_light_svg__cls-10,.PostgresOverview_light_svg__cls-3,.PostgresOverview_light_svg__cls-8,.PostgresOverview_light_svg__cls-9{stroke-width:1.5px}.PostgresOverview_light_svg__cls-3,.PostgresOverview_light_svg__cls-6{stroke-miterlimit:10}.PostgresOverview_light_svg__cls-12,.PostgresOverview_light_svg__cls-14,.PostgresOverview_light_svg__cls-17,.PostgresOverview_light_svg__cls-18,.PostgresOverview_light_svg__cls-19{isolation:isolate}.PostgresOverview_light_svg__cls-12,.PostgresOverview_light_svg__cls-14,.PostgresOverview_light_svg__cls-17,.PostgresOverview_light_svg__cls-19{font-family:KozGoPr6N-Regular-83pv-RKSJ-H,"Kozuka Gothic Pr6N"}.PostgresOverview_light_svg__cls-12{font-size:16px}.PostgresOverview_light_svg__cls-10,.PostgresOverview_light_svg__cls-11,.PostgresOverview_light_svg__cls-8,.PostgresOverview_light_svg__cls-9{stroke-linejoin:bevel}.PostgresOverview_light_svg__cls-34,.PostgresOverview_light_svg__cls-38,.PostgresOverview_light_svg__cls-39,.PostgresOverview_light_svg__cls-5{stroke-width:0}.PostgresOverview_light_svg__cls-40{letter-spacing:-.02em}.PostgresOverview_light_svg__cls-8{fill:#cbf4ff}.PostgresOverview_light_svg__cls-9{fill:#ffffdf}.PostgresOverview_light_svg__cls-10{fill:#efdeff}.PostgresOverview_light_svg__cls-14{font-size:21px}.PostgresOverview_light_svg__cls-19{font-size:14px}.PostgresOverview_light_svg__cls-65{letter-spacing:-.05em}.PostgresOverview_light_svg__cls-17{font-size:18px}.PostgresOverview_light_svg__cls-84{letter-spacing:-.27em}.PostgresOverview_light_svg__cls-11{fill:#f9f2ff}.PostgresOverview_light_svg__cls-34{fill:#dce3ea}.PostgresOverview_light_svg__cls-38{fill:#f0e6e4}.PostgresOverview_light_svg__cls-39{fill:#f5f7f8}'
+          `.other_components_frame,
+          .strings,
+          .fill_none{fill:none}
+          .memory_component_indivisual,
+          .memory_components_instance,
+          .other_components_frame,
+          .fill_none,
+          .process_component,
+          .file_component{stroke:#000}
+          .memory_component_indivisual,
+          .process_component,
+          .file_component{stroke-width:1.5px}
+          .fill_none{stroke-miterlimit:10}
+          .PostgresOverview_light_svg__cls-19{isolation:isolate}
+          .PostgresOverview_light_svg__cls-12{font-size:16px}
+          .memory_component_indivisual,
+          .memory_components_instance,
+          .process_component,
+          .file_component{stroke-linejoin:bevel}
+          .components_layers_frame,
+          .other_components,
+          .components_layers,
+          .strings{stroke-width:0}
+          .process_component{fill:#cbf4ff}
+          .file_component{fill:#ffffdf}
+          .memory_component_indivisual{fill:#efdeff}
+          .PostgresOverview_light_svg__cls-14{font-size:21px}
+          .PostgresOverview_light_svg__cls-19{font-size:14px}
+          .PostgresOverview_light_svg__cls-17{font-size:18px}
+          .PostgresOverview_light_svg__cls-84{letter-spacing:-.27em}
+          .memory_components_instance{fill:#f9f2ff}
+          .components_layers_frame{fill:#dce3ea}
+          .other_components{fill:#f0e6e4}
+          .components_layers{fill:#f5f7f8}`
         }
       </style>
     </defs>
     <g
-      id="PostgresOverview_light_svg___\u30EC\u30A4\u30E4\u30FC_1-2"
-      data-name="\u30EC\u30A4\u30E4\u30FC 1"
+      id="layer_1-2"
+      data-name="layer_1"
     >
       <path
         d="M213.5 1.5h932v478h-932z"
-        className="PostgresOverview_light_svg__cls-39"
+        className="components_layers"
       />
       <path
         d="M1145 2v477H214V2h931m1-1H213v479h933V1Z"
-        className="PostgresOverview_light_svg__cls-34"
+        className="components_layers_frame"
       />
       <path
         d="M318.76 283.03h182.91c16.12 0 29.19 42.14 29.19 94.11 0 51.98-13.07 94.11-29.19 94.11H318.76c-16.12 0-29.19-42.14-29.19-94.11s13.07-94.11 29.19-94.11Z"
-        className="PostgresOverview_light_svg__cls-11"
+        className="memory_components_instance"
       />
       <path
         d="M278.57 216.77h211.29v37.5H278.57z"
-        className="PostgresOverview_light_svg__cls-8"
+        className="process_component"
       />
       <path
         d="M1176.5.5h233v478h-233z"
-        className="PostgresOverview_light_svg__cls-39"
+        className="components_layers"
       />
       <path
         d="M1409 1v477h-232V1h232m1-1h-234v479h234V0Z"
-        className="PostgresOverview_light_svg__cls-34"
+        className="components_layers_frame"
       />
       <path
         d="M213.5 497.5h1196v72h-1196z"
-        className="PostgresOverview_light_svg__cls-39"
+        className="components_layers"
       />
       <path
         d="M1409 498v71H214v-71h1195m1-1H213v73h1197v-73Z"
-        className="PostgresOverview_light_svg__cls-34"
+        className="components_layers_frame"
       />
       <path
         d="M230.81 15.67h329.76V49H230.81z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-14"
@@ -65,7 +98,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M230.38 507.1h294.05v27.38H230.38z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-14"
@@ -77,7 +110,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M1185 9.71h225V39h-225z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-14"
@@ -122,7 +155,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       />
       <path
         d="M13.95 16.1H184V41H13.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-14"
@@ -140,7 +173,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M13.98 305.61h170.05v24.9H13.98z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-14"
@@ -152,39 +185,39 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M181 536.5c0 5.5-4.5 10-10 10H36c-5.5 0-10-4.5-10-10V519c0-5.5 4.5-10 10-10h135c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-38"
+        className="other_components"
       />
       <path
         d="M181 536.5c0 5.5-4.5 10-10 10H36c-5.5 0-10-4.5-10-10V519c0-5.5 4.5-10 10-10h135c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-3"
+        className="other_components_frame"
       />
       <path
         d="M25.45 340.11h155v37.5h-155z"
-        className="PostgresOverview_light_svg__cls-8"
+        className="process_component"
       />
       <path
         d="M43.8 395.11h117.5c10.36 0 18.75 8.39 18.75 18.75s-8.39 18.75-18.75 18.75H43.8c-10.36 0-18.75-8.39-18.75-18.75s8.39-18.75 18.75-18.75Z"
-        className="PostgresOverview_light_svg__cls-10"
+        className="memory_component_indivisual"
       />
       <path
         d="m40.45 451.5 139.55-.39-16.55 37.39-138.45.11 15.45-37.11z"
-        className="PostgresOverview_light_svg__cls-9"
+        className="file_component"
       />
       <path
         d="M64.57 348.61H142v24.9H64.57z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-17"
         transform="translate(63.67 364.45)"
       >
-        <tspan x={0} y={0} className="PostgresOverview_light_svg__cls-40">
+        <tspan x={0} y={0}>
           {"\u30D7\u30ED\u30BB\u30B9"}
         </tspan>
       </text>
       <path
         d="M74.28 404.5H133v24.9H74.28z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-17"
@@ -197,7 +230,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
             letterSpacing: "-.05em",
           }}
         >
-          {"\u30E1\u30E2"}
+          {"\u30e1\u30e2\u30ea"}
         </tspan>
       </text>
       <text
@@ -216,7 +249,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M73.95 518.22h77.43v24.9H73.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-17"
@@ -228,12 +261,12 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M268.71 207.77H480v37.5H268.71zm-29.14-146h211.29v37.5H239.57z"
-        className="PostgresOverview_light_svg__cls-8"
+        className="process_component"
         style={{ stroke: 'red', strokeWidth: '1.5' }}
       />
       <path
         d="M278.95 217.17H429v24.9H278.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-17"
@@ -251,9 +284,9 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M249.95 71.17H400v24.9H249.95z"
-        //className="PostgresOverview_light_svg__cls-5"
-        //className={`PostgresOverview_light_svg__cls-5 ${highlight === "masterProcess" ? "highlight" : ""}`}
-        className={`PostgresOverview_light_svg__cls-5 ${highlight === "masterProcess" ? "highlight" : ""}`}
+        //className="strings"
+        //className={`strings ${highlight === "masterProcess" ? "highlight" : ""}`}
+        className={`strings ${highlight === "masterProcess" ? "highlight" : ""}`}
       />
       <text
         className="PostgresOverview_light_svg__cls-17"
@@ -271,15 +304,15 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M305.9 274.77h182.91c16.12 0 29.19 42.14 29.19 94.11 0 51.98-13.07 94.11-29.19 94.11H305.9c-16.12 0-29.19-42.14-29.19-94.11s13.07-94.11 29.19-94.11Z"
-        className="PostgresOverview_light_svg__cls-11"
+        className="memory_components_instance"
       />
       <path
         d="M318.97 323.77h145.77c12.85 0 23.26 8.39 23.26 18.75s-10.41 18.75-23.26 18.75H318.97c-12.85 0-23.26-8.39-23.26-18.75 0-10.35 10.42-18.75 23.26-18.75Zm-.12 84h145.87c12.86 0 23.28 8.39 23.28 18.75s-10.42 18.75-23.28 18.75H318.85c-12.86 0-23.28-8.39-23.28-18.75 0-10.35 10.42-18.75 23.28-18.75Zm.5-42h145.44c12.82 0 23.21 8.39 23.21 18.75s-10.39 18.75-23.21 18.75H319.35c-12.82 0-23.21-8.39-23.21-18.75 0-10.35 10.39-18.75 23.21-18.75Z"
-        className="PostgresOverview_light_svg__cls-10"
+        className="memory_component_indivisual"
       />
       <path
         d="M310.95 334.17H414v24.9H310.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -291,7 +324,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M310.13 377H534v24.08H310.13z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -303,7 +336,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M310.13 419.17h103.05v24.9H310.13z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -315,7 +348,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M309.95 287.17H460v24.9H309.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-17"
@@ -330,15 +363,15 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M600.76 140.91h182.91c16.12 0 29.19 50.61 29.19 113.04 0 62.43-13.07 113.04-29.19 113.04H600.76c-16.12 0-29.19-50.61-29.19-113.04 0-62.43 13.07-113.04 29.19-113.04Z"
-        className="PostgresOverview_light_svg__cls-11"
+        className="memory_components_instance"
       />
       <path
         d="M619.33 188.77H765.1c12.85 0 23.26 8.39 23.26 18.75s-10.41 18.75-23.26 18.75H619.33c-12.85 0-23.26-8.39-23.26-18.75 0-10.35 10.42-18.75 23.26-18.75Zm0 42H765.1c12.85 0 23.26 8.39 23.26 18.75s-10.41 18.75-23.26 18.75H619.33c-12.85 0-23.26-8.39-23.26-18.75 0-10.35 10.42-18.75 23.26-18.75Zm-.05 42h145.87c12.86 0 23.28 8.39 23.28 18.75s-10.42 18.75-23.28 18.75H619.28c-12.86 0-23.28-8.39-23.28-18.75 0-10.35 10.42-18.75 23.28-18.75Zm0 42h145.87c12.86 0 23.28 8.39 23.28 18.75s-10.42 18.75-23.28 18.75H619.28c-12.86 0-23.28-8.39-23.28-18.75 0-10.35 10.42-18.75 23.28-18.75Z"
-        className="PostgresOverview_light_svg__cls-10"
+        className="memory_component_indivisual"
       />
       <path
         d="M608.19 200.03H773v24.9H608.19z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -350,7 +383,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M608.19 242.03h103.05v24.9H608.19z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -362,7 +395,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M608.19 284.03h103.05v24.9H608.19z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -374,7 +407,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M609.19 328.03h103.05v24.9H609.19z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -386,7 +419,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M606.95 151.17H757v24.9H606.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-17"
@@ -398,15 +431,15 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="m1216.31 55.94 176.69-.83-20.95 79.66-175.31.23 19.57-79.06zm0 100.56 176.69-.39-20.95 37.39-175.31.11 19.57-37.11z"
-        className="PostgresOverview_light_svg__cls-9"
+        className="file_component"
       />
       <path
         d="M269.57 137.72h211.29v37.5H269.57z"
-        className="PostgresOverview_light_svg__cls-8"
+        className="process_component"
       />
       <path
         d="M279.95 147.12H430v24.9H279.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-17"
@@ -424,17 +457,17 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M881.57 61.77h211.29v37.5H881.57zm0 59h211.29v37.5H881.57zm0 302h211.29v37.5H881.57zm0-241h211.29v37.5H881.57zm0 61h211.29v37.5H881.57zm0 60h211.29v37.5H881.57zm0 61h211.29v37.5H881.57z"
-        className="PostgresOverview_light_svg__cls-8"
+        className="process_component"
       />
       <path
         d="M889.95 72.17H1119v24.9H889.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-12"
         transform="translate(889.95 86.25)"
       >
-        <tspan x={0} y={0} className="PostgresOverview_light_svg__cls-65">
+        <tspan x={0} y={0} className="fill_none5">
           {
             "\u30D0\u30C3\u30AF\u30B0\u30E9\u30A6\u30F3\u30C9\u30E9\u30A4\u30BF\u30FC"
           }
@@ -442,7 +475,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M889.95 131.17H1040v24.9H889.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-12"
@@ -454,7 +487,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M889.95 192.17H1040v24.9H889.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <g className="PostgresOverview_light_svg__cls-18">
         <text
@@ -468,7 +501,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </g>
       <path
         d="M889.95 253.17H1040v24.9H889.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <g className="PostgresOverview_light_svg__cls-18">
         <text
@@ -482,7 +515,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </g>
       <path
         d="M890.95 313.17H1041v24.9H890.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-12"
@@ -500,7 +533,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M890.95 375.17H1078v24.9H890.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <g className="PostgresOverview_light_svg__cls-18">
         <text
@@ -520,7 +553,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </g>
       <path
         d="M891.95 434.17H1108v24.9H891.95z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-12"
@@ -540,7 +573,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M1217.19 65.1H1332V141h-114.81z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <g className="PostgresOverview_light_svg__cls-18">
         <text
@@ -570,7 +603,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </g>
       <path
         d="M1217.31 169.03h164.81v24.9h-164.81z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <g className="PostgresOverview_light_svg__cls-18">
         <text
@@ -590,11 +623,11 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </g>
       <path
         d="m1215.8 215.5 176.69-.39-20.95 37.39-175.3.11 19.56-37.11z"
-        className="PostgresOverview_light_svg__cls-9"
+        className="file_component"
       />
       <path
         d="M1216.83 228.03h164.81v24.9h-164.81z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -612,11 +645,11 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="m1215.8 274.5 176.69-.39-20.95 37.39-175.3.11 19.56-37.11z"
-        className="PostgresOverview_light_svg__cls-9"
+        className="file_component"
       />
       <path
         d="M1216.83 287.03h164.81v24.9h-164.81z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -628,11 +661,11 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="m1215.8 333.5 176.69-.39-20.95 37.39-175.3.11 19.56-37.11z"
-        className="PostgresOverview_light_svg__cls-9"
+        className="file_component"
       />
       <path
         d="M1216.83 346.03h164.81v24.9h-164.81z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-19"
@@ -644,39 +677,39 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </text>
       <path
         d="M534.5 544.89c0 5.5-4.5 10-10 10H316.71c-5.5 0-10-4.5-10-10v-17.5c0-5.5 4.5-10 10-10H524.5c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-38"
+        className="other_components"
       />
       <path
         d="M534.5 544.89c0 5.5-4.5 10-10 10H316.71c-5.5 0-10-4.5-10-10v-17.5c0-5.5 4.5-10 10-10H524.5c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-3"
+        className="other_components_frame"
       />
       <path
         d="M785.11 544.89c0 5.5-4.5 10-10 10H567.32c-5.5 0-10-4.5-10-10v-17.5c0-5.5 4.5-10 10-10h207.79c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-38"
+        className="other_components"
       />
       <path
         d="M785.11 544.89c0 5.5-4.5 10-10 10H567.32c-5.5 0-10-4.5-10-10v-17.5c0-5.5 4.5-10 10-10h207.79c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-3"
+        className="other_components_frame"
       />
       <path
         d="M1034.11 544.89c0 5.5-4.5 10-10 10H816.32c-5.5 0-10-4.5-10-10v-17.5c0-5.5 4.5-10 10-10h207.79c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-38"
+        className="other_components"
       />
       <path
         d="M1034.11 544.89c0 5.5-4.5 10-10 10H816.32c-5.5 0-10-4.5-10-10v-17.5c0-5.5 4.5-10 10-10h207.79c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-3"
+        className="other_components_frame"
       />
       <path
         d="M1284.11 544.89c0 5.5-4.5 10-10 10h-207.79c-5.5 0-10-4.5-10-10v-17.5c0-5.5 4.5-10 10-10h207.79c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-38"
+        className="other_components"
       />
       <path
         d="M1284.11 544.89c0 5.5-4.5 10-10 10h-207.79c-5.5 0-10-4.5-10-10v-17.5c0-5.5 4.5-10 10-10h207.79c5.5 0 10 4.5 10 10v17.5Z"
-        className="PostgresOverview_light_svg__cls-3"
+        className="other_components_frame"
       />
       <path
         d="M322.69 528.72h150.05v24.9H322.69z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <g className="PostgresOverview_light_svg__cls-18">
         <text
@@ -690,19 +723,19 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </g>
       <path
         d="M573.69 528.72h150.05v24.9H573.69z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <text
         className="PostgresOverview_light_svg__cls-12"
         transform="translate(573.05 542.8)"
       >
-        <tspan x={0} y={0} className="PostgresOverview_light_svg__cls-65">
+        <tspan x={0} y={0} className="fill_none5">
           {"MEMORY"}
         </tspan>
       </text>
       <path
         d="M819.69 528.72h150.05v24.9H819.69z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <g className="PostgresOverview_light_svg__cls-18">
         <text
@@ -716,7 +749,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </g>
       <path
         d="M1070.69 528.72h150.05v24.9h-150.05z"
-        className="PostgresOverview_light_svg__cls-5"
+        className="strings"
       />
       <g className="PostgresOverview_light_svg__cls-18">
         <text
@@ -730,11 +763,11 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       </g>
       <path
         d="M99 74v152.17h169.71"
-        className="PostgresOverview_light_svg__cls-6"
+        className="fill_none"
       />
       <path
         d="M99.5 156.11s2.16.08 6 .12"
-        className="PostgresOverview_light_svg__cls-6"
+        className="fill_none"
       />
       <path
         d="M117.61 156.3c34.76.15 110 .17 139.34.17"
@@ -747,7 +780,7 @@ const SvgPostgresOverviewLight = ({ highlight, ...props }: SVGProps<SVGSVGElemen
       />
       <path
         d="M263 156.47h6m181.86-75.95H881"
-        className="PostgresOverview_light_svg__cls-6"
+        className="fill_none"
       />
       <path
         d="M881.57 441.52H842v-361m38.76 302.65H842m39.57-62H842m39.57-60H842m39.57-61H842m39-61h-39"

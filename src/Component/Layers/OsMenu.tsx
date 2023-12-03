@@ -7,14 +7,11 @@ import { RootState } from '../Redux/StateStore';
 import CPUusage from '../../Content/Postgresql/CPUusage';
 import MemoryUsage from '../../Content/Postgresql/PostgresMemoryUsage';
 import MemoryUsageRatio from '../../Content/Postgresql/PostgresMemoryUsageRatio';
-import { parse } from 'date-fns';
-import { useLocation, useSearchParams } from 'react-router-dom';
 import { useSyncQueryString } from '../Common/DateUpdate';
 import { BreadcrumbsBar } from '../Common/BreadcrumbsBar';
 
-interface OsMenuProps {search: string;}
 
-const OsMenu: React.FC<OsMenuProps> = ({ search }) => {
+const OsMenu: React.FC = () => {
   
   useSyncQueryString();
 

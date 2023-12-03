@@ -146,8 +146,8 @@ export default function BaseDisplayMenu() {
     <Routes>
       <Route path="/" element={<HomeMenu/>} />
       <Route path="/home" element={<HomeMenu/>} />
-      <Route path="/dashboard" element={<OverViewMenu search={location.search} />} />
-      <Route path="/server" element={<OsMenu search={location.search}/>} />
+      <Route path="/dashboard" element={<OverViewMenu />} />
+      <Route path="/server" element={<OsMenu />} />
       <Route path="/rdbms" element={<RdbmsMenu/>} />
       <Route path="/analysis-report" element={<AnalysisReportMenu/>}/>
       <Route path="/queries" element={<TableMenu/>} />
