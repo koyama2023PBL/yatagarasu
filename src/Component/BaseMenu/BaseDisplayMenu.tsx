@@ -22,6 +22,7 @@ import {
   Dashboard as DashboardIcon,
   Storage as StorageIcon,
   Troubleshoot as TroubleshootIcon,
+  DashboardCustomize as DashboardCustomizeIcon,
   DeveloperBoard as DeveloperBoardIcon,
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
@@ -39,6 +40,7 @@ import { AnalysisReportMenu } from "../Layers/AnalysisReportMenu";
 import { setSelected } from '../Redux/MenuState';
 import { RootState } from '../Redux/StateStore';
 import HomeMenu from '../Layers/HomeMenu';
+import {CustomDashboard} from "../Layers/CustomDashboard";
 
 const drawerWidth = 300;
 
@@ -122,7 +124,8 @@ const menuItems: MenuItem[] = [
   { id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
   { id: 'server', text: 'Server', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
   { id: 'rdbms', text: 'RDBMS', icon: <StorageIcon style={{ fontSize: 40 }}/> },
-  { id: 'queries', text: 'Queries', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> }
+  { id: 'queries', text: 'Queries', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
+  { id: 'custom', text: 'Custom', icon: <DashboardCustomizeIcon style={{ fontSize: 40 }}/> },
 ];
 
 
@@ -150,6 +153,7 @@ export default function BaseDisplayMenu() {
       <Route path="/server" element={<OsMenu />} />
       <Route path="/rdbms" element={<RdbmsMenu/>} />
       <Route path="/analysis-report" element={<AnalysisReportMenu/>}/>
+      <Route path="/custom" element={<CustomDashboard/>}/>
       <Route path="/queries" element={<TableMenu/>} />
     </Routes>
   );
