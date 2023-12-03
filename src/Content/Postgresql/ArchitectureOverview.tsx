@@ -16,6 +16,7 @@ import { setSelected } from '../../Component/Redux/MenuState';
 import { useTheme } from '@mui/system';
 import {useMediaQuery} from '@mui/material';
 import SvgPostgresOverviewLight from './SVGs/PostgresOverviewLight';
+import ArchitectureMap from './ArchitectureMap';
 
 interface ArchitectureOverviewProps {
   starttime: Date;
