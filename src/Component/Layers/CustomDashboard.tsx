@@ -3,6 +3,8 @@ import {BreadcrumbsBar} from "../Common/BreadcrumbsBar";
 import * as React from "react";
 
 export const CustomDashboard: React.FC = () => {
+  // TODO: GrafanaのURLを設定値に置き換える
+  // TODO: 取得するデータの期間を入力できるようにする
   return (
     <div>
       <Box sx={{ p: 1, flexDirection: 'column', height: '7vh', alignItems: 'center', marginTop: '-1vh'}}>
