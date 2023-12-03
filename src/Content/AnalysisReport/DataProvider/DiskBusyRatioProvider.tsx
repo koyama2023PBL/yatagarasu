@@ -1,6 +1,8 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {getRange, unixTimeToDate} from "../../../Component/Common/Util";
+import {calcMaxStep, getRange, unixTimeToDate} from "../../../Component/Common/Util";
 import instance from "../../../Axios/AxiosInstance";
+import {invokeQueryRange, QueryRangeResponse} from "../../../Component/Common/PrometheusClient";
+import {prometheusSettings} from "../../../Component/Redux/PrometheusSettings";
 
 /**
  * データプロバイダのプロパティ
@@ -9,7 +11,6 @@ interface DiskBusyRatioProviderProps {
   children: React.ReactNode;
   starttime: Date;
   endtime: Date;
-  scrapeInterval: string;
 }
 
 /**
@@ -66,26 +67,24 @@ const getTargetDisks = async (datetime: Date) => {
  * APIにリクエストを送信する
  * @param starttime
  * @param endtime
- * @param scrapeInterval
  */
-const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date, scrapeInterval: string) => {
+const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date) => {
   const targetDisks = await getTargetDisks(endtime);
-  const startTimeRfc3339 = starttime.toISOString();
-  const endTimeRfc3339 = endtime.toISOString();
-  const range = getRange(scrapeInterval);
+  const range = getRange(calcMaxStep(starttime, endtime, prometheusSettings?.nodeScrapeInterval?? '15s')?? '30s');
   const targetDisksString = targetDisks.join('|');
-  const endpoint = `/api/v1/query_range`
-                        + `?query=sum(rate(node_disk_io_time_seconds_total{device=~"${targetDisksString}"}[${range}]))`
-                        + `\/count(node_disk_io_time_seconds_total{device=~"${targetDisksString}"})*100`
-                        + `&start=${startTimeRfc3339}&end=${endTimeRfc3339}&step=${range}`;
-  const response = await instance.get(endpoint);
-  const data = response.data.data.result[0].values.map((item: [number, string]): DiskBusyRatioData => {
+  const query = `sum(rate(node_disk_io_time_seconds_total{device=~"${targetDisksString}"}[${range}]))`
+                     + `\/count(node_disk_io_time_seconds_total{device=~"${targetDisksString}"})*100`;
+
+  const { status: status, data: response }
+      = await invokeQueryRange<QueryRangeResponse<any>>(query, starttime, endtime, prometheusSettings?.nodeScrapeInterval);
+
+  const data = response.data.result[0].values.map(([timestamp, value]): DiskBusyRatioData => {
     return {
-      datetime: unixTimeToDate(item[0]).toLocaleString(),
-      ratio: Number(item[1])
+      datetime: unixTimeToDate(timestamp).toLocaleString(),
+      ratio: Number(value)
     };
   });
-  return {status: response.status, data: data};
+  return {status: status, data: data};
 }
 
 /**
@@ -95,18 +94,18 @@ const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date, scrapeInt
  * @param endtime
  * @param scrapeInterval
  */
-export const DiskBusyRatioProvider: React.FC<DiskBusyRatioProviderProps> = ({ children, starttime, endtime, scrapeInterval }) => {
+export const DiskBusyRatioProvider: React.FC<DiskBusyRatioProviderProps> = ({ children, starttime, endtime }) => {
   const [, setStatusCode] = useState<number | null>(null);
   const [data, setData] = useState<DiskBusyRatioData[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const {status, data} = await fetchFromAPIwithRequest(starttime, endtime, scrapeInterval);
+      const {status, data} = await fetchFromAPIwithRequest(starttime, endtime);
       setStatusCode(status);
       setData(data);
     }
     void fetchData();
-  }, [starttime, endtime, scrapeInterval]);
+  }, [starttime, endtime]);
 
   return (
     <DataContext.Provider value={data}>

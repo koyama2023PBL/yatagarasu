@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {getRange, unixTimeToDate} from "../../../Component/Common/Util";
-import instance from "../../../Axios/AxiosInstance";
+import {unixTimeToDate} from "../../../Component/Common/Util";
+import {invokeQueryRange, QueryRangeResponse, QueryRangeResult} from "../../../Component/Common/PrometheusClient";
+import {prometheusSettings} from "../../../Component/Redux/PrometheusSettings";
 
 /**
  * データプロバイダのプロパティ
@@ -9,7 +10,6 @@ interface CPUUsageRatioProps {
   children: React.ReactNode;
   starttime: Date;
   endtime: Date;
-  scrapeInterval: string;
 }
 
 /**
@@ -24,13 +24,10 @@ export interface CPUUsageRatioData {
 }
 
 /**
- * メトリクスのアイテム
+ * メトリクス
  */
-interface MetricItem {
-  metric: {
-    mode: string;
-  };
-  values: [];
+interface CPUUsageRatioMetric {
+  mode: string;
 }
 
 /**
@@ -42,33 +39,22 @@ const DataContext: React.Context<any> = createContext<CPUUsageRatioData[] | null
  * APIでデータを取得して整形します。
  * @param starttime
  * @param endtime
- * @param scrapeInterval
  */
-const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date, scrapeInterval: string) => {
+const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date) => {
   // APIからデータを取得
-  const startTimeRfc3339 = starttime.toISOString();
-  const endTimeRfc3339 = endtime.toISOString();
-  const range = getRange(scrapeInterval);
-  const endpoint  = `/api/v1/query_range?query=node_cpu_seconds_total&start=${startTimeRfc3339}&end=${endTimeRfc3339}&step=${range}`
-  const response = await instance.get(endpoint);
+  const { status: status, data: response }
+      = await invokeQueryRange<QueryRangeResponse<CPUUsageRatioMetric>>('node_cpu_seconds_total', starttime, endtime, prometheusSettings?.nodeScrapeInterval);
 
   // データを取得日時で束ねる
   const result: { [key: string]: any } = {};  // <datetime: {mode: usage}>
-  response.data.data.result.forEach((item: MetricItem) => {
+  response.data.result.forEach((item: QueryRangeResult<CPUUsageRatioMetric>) => {
     const mode: string = item.metric.mode;
 
     item.values.forEach((value: [timestamp: number, usage: string]) => {
       const datetime = unixTimeToDate(value[0]).toLocaleString();
       const usage = Number(value[1]);
-
-      if (!result[datetime]) {
-        result[datetime] = {};
-      }
-
-      if (!result[datetime][mode]) {
-        result[datetime][mode] = 0;
-      }
-
+      if (!result[datetime]) result[datetime] = {};
+      if (!result[datetime][mode]) result[datetime][mode] = 0;
       result[datetime][mode] += usage;
     });
   });
@@ -106,22 +92,21 @@ const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date, scrapeInt
 
     data.push(dataItem);
   });
-
-  return { status: response.status, data: data};
+  return { status: status, data: data };
 }
 
-export const CPUUsageRatioProvider: React.FC<CPUUsageRatioProps> = ({children, starttime, endtime, scrapeInterval}) => {
+export const CPUUsageRatioProvider: React.FC<CPUUsageRatioProps> = ({children, starttime, endtime}) => {
   const [, setStatusCode] = useState<number | null>(null);
   const [data, setData] = useState<CPUUsageRatioData[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const {status, data} = await fetchFromAPIwithRequest(new Date(starttime), new Date(endtime), scrapeInterval);
+      const {status, data} = await fetchFromAPIwithRequest(new Date(starttime), new Date(endtime));
       setStatusCode(status);
       setData(data);
     }
     void fetchData();
-  }, [starttime, endtime, scrapeInterval]);
+  }, [starttime, endtime]);
 
   return (
     <DataContext.Provider value={data}>

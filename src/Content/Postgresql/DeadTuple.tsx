@@ -12,8 +12,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-import instance from '../../Axios/AxiosInstance';
-import {getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
+import {rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -24,30 +23,11 @@ import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
 import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
-
-interface DeadTupleApiRequest {
-  start: Date;
-  end: Date;
-}
+import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
 
 interface DeadTupleProps {
   starttime: Date;
   endtime: Date;
-}
-
-interface DeadTupleApiResponse {
-  data: DeadTupleApiResponseData;
-  status: string;
-};
-
-interface DeadTupleApiResponseData {
-  resultType: string;
-  result: DeadTupleApiResponseResult[];
-}
-
-interface DeadTupleApiResponseResult {
-  metric: DeadTupleApiResponseMetric;
-  values: [number, string][];
 }
 
 interface DeadTupleApiResponseMetric {
@@ -56,27 +36,6 @@ interface DeadTupleApiResponseMetric {
   datname: string;
   instance: string;
   job: string;
-}
-
-const fetchFromAPIwithRequest = async (
-    endpoint: string,
-    queryParameters: DeadTupleApiRequest,
-    query: string
-)=> {
-  try {
-    const startTimeString = queryParameters.start.toISOString();
-    const endTimeString = queryParameters.end.toISOString();
-    const response = await instance.get<DeadTupleApiResponse>(
-        `${endpoint}${encodeURIComponent(
-            query
-        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
-        }`
-    );
-    return { status: response.status, data: response.data };
-  } catch (err) {
-    console.log("err:", err);
-    throw err;
-  }
 }
 
 ChartJS.register(
@@ -102,17 +61,9 @@ const DeadTuple: React.FC<DeadTupleProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/api/v1/query_range?query=";
-      const query =
-          'pg_stat_user_tables_n_dead_tup{datname="' +
-          yatagarasuSettings.dbname + '"}';
-
-      const requestBody: DeadTupleApiRequest = {
-        start: starttime,
-        end: endtime,
-      };
-  
-      const { status, data: response }: {status: number, data: DeadTupleApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody, query);
+      const query = `pg_stat_user_tables_n_dead_tup{datname="${yatagarasuSettings.dbname}"}`;
+      const {status: status, data: response }: {status: number, data: QueryRangeResponse<DeadTupleApiResponseMetric>}
+          = await invokeQueryRange<QueryRangeResponse<DeadTupleApiResponseMetric>>(query, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
       setStatusCode(status);
 
       // キーごとに合計するマップ
@@ -169,7 +120,7 @@ const DeadTuple: React.FC<DeadTupleProps> = ({ starttime, endtime }) => {
         length: length
       });
     };
-    fetchChartData();
+    void fetchChartData();
   }, [starttime, endtime]);
 
   const options = () => ({
@@ -187,7 +138,7 @@ const DeadTuple: React.FC<DeadTupleProps> = ({ starttime, endtime }) => {
           autoSkip: false,
           maxRotation: 0,
           minRotation: 0,
-          callback: function(value : any, index : any , values : any) {
+          callback: function(_value : any, index : any , _values : any) {
             return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
           }
         },
@@ -197,7 +148,7 @@ const DeadTuple: React.FC<DeadTupleProps> = ({ starttime, endtime }) => {
         }
       }
     },
-    onHover: (e: any, elements: any) => {
+    onHover: (_e: any, _elements: any) => {
     },
     plugin: {
       legend: {

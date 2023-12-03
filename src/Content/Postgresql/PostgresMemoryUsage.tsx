@@ -12,8 +12,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-import instance from '../../Axios/AxiosInstance';
-import { getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
+import {rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -23,76 +22,16 @@ import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
 import { prometheusSettings } from "../../Component/Redux/PrometheusSettings";
-
-
-export interface MemUsageApiResponse {
-  data: MemUsageResponseData;
-  status: string;
-}
-
-export interface MemUsageResponseData {
-  resultType: string;
-  result: MemUsageResponseResult[];
-}
-
-export interface MemUsageResponseResult {
-  metric: MemUsageResponseMetric;
-  values: [number, string][];
-}
+import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
 
 export interface MemUsageResponseMetric {
   instance: string;
   job: string;
 }
 
-export interface MemUsageApiRequest {
-  //query: string;
-  start: Date;
-  end: Date;
-}
-
-// interface MemUsageData {
-//   timestamp: string;
-//   memUsage: number;
-//   memUsageRatio: number;
-//   connections: number;
-// }
-  
-// interface MemUsageApiResponse {
-//   starttime: string;
-//   endtime: string;
-//   workMem: number;
-//   maxConnections: number;
-//   data: MemUsageData[];
-// }
-  
-// interface MemUsageApiRequest {
-//   starttime: Date;
-//   endtime: Date;
-// }
-
 interface MemoryUsageProps {
   starttime: Date;
   endtime: Date;
-}
-
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: MemUsageApiRequest, query: string) => {
-  try {
-    //APIの形式に合わせるためISO時間を使う
-    const startTimeString = queryParameters.start.toISOString();
-    const endTimeString = queryParameters.end.toISOString();
-    
-    const response = await instance.get<MemUsageApiResponse>(
-      `${endpoint}${encodeURIComponent(
-        query
-      )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
-      }`
-    );
-      return { status: response.status, data: response.data };
-  } catch (err) {
-      console.log("err:", err);
-      throw err;
-  }
 }
 
 ChartJS.register(
@@ -118,16 +57,10 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/api/v1/query_range?query=";
       const query = '(node_memory_MemTotal_bytes-node_memory_MemAvailable_bytes)/(1024*1024)'
-
-      const requestBody: MemUsageApiRequest = {
-        start: new Date(starttime),
-        end: new Date(endtime)
-      };
-
-
-      const { status, data: response }: {status: number, data: MemUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody, query);
+      const { status: status, data: response }: {status: number, data: QueryRangeResponse<MemUsageResponseMetric>}
+          = await invokeQueryRange<QueryRangeResponse<MemUsageResponseMetric>>(query, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
+      setStatusCode(status);
       const labels = response.data.result.flatMap(data => data.values).map(value => unixTimeToDate(value[0]));
       const backgroundColor = response.data.result.flatMap(data => 
         data.values.map(value => {
@@ -141,7 +74,7 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
           }
           return rgbToRgba(statusColors[status], 0.1);
         })
-        );
+      );
       const borderColor = response.data.result.flatMap(data => 
         data.values.map(value => {
           let status: Status;
@@ -158,9 +91,6 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
       const length = labels.length;
       const data = response.data.result.flatMap(data => data.values).map(value => Number(value[1]));
 
-
-
-
       setChartData({
         labels: labels,
         datasets: [
@@ -175,7 +105,7 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
     };
   
   
-    fetchChartData();
+    void fetchChartData();
   }, [starttime, endtime]);
 
   const options = () => ({
@@ -193,7 +123,7 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
           autoSkip: false,
           maxRotation: 0,
           minRotation: 0,
-          callback: function(value : any, index : any , values : any) {
+          callback: function(_value : any, index : any , _values : any) {
             return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
           }
         },
@@ -203,7 +133,7 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
         }
       }
     },
-    onHover: (e: any, elements: any) => {
+    onHover: (_e: any, _elements: any) => {
     },
     plugin: {
       legend: {

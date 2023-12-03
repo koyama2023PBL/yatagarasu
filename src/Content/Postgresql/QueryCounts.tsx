@@ -1,53 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Legend,
   BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  LineElement,
+  PointElement,
+  Title,
   Tooltip,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
+import {Bar} from "react-chartjs-2";
 
-import instance from '../../Axios/AxiosInstance';
-import {getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
-import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
+import {rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
+import {Box, Card, CardContent, Checkbox, CircularProgress, IconButton, Popover, Typography} from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { green, yellow, red } from '@mui/material/colors';
+import {green, red, yellow} from '@mui/material/colors';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
-import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
+import {Status, statusColors, Thresholds} from "../../Component/Threshold/Threshold";
 import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
-
-interface QueryCountsApiRequest {
-  start: Date;
-  end: Date;
-}
+import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
 
 interface QueryCountsProps {
   starttime: Date;
   endtime: Date;
-}
-
-interface QueryCountsApiResponse {
-  data: QueryCountsApiResponseData;
-  status: string;
-};
-
-export interface QueryCountsApiResponseData {
-  resultType: string;
-  result: QueryCountsApiResponseResult[];
-}
-
-interface QueryCountsApiResponseResult {
-  metric: QueryCountsApiResponseMetric;
-  values: [number, string][];
 }
 
 interface QueryCountsApiResponseMetric {
@@ -56,27 +36,6 @@ interface QueryCountsApiResponseMetric {
   datname: string;
   instance: string;
   job: string;
-}
-
-const fetchFromAPIwithRequest = async (
-    endpoint: string,
-    queryParameters: QueryCountsApiRequest,
-    query: string
-)=> {
-  try {
-      const startTimeString = queryParameters.start.toISOString();
-      const endTimeString = queryParameters.end.toISOString();
-      const response = await instance.get<QueryCountsApiResponse>(
-        `${endpoint}${encodeURIComponent(
-            query
-        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
-        }`
-    );
-      return { status: response.status, data: response.data };
-  } catch (err) {
-      console.log("err:", err);
-      throw err;
-  }
 }
 
 ChartJS.register(
@@ -102,24 +61,16 @@ const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/api/v1/query_range?query=";
-      const query =
-          'pg_stat_activity_count{datname="' +
-          yatagarasuSettings.dbname +
-          '",state="active"}';
-
-      const requestBody: QueryCountsApiRequest = {
-        start: new Date(starttime),
-        end: new Date(endtime),
-      };
-  
-      const { status, data: response }: {status: number, data: QueryCountsApiResponse}
-          = await fetchFromAPIwithRequest(endpoint, requestBody, query);
+      const query = `pg_stat_activity_count{datname="${yatagarasuSettings.dbname}",state="active"}`;
+      const { status: status, data: response }: {status: number, data: QueryRangeResponse<QueryCountsApiResponseMetric>}
+          = await invokeQueryRange<QueryRangeResponse<QueryCountsApiResponseMetric>>(query, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
       setStatusCode(status);
       const queryCounts = response.data.result.flatMap((data) =>
           data.values.map(([_, queryCounts]) => queryCounts));
       const labels = response.data.result.flatMap((data) =>
-          data.values.map(([labels, _]) => labels)).map(value => {let v = unixTimeToDate(value).toLocaleString(); return v;});
+          data.values.map(([labels, _]) => labels))
+                     .map(value => { return unixTimeToDate(value).toLocaleString(); });
+
       const borderColor = queryCounts.map((value)=> {
         let status: Status;
         if (Number(value) <= Thresholds.querycounts.ok) {
@@ -158,7 +109,7 @@ const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
     };
   
   
-    fetchChartData();
+    void fetchChartData();
   }, [starttime, endtime]);
 
   const options = () => ({
@@ -176,7 +127,7 @@ const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
           autoSkip: false,
           maxRotation: 0,
           minRotation: 0,
-          callback: function(value : any, index : any , values : any) {
+          callback: function(_value : any, index : any , _values : any) {
             return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
           }
         },
@@ -186,7 +137,7 @@ const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
         }
       }
     },
-    onHover: (e: any, elements: any) => {
+    onHover: (_e: any, _elements: any) => {
     },
     plugin: {
       legend: {

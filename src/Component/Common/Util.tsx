@@ -46,7 +46,7 @@ export function parseDateString (dateString: string): Date | null  {
   }
 
   return null;
-};
+}
 
 /*
 //分以下切り捨て
@@ -69,7 +69,6 @@ export function unixTimeToDate(unixTime: number) {
 export function roundMinutes(date: Date): Date {
   const coeff = 1000 * 60 * 5;
   return new Date(Math.floor(date.getTime() / coeff) * coeff);
-  
 }
 
 //小数点以下3桁丸め
@@ -116,4 +115,24 @@ export function calcSum(values: [number, string][]){
     sum += Number(values[i][1]);
   }
   return sum;
+}
+
+export function calcMaxStep(from: Date, to: Date, scrape_interval: string, record_count: number = 10000): string | null {
+  if (record_count >= 11000) return null;
+  if (!/\d+[smhdwy]/.test(scrape_interval)) return null;
+
+  const interval_num = Number(scrape_interval.replace(/\D/g, ''));
+  const interval_unit = scrape_interval.replace(/\d/g, '');
+  const interval_second = interval_num * (
+      interval_unit === 's' ? 1 :
+      interval_unit === 'm' ? 60 :
+      interval_unit === 'h' ? 3600 :
+      interval_unit === 'd' ? 86400 :
+      interval_unit === 'w' ? 604800 :
+      interval_unit === 'y' ? 31536000 : 0);
+
+  const diff = Math.floor((to.getTime() - from.getTime()) / 1000);
+  const max_step = Math.floor(diff / record_count);
+
+  return String(Math.max(max_step, interval_second)) + 's';
 }

@@ -11,8 +11,7 @@ import {
   Tooltip,
 } from "chart.js";
 
-import instance from '../../Axios/AxiosInstance';
-import {calcAverage, calcSum, getDate, roundToTwoDecimalPlaces, unixTimeToDate} from '../../Component/Common/Util';
+import { calcSum, unixTimeToDate } from '../../Component/Common/Util';
 import { Box, Card, CardContent, CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -22,30 +21,11 @@ import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
 import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
-
-interface DeadLocksApiRequest {
-  start: Date;
-  end: Date;
-}
+import {invokeQueryRange, QueryRangeData, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
 
 interface DeadLocksProps {
   starttime: Date;
   endtime: Date;
-}
-
-interface DeadLocksApiResponse {
-  data: DeadLocksApiResponseData;
-  status: string;
-};
-
-export interface DeadLocksApiResponseData {
-  resultType: string;
-  result: DeadLocksApiResponseResult[];
-}
-
-interface DeadLocksApiResponseResult {
-  metric: DeadLocksApiResponseMetric;
-  values: [number, string][];
 }
 
 interface DeadLocksApiResponseMetric {
@@ -54,29 +34,6 @@ interface DeadLocksApiResponseMetric {
   datname: string;
   instance: string;
   job: string;
-}
-
-const fetchFromAPIwithRequest = async (
-    endpoint: string,
-    queryParameters: DeadLocksApiRequest,
-    query: string
-) => {
-  try {
-    const startTimeString = queryParameters.start.toISOString();
-    const endTimeString = queryParameters.end.toISOString();
-
-    const response = await instance.get<DeadLocksApiResponse>(
-        `${endpoint}${encodeURIComponent(
-            query
-        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
-        }`
-    );
-    return { status: response.status, data: response.data };
-
-  } catch (err) {
-      console.log("err:", err);
-      throw err;
-  }
 }
 
 ChartJS.register(
@@ -92,39 +49,24 @@ ChartJS.register(
 );
 
 const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
-
-  const [deadLocksData, setDeadLocksData] =
-      useState<DeadLocksApiResponseData | null>(null);
+  const [deadLocksData, setDeadLocksData] = useState<QueryRangeData<DeadLocksApiResponseMetric> | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
   const [datname, setDatname] = useState<string | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => { setAnchorEl(event.currentTarget); };
+  const handlePopoverClose = () => { setAnchorEl(null); };
   const open = Boolean(anchorEl);
 
   useEffect(() => {
     const fetchDeadLocksData = async () => {
-      const endpoint = "/api/v1/query_range?query=";
-      const query =
-          'pg_stat_database_deadlocks{datname="' +
-          yatagarasuSettings.dbname + '"}';
-      const requestBody: DeadLocksApiRequest = {
-        start: starttime,
-        end: endtime,
-      };
-      const { status, data: response }: {status: number, data: DeadLocksApiResponse}
-          = await fetchFromAPIwithRequest(endpoint, requestBody, query);
+      const query = `pg_stat_database_deadlocks{datname="${yatagarasuSettings.dbname}"}`;
+      const { status: status, data: response }: {status: number, data: QueryRangeResponse<DeadLocksApiResponseMetric>}
+          = await invokeQueryRange<QueryRangeResponse<DeadLocksApiResponseMetric>>(query, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
       setStatusCode(status);
       setDatname(yatagarasuSettings.dbname);
       setDeadLocksData(response.data);
     };
-
-    fetchDeadLocksData();
+    void fetchDeadLocksData();
   }, []);
 
   const getIcon = () => {

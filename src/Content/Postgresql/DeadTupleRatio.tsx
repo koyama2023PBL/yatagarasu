@@ -12,7 +12,6 @@ import {
 } from "chart.js";
 import {Bar} from "react-chartjs-2";
 
-import instance from '../../Axios/AxiosInstance';
 import {rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import {Box, Card, CardContent, Checkbox, CircularProgress, IconButton, Popover, Typography} from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -24,30 +23,11 @@ import WarningIcon from '@mui/icons-material/Warning';
 import {Status, statusColors, Thresholds} from "../../Component/Threshold/Threshold";
 import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
-
-interface TupleApiRequest {
-  start: Date;
-  end: Date;
-}
+import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
 
 interface TupleProps {
   starttime: Date;
   endtime: Date;
-}
-
-interface TupleApiResponse {
-  data: TupleApiResponseData;
-  status: string;
-};
-
-interface TupleApiResponseData {
-  resultType: string;
-  result: TupleApiResponseResult[];
-}
-
-interface TupleApiResponseResult {
-  metric: TupleApiResponseMetric;
-  values: [number, string][];
 }
 
 interface TupleApiResponseMetric {
@@ -56,27 +36,6 @@ interface TupleApiResponseMetric {
   datname: string;
   instance: string;
   job: string;
-}
-
-const fetchFromAPIwithRequest = async (
-    endpoint: string,
-    queryParameters: TupleApiRequest,
-    query: string
-)=> {
-  try {
-    const startTimeString = queryParameters.start.toISOString();
-    const endTimeString = queryParameters.end.toISOString();
-    const response = await instance.get<TupleApiResponse>(
-        `${endpoint}${encodeURIComponent(
-            query
-        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
-        }`
-    );
-    return { status: response.status, data: response.data };
-  } catch (err) {
-    console.log("err:", err);
-    throw err;
-  }
 }
 
 ChartJS.register(
@@ -102,32 +61,17 @@ const DeadTuples: React.FC<TupleProps> = ({ starttime, endtime }) => {
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/api/v1/query_range?query=";
-      const queryDeadTuple =
-          'pg_stat_user_tables_n_dead_tup{datname="' +
-          yatagarasuSettings.dbname + '"}';
-      const queryLiveTuple =
-          'pg_stat_user_tables_n_live_tup{datname="' +
-          yatagarasuSettings.dbname + '"}';
+      const queryDeadTuple = `pg_stat_user_tables_n_dead_tup{datname="${yatagarasuSettings.dbname}"}`;
+      const queryLiveTuple = `pg_stat_user_tables_n_live_tup{datname="${yatagarasuSettings.dbname}"}`;
 
-      const requestBody: TupleApiRequest = {
-        start: starttime,
-        end: endtime,
-      };
+      const { status: deadTupleStatus, data: deadTupleResponse }: {status: number, data: QueryRangeResponse<TupleApiResponseMetric>}
+          = await invokeQueryRange<QueryRangeResponse<TupleApiResponseMetric>>(queryDeadTuple, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
+      const { status: liveTupleStatus, data: liveTupleResponse }: {status: number, data: QueryRangeResponse<TupleApiResponseMetric>}
+          = await invokeQueryRange<QueryRangeResponse<TupleApiResponseMetric>>(queryLiveTuple, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
 
-      const { status: deadTupleStatus, data: deadTupleResponse }: {status: number, data: TupleApiResponse}
-          = await fetchFromAPIwithRequest(endpoint, requestBody, queryDeadTuple);
-      const { status: liveTupleStatus, data: liveTupleResponse }: {status: number, data: TupleApiResponse}
-          = await fetchFromAPIwithRequest(endpoint, requestBody, queryLiveTuple);
-      if (deadTupleStatus == null || liveTupleStatus == null) {
-        setStatusCode(null);
-      }
-      else if (deadTupleStatus >= liveTupleStatus){
-        setStatusCode(deadTupleStatus);
-      }
-      else{
-        setStatusCode(liveTupleStatus);
-      }
+      if (deadTupleStatus == null || liveTupleStatus == null) setStatusCode(null);
+      else if (deadTupleStatus >= liveTupleStatus) setStatusCode(deadTupleStatus);
+      else setStatusCode(liveTupleStatus);
 
       const DeadTupleMap: Record<string, number> = {};
       const LiveTupleMap: Record<string, number> = {};
@@ -198,9 +142,7 @@ const DeadTuples: React.FC<TupleProps> = ({ starttime, endtime }) => {
         length: length
       });
     };
-  
-  
-    fetchChartData();
+    void fetchChartData();
   }, [starttime, endtime]);
 
   const options = () => ({
@@ -218,7 +160,7 @@ const DeadTuples: React.FC<TupleProps> = ({ starttime, endtime }) => {
           autoSkip: false,
           maxRotation: 0,
           minRotation: 0,
-          callback: function(value : any, index : any , values : any) {
+          callback: function(_value : any, index : any , _values : any) {
             return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
           }
         },
@@ -228,7 +170,7 @@ const DeadTuples: React.FC<TupleProps> = ({ starttime, endtime }) => {
         }
       }
     },
-    onHover: (e: any, elements: any) => {
+    onHover: (_e: any, _elements: any) => {
     },
     plugin: {
       legend: {

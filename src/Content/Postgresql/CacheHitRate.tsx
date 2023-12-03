@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import instance from "../../Axios/AxiosInstance";
 import {
   roundToTwoDecimalPlaces,
   unixTimeToDate,
@@ -21,26 +20,11 @@ import WarningIcon from "@mui/icons-material/Warning";
 import { green, yellow, red } from "@mui/material/colors";
 import { prometheusSettings } from "../../Component/Redux/PrometheusSettings";
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
+import {invokeQueryRange, QueryRangeData, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
 
 interface CacheHitRateProps {
   starttime: Date;
   endtime: Date;
-}
-
-//APIレスポンスの基本形
-export interface CacheHitRateApiResponse {
-  data: CacheHitRateResponseData;
-  status: string;
-}
-
-export interface CacheHitRateResponseData {
-  resultType: string;
-  result: CacheHitRateResponseResult[];
-}
-
-export interface CacheHitRateResponseResult {
-  metric: CacheHitRateResponseMetric;
-  values: [number, string][];
 }
 
 export interface CacheHitRateResponseMetric {
@@ -51,82 +35,31 @@ export interface CacheHitRateResponseMetric {
   job: string;
 }
 
-export interface CacheHitRateApiRequest {
-  //query: string;
-  start: Date;
-  end: Date;
-  datname: string;
-}
-
-const fetchFromAPIwithRequest = async (
-  endpoint: string,
-  queryParameters: CacheHitRateApiRequest,
-  query: string
-) => {
-  try {
-    const startTimeString = queryParameters.start.toISOString();
-    const endTimeString = queryParameters.end.toISOString();
-
-    const response = await instance.get<CacheHitRateApiResponse>(
-      `${endpoint}${encodeURIComponent(
-        query
-      )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
-      }`
-    );
-    return { status: response.status, data: response.data };
-  } catch (err) {
-    console.log("err:", err);
-    throw err;
-  }
-};
-
 const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
-  const [cacheHitRateData, setCacheHitRateData] =
-    useState<CacheHitRateResponseData | null>(null);
+  const [cacheHitRateData, setCacheHitRateData] = useState<QueryRangeData<CacheHitRateResponseMetric> | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
   const [datname, setDatname] = useState<string | null>(null);
-
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget);};
+  const handlePopoverClose = () => {setAnchorEl(null);};
   const open = Boolean(anchorEl);
-
-  //const [cacheHitAverage, setCacheHitAverage] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchCacheHitRateData = async () => {
-      const endpoint = "/api/v1/query_range?query=";
-      const query =
-        'pg_stat_database_blks_hit{datname="' +
-        yatagarasuSettings.dbname +
-        '"}/(pg_stat_database_blks_hit{datname="' +
-        yatagarasuSettings.dbname +
-        '"}+pg_stat_database_blks_read{datname="' +
-        yatagarasuSettings.dbname +
-        '"})';
+      const query = `pg_stat_database_blks_hit{datname="${yatagarasuSettings.dbname}"}`
+          + `/(pg_stat_database_blks_hit{datname="${yatagarasuSettings.dbname}"}`
+          + `+pg_stat_database_blks_read{datname="${yatagarasuSettings.dbname}"})`;
 
-      const requestBody: CacheHitRateApiRequest = {
-        start: new Date(starttime),
-        end: new Date(endtime),
-        datname: yatagarasuSettings.dbname,
-      };
+      const { status: status, data: response }: {status: number, data: QueryRangeResponse<CacheHitRateResponseMetric>}
+          = await invokeQueryRange<QueryRangeResponse<CacheHitRateResponseMetric>>(query, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
 
-      const {
-        status,
-        data: response,
-      }: { status: number; data: CacheHitRateApiResponse } =
-        await fetchFromAPIwithRequest(endpoint, requestBody, query);
       setStatusCode(status);
       setCacheHitRateData(response.data);
       //外部定義ファイルからの設定
       setDatname(yatagarasuSettings.dbname);
     };
 
-    fetchCacheHitRateData();
+    void fetchCacheHitRateData();
   }, [starttime, endtime, datname]);
 
   const getIcon = () => {

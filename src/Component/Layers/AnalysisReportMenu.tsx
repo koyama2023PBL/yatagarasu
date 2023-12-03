@@ -5,7 +5,6 @@ import {RootState} from "../Redux/StateStore";
 import {ReportingOverview} from "../../Content/AnalysisReport/ReportingOverview";
 import {PerformanceReport} from "../../Content/AnalysisReport/PerformanceReport";
 import {MemorySwapIOProvider} from "../../Content/AnalysisReport/DataProvider/MemorySwapIOProvider";
-import {prometheusSettings} from "../Redux/PrometheusSettings";
 import {CPUUsageRatioProvider} from "../../Content/AnalysisReport/DataProvider/CPUUsageRatioProvider";
 import {CheckpointProgressProvider} from "../../Content/AnalysisReport/DataProvider/CheckpointProgressProvider";
 import {DiskBusyRatioProvider} from "../../Content/AnalysisReport/DataProvider/DiskBusyRatioProvider";
@@ -19,16 +18,14 @@ export const AnalysisReportMenu: React.FC = () => {
   const { from, to } = useSelector((state: RootState) => state.date);
   const starttime = new Date(from);
   const endtime   = new Date(to);
-  const nodeScrapeInterval     = prometheusSettings?.nodeScrapeInterval ?? '15s';
-  const postgresScrapeInterval = prometheusSettings?.postgresqlScrapeInterval ?? '15s';
 
   return (
       <div>
-        <MemorySwapIOProvider       starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
-        <CPUUsageRatioProvider      starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
-        <CheckpointProgressProvider starttime={starttime} endtime={endtime} scrapeInterval={postgresScrapeInterval}>
-        <DiskBusyRatioProvider      starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
-        <DiskUsageProvider          starttime={starttime} endtime={endtime} scrapeInterval={nodeScrapeInterval}>
+        <MemorySwapIOProvider       starttime={starttime} endtime={endtime}>
+        <CPUUsageRatioProvider      starttime={starttime} endtime={endtime}>
+        <CheckpointProgressProvider starttime={starttime} endtime={endtime}>
+        <DiskBusyRatioProvider      starttime={starttime} endtime={endtime}>
+        <DiskUsageProvider          starttime={starttime} endtime={endtime}>
           <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
             <ReportingOverview />
           </Box>
