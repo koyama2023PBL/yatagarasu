@@ -1,6 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {getRange, unixTimeToDate} from "../../../Component/Common/Util";
-import instance from "../../../Axios/AxiosInstance";
+import {unixTimeToDate} from "../../../Component/Common/Util";
+import {invokeQueryRange, QueryRangeResponse} from "../../../Component/Common/PrometheusClient";
+import {prometheusSettings} from "../../../Component/Redux/PrometheusSettings";
 
 /**
  * データプロバイダのプロパティ
@@ -9,7 +10,6 @@ interface DiskUsageProviderProps {
   children: React.ReactNode;
   starttime: Date;
   endtime: Date;
-  scrapeInterval: string;
 }
 
 /**
@@ -29,23 +29,19 @@ const DataContext: React.Context<any> = createContext<DiskUsageData[] | null>(nu
  * APIにリクエストを送信する
  * @param starttime
  * @param endtime
- * @param scrapeInterval
  */
-const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date, scrapeInterval: string) => {
-  const startTimeRfc3339 = starttime.toISOString();
-  const endTimeRfc3339 = endtime.toISOString();
-  const range = getRange(scrapeInterval);
-  const endpoint  = `/api/v1/query_range`
-                         + `?query=100-SUM(node_filesystem_avail_bytes)\/SUM(node_filesystem_size_bytes)*100`
-                         + `&start=${startTimeRfc3339}&end=${endTimeRfc3339}&step=${range}`
-  const response = await instance.get(endpoint);
-  const data: DiskUsageData[] = response.data.data.result[0].values.map((item: [number, string]) => {
+const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date) => {
+  const query  = `100-SUM(node_filesystem_avail_bytes)\/SUM(node_filesystem_size_bytes)*100`;
+  const { status: status, data: response }
+      = await invokeQueryRange<QueryRangeResponse<any>>(query, starttime, endtime, prometheusSettings?.nodeScrapeInterval);
+
+  const data: DiskUsageData[] = response.data.result[0].values.map(([timestamp, value]) => {
     return {
-      datetime: unixTimeToDate(item[0]).toLocaleString(),
-      usage: Number(item[1])
+      datetime: unixTimeToDate(timestamp).toLocaleString(),
+      usage: Number(value)
     };
   });
-  return {status: response.status, data: data};
+  return {status: status, data: data};
 }
 
 /**
@@ -53,20 +49,19 @@ const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date, scrapeInt
  * @param children
  * @param starttime
  * @param endtime
- * @param scrapeInterval
  */
-export const DiskUsageProvider: React.FC<DiskUsageProviderProps> = ({ children, starttime, endtime, scrapeInterval }) => {
+export const DiskUsageProvider: React.FC<DiskUsageProviderProps> = ({ children, starttime, endtime }) => {
   const [, setStatusCode] = useState<number | null>(null);
   const [data, setData] = useState<DiskUsageData[] | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const {status, data} = await fetchFromAPIwithRequest(starttime, endtime, scrapeInterval);
+      const {status, data} = await fetchFromAPIwithRequest(starttime, endtime);
       setStatusCode(status);
       setData(data);
     }
     void fetchData();
-  }, [starttime, endtime, scrapeInterval]);
+  }, [starttime, endtime]);
 
   return (
     <DataContext.Provider value={data}>

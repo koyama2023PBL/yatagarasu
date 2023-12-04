@@ -1,7 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import yatagarasuSettings from "../../../Component/Redux/YatagarasuSettings";
-import instance from "../../../Axios/AxiosInstance";
-import {getRange} from "../../../Component/Common/Util";
+import {invokeQueryRange, QueryRangeResponse} from "../../../Component/Common/PrometheusClient";
+import {prometheusSettings} from "../../../Component/Redux/PrometheusSettings";
 
 /**
  * データプロバイダのプロパティ
@@ -10,7 +10,6 @@ interface CheckpointProgressProps {
   children: React.ReactNode;
   starttime: Date;
   endtime: Date;
-  scrapeInterval: string;
 }
 
 /**
@@ -30,22 +29,19 @@ const DataContext: React.Context<CheckpointProgressData | null> = createContext<
  * APIでデータを取得して整形します。
  * @param starttime
  * @param endtime
- * @param scrapeInterval
  */
-const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date, scrapeInterval: string) => {
-  const startTimeRfc3339 = starttime.toISOString();
-  const endTimeRfc3339 = endtime.toISOString();
-  const range = getRange(scrapeInterval);
-  const endpointTimed  = `/api/v1/query_range?query=pg_stat_bgwriter_checkpoints_timed_total{job="${yatagarasuSettings.postgresExporterJobName}"}&start=${startTimeRfc3339}&end=${endTimeRfc3339}&step=${range}`
-  const endpointReq  = `/api/v1/query_range?query=pg_stat_bgwriter_checkpoints_req_total{job="${yatagarasuSettings.postgresExporterJobName}"}&start=${startTimeRfc3339}&end=${endTimeRfc3339}&step=${range}`
-  const responseTimed = await instance.get(endpointTimed);
-  const responseReq = await instance.get(endpointReq);
+const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date) => {
+  const queryTimed  = `pg_stat_bgwriter_checkpoints_timed_total{job="${yatagarasuSettings.postgresExporterJobName}"}`
+  const queryReq    = `pg_stat_bgwriter_checkpoints_req_total{job="${yatagarasuSettings.postgresExporterJobName}"}`
 
-  const countsTimed: number[] = responseTimed.data.data.result[0].values.map((item: [string, number]) => Number(item[1]));
-  const countsReq  : number[] = responseReq.data.data.result[0].values.map((item: [string, number]) => Number(item[1]));
+  const { status: statusTimed, data: dataTimed } = await invokeQueryRange<QueryRangeResponse<any>>(queryTimed, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
+  const { status: statusReq,   data: dataReq   } = await invokeQueryRange<QueryRangeResponse<any>>(queryReq,   starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
+
+  const countsTimed: number[] = dataTimed.data.result[0].values.map(([_timestamp, value]) => Number(value));
+  const countsReq  : number[] = dataReq.data.result[0].values.map(([_timestamp, value]) => Number(value));
 
   return {
-    status: responseTimed.status,
+    status: Math.max(statusTimed, statusReq),
     data: {
       timed: Math.max(...countsTimed) - Math.min(...countsTimed),
       req:   Math.max(...countsReq)   - Math.min(...countsReq),
@@ -59,18 +55,18 @@ const fetchFromAPIwithRequest = async (starttime: Date, endtime: Date, scrapeInt
  * @param starttime
  * @param endtime
  */
-export const CheckpointProgressProvider: React.FC<CheckpointProgressProps> = ({ children, starttime, endtime , scrapeInterval}) => {
+export const CheckpointProgressProvider: React.FC<CheckpointProgressProps> = ({ children, starttime, endtime }) => {
   const [, setStatusCode] = useState<number | null>(null);
   const [data, setData] = useState<CheckpointProgressData | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const {status, data} = await fetchFromAPIwithRequest(new Date(starttime), new Date(endtime), scrapeInterval);
+      const {status, data} = await fetchFromAPIwithRequest(new Date(starttime), new Date(endtime));
       setStatusCode(status);
       setData(data);
     }
     void fetchData();
-  }, [starttime, endtime, scrapeInterval]);
+  }, [starttime, endtime]);
 
   return (
     <DataContext.Provider value={data}>

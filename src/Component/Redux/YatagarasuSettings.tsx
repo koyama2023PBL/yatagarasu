@@ -7,7 +7,7 @@ interface YatagarasuSettings {
 }
 
 const yatagarasuSettings: YatagarasuSettings = {
-  dbname: 'yatagarasu-db',
+  dbname: 'explorer',
   nodeExporterJobName: 'node_exporter',
   postgresExporterJobName: 'postgres_exporter',
 };
