@@ -1,7 +1,11 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import {calcMaxStep, getRange, unixTimeToDate} from "../../../Component/Common/Util";
-import instance from "../../../Axios/AxiosInstance";
-import {invokeQueryRange, QueryRangeResponse} from "../../../Component/Common/PrometheusClient";
+import {
+  invokeQuery,
+  invokeQueryRange,
+  QueryRangeResponse,
+  QueryResponse, QueryResult
+} from "../../../Component/Common/PrometheusClient";
 import {prometheusSettings} from "../../../Component/Redux/PrometheusSettings";
 
 /**
@@ -24,11 +28,8 @@ export interface DiskBusyRatioData {
 /**
  * メトリクスのアイテム
  */
-interface MetricItem {
-  metric: {
-    device: string;
-  };
-  value: [number, string];
+interface DiskIoTimeMetric {
+  device: string;
 }
 
 /**
@@ -42,9 +43,9 @@ const DataContext: React.Context<DiskBusyRatioData[] | null> = createContext<Dis
  * @param datetime 集計する日時
  */
 const getTargetDisks = async (datetime: Date) => {
-  const response = await instance.get(`/api/v1/query?query=node_disk_io_time_seconds_total&time=${datetime.toISOString()}`);
+  const { data: response } = await invokeQuery<QueryResponse<DiskIoTimeMetric>>('node_disk_io_time_seconds_total', datetime)
   const ioObject: {[key: string]: number;} = {};
-  response.data.data.result.forEach((item: MetricItem) => {
+  response.data.result.forEach((item: QueryResult<DiskIoTimeMetric>) => {
     const device: string = item.metric.device;
     if (!(device in ioObject)) ioObject[device] = 0;
     ioObject[device] += Number(item.value[1]);

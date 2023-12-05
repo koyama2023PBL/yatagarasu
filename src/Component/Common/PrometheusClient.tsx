@@ -16,14 +16,56 @@ export interface QueryRangeResult<T> {
   values: [timestamp: number, value: string][];
 }
 
-export async function invokeQueryRange<T>(query: string, start: Date, end: Date, scrapeInterval: string | undefined) :Promise<{status: number, data: T}> {
+export async function invokeQueryRange<T>(
+    query: string,
+    start: Date,
+    end: Date,
+    scrapeInterval: string | undefined,
+    extraParams?: { [key: string]: any }
+) :Promise<{status: number, data: T}> {
   try {
-    const endpoint = `/api/v1/query_range`
-        + `?query=${encodeURIComponent(query)}`
-        + `&start=${start.toISOString()}`
-        + `&end=${end.toISOString()}`
-        + `&step=${calcMaxStep(start, end, scrapeInterval?? '15s')}`;
-    const response = await instance.get<T>(endpoint);
+    const params = { ...{
+      query: query,
+      start: start.toISOString(),
+      end  : end.toISOString(),
+      step : calcMaxStep(start, end, scrapeInterval?? '15s')
+    }, ...extraParams?? {} };
+
+    const response = await instance.get<T>('/api/v1/query_range', {params: params} );
+    return { status: response.status, data: response.data };
+  } catch (err) {
+    console.log("err:", err);
+    throw err;
+  }
+}
+
+export interface QueryResponse<T> {
+  status: string;
+  data: QueryData<T>;
+}
+
+export interface QueryData<T> {
+  resultType: string;
+  result: QueryResult<T>[];
+}
+
+export interface QueryResult<T> {
+  metric: T;
+  value: [timestamp: number, value: string];
+}
+
+export async function invokeQuery<T>(
+    query: string,
+    time: Date,
+    extraParams?: { [key: string]: any }
+) :Promise<{status: number, data: T}> {
+  try {
+    const params = { ...{
+      query: query,
+      time : time.toISOString(),
+    }, ...extraParams?? {} };
+
+    const response = await instance.get<T>('/api/v1/query', {params: params});
     return { status: response.status, data: response.data };
   } catch (err) {
     console.log("err:", err);
