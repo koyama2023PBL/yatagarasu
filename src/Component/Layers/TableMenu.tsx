@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 
-import SlowQueryCount from '../../Content/Postgresql/SlowQuery';
+import SlowQuery from '../../Content/Postgresql/SlowQuery';
 import AverageQueryTime from '../../Content/Postgresql/AvgQueryTime';
 
 import { useSelector } from 'react-redux';
@@ -29,7 +29,7 @@ const TableMenu: React.FC = () => {
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'left', width: '95vw',marginRight: 'auto', marginLeft: 'auto'}}>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
-          <SlowQueryCount starttime={starttime} endtime={endtime} querytime={querytime}/>
+          <SlowQuery starttime={starttime} endtime={endtime}/>
           <Box sx={{ width: '1.5vh'}}></Box>
           <AverageQueryTime starttime={starttime} endtime={endtime}/>
         </Box>

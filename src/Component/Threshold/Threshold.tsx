@@ -50,8 +50,8 @@ export const Thresholds = {
     watch: 1
   },
   slowquery: {
-    ok: 0,
-    watch: 1
+    ok: 100,
+    watch: 300
   },
 };
 
