@@ -13,36 +13,37 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemTextIcon from '@mui/material/ListItemText';
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
+import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Home as HomeIcon,
   Summarize as SummarizeIcon,
   Dashboard as DashboardIcon,
-  Storage as StorageIcon,
+  Explore as ExploreIcon,
   Troubleshoot as TroubleshootIcon,
+  QueryStats as QueryStatsIcon,
   DashboardCustomize as DashboardCustomizeIcon,
   DeveloperBoard as DeveloperBoardIcon,
+  Settings as SettingsIcon,
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
 } from '@mui/icons-material';
 
 
-import OverViewMenu from '../Layers/OverViewMenu';
-import OsMenu from '../Layers/OsMenu';
-import RdbmsMenu from '../Layers/RdbmsMenu';
-import TableMenu from '../Layers/TableMenu';
+import ExploreModeMenu from '../Layers/ExploreModeMenu';
 import icon from '../../img/icon.png';
 
-import { AnalysisReportMenu } from "../Layers/AnalysisReportMenu";
+import { CheckModeMenu } from "../Layers/CheckModeMenu";
 import { setSelected } from '../Redux/MenuState';
 import { RootState } from '../Redux/StateStore';
 import HomeMenu from '../Layers/HomeMenu';
 import {CustomDashboard} from "../Layers/CustomDashboard";
+import SettingsMenu from '../Layers/SettingsMenu';
 
-const drawerWidth = 300;
+const drawerWidth = 200;
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -119,13 +120,9 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
-  { id: 'home', text: 'Home', icon: <HomeIcon style={{ fontSize: 40 }}/> },
-  { id: 'analysis-report', text: 'Analysis Report', icon: <SummarizeIcon style={{ fontSize: 40 }}/> },
-  { id: 'dashboard', text: 'Dashboard', icon: <DashboardIcon style={{ fontSize: 40 }}/> },
-  { id: 'server', text: 'Server', icon: <DeveloperBoardIcon style={{ fontSize: 40 }}/> },
-  { id: 'rdbms', text: 'RDBMS', icon: <StorageIcon style={{ fontSize: 40 }}/> },
-  { id: 'queries', text: 'Queries', icon: <TroubleshootIcon style={{ fontSize: 40 }}/> },
-  { id: 'custom', text: 'Custom', icon: <DashboardCustomizeIcon style={{ fontSize: 40 }}/> },
+  { id: 'check', text: 'Check', icon: <SummarizeIcon style={{ fontSize: 40 }}/> },
+  { id: 'explore', text: 'Explore', icon: <ExploreIcon style={{ fontSize: 40 }}/> },
+  { id: 'advance', text: 'Advance', icon: <QueryStatsIcon style={{ fontSize: 40 }}/> },
 ];
 
 
@@ -134,6 +131,7 @@ export default function BaseDisplayMenu() {
   const dispatch = useDispatch();
   const selected = useSelector((state: RootState) => state.menu.selected);
   const location = useLocation();
+  const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const handleDrawerOpen = () => setOpen(true);
@@ -148,15 +146,15 @@ export default function BaseDisplayMenu() {
   const renderRoutes = () => (
     <Routes>
       <Route path="/" element={<HomeMenu/>} />
-      <Route path="/home" element={<HomeMenu/>} />
-      <Route path="/dashboard" element={<OverViewMenu />} />
-      <Route path="/server" element={<OsMenu />} />
-      <Route path="/rdbms" element={<RdbmsMenu/>} />
-      <Route path="/analysis-report" element={<AnalysisReportMenu/>}/>
-      <Route path="/custom" element={<CustomDashboard/>}/>
-      <Route path="/queries" element={<TableMenu/>} />
+      <Route path="/explore" element={<ExploreModeMenu />} />
+      <Route path="/check" element={<CheckModeMenu/>}/>
+      <Route path="/advance" element={<CustomDashboard/>}/>
+      <Route path="/settings" element={<SettingsMenu/>}/>
     </Routes>
   );
+  const handleSettingsClick = () => {
+    navigate('/settings'); 
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -168,7 +166,7 @@ export default function BaseDisplayMenu() {
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            sx={{marginRight: 5, ...(open && { display: 'none' })}}
+            sx={{marginRight: 1, ...(open && { display: 'none' })}}
           >
             <MenuIcon />
           </IconButton>
@@ -188,6 +186,12 @@ export default function BaseDisplayMenu() {
           <img src={icon} alt="icon" style={{ height: '50px', marginRight: '12px' }} />
           Yatagarasu
           </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+            <IconButton color="inherit" aria-label="open settings" edge="end" onClick={handleSettingsClick} sx={{fontSize: '2rem', padding: '12px', margin: '-12px' }}>
+              <SettingsIcon sx={{
+                fontSize: 'inherit',
+              }}/>
+            </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -201,26 +205,28 @@ export default function BaseDisplayMenu() {
         {menuItems.map((item) => (
         <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
           <Link to={`/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 3,
-                backgroundColor: isSelected(item.id) ? '#DDE1E1' : 'inherit',
-              }}
-            >
-              <ListItemIcon
+            <Tooltip title={item.text} placement="right" arrow>
+              <ListItemButton
                 sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  color: isSelected(item.id) ? theme.palette.primary.main : '#696969',
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 3,
+                  backgroundColor: isSelected(item.id) ? '#DDE1E1' : 'inherit',
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemTextIcon primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    color: isSelected(item.id) ? theme.palette.primary.main : '#696969',
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemTextIcon primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </Tooltip>
           </Link>
         </ListItem>
       ))}
