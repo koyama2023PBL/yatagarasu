@@ -14,7 +14,7 @@ import {DiskReport} from "../../Content/AnalysisReport/DiskReport";
 /**
  * 診断レポート画面のメニューのJSX
  */
-export const AnalysisReportMenu: React.FC = () => {
+export const CheckModeMenu: React.FC = () => {
   const { from, to } = useSelector((state: RootState) => state.date);
   const starttime = new Date(from);
   const endtime   = new Date(to);

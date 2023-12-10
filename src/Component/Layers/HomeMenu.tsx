@@ -18,8 +18,6 @@ import { Typography } from '@mui/material';
 
 const HomeMenu: React.FC = () => {
 
-  useSyncQueryString();
-
   const { from, to } = useSelector((state: RootState) => state.date);
   const starttime = new Date(from);
   const endtime = new Date(to);

@@ -12,7 +12,7 @@ import DeadTuple from '../../Content/Postgresql/DeadTuple';
 import { useSyncQueryString } from '../Common/DateUpdate';
 import { BreadcrumbsBar } from '../Common/BreadcrumbsBar';
 
-const OverViewMenu: React.FC = () => {
+const ExploreModeMenu: React.FC = () => {
 
   useSyncQueryString();
 
@@ -44,4 +44,4 @@ const OverViewMenu: React.FC = () => {
   );
 }
 
-export default OverViewMenu;
+export default ExploreModeMenu;
