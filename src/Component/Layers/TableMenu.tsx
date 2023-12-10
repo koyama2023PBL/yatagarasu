@@ -10,6 +10,7 @@ import DeadLocks from '../../Content/Postgresql/DeadLock';
 import QueryCounts from '../../Content/Postgresql/QueryCounts';
 import { useSyncQueryString } from '../Common/DateUpdate';
 import { BreadcrumbsBar } from '../Common/BreadcrumbsBar';
+import {HighLoadSQL} from "../../Content/Postgresql/HighLoadSQL";
 
 
 const TableMenu: React.FC = () => {
@@ -31,7 +32,7 @@ const TableMenu: React.FC = () => {
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <SlowQuery starttime={starttime} endtime={endtime}/>
           <Box sx={{ width: '1.5vh'}}></Box>
-          <AverageQueryTime starttime={starttime} endtime={endtime}/>
+          <HighLoadSQL starttime={starttime} endtime={endtime}/>
         </Box>
         <Box sx={{ p:1, display: 'flex', flexDirection: 'row', height: '27vh',alignItems: 'left', marginTop: '-1vh'}}>
           <DeadLocks starttime={starttime} endtime={endtime} />
