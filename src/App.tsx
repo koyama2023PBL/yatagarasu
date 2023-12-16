@@ -9,6 +9,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { FetchOnInit } from "./Component/Common/FetchOnInit";
 import { fetchPrometheusSettings } from "./Component/Redux/PrometheusSettings";
 import { BrowserRouter as Router} from 'react-router-dom';
+import { SettingsProvider } from './settingContext';
 
 const theme = createTheme({
   palette: {
@@ -29,10 +30,12 @@ const App: FC = () => {
     <FetchOnInit tasks={[fetchPrometheusSettings]}>
       <Provider store={store as Store}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Router>
-            <BaseDisplayMenu />
-          </Router>
+          <SettingsProvider>
+            <CssBaseline />
+              <Router>
+              <BaseDisplayMenu />
+            </Router>
+          </SettingsProvider>
         </ThemeProvider>
       </Provider>
     </FetchOnInit>
