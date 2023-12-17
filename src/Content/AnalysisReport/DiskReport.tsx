@@ -4,6 +4,7 @@ import {CPUIOWaitRatio, getCPUIOWaitRatioStatus} from "./ReportingItem/CPUIOWait
 import {Box, Card, CardContent, Typography} from "@mui/material";
 import React from "react";
 import {StatusType} from "./AnalysisReportUtil";
+import {useSettings} from "../../settingContext";
 
 /**
  * ディスク診断のステータスを取得する
@@ -25,12 +26,13 @@ export const getDiskStatus = (): StatusType | null => {
  * ディスク診断部分のコンポーネント
  */
 export const DiskReport: React.FC = () => {
+  const settings = useSettings();
   return (
     <Card sx={{ marginTop: '1vh' }}>
       <CardContent>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-            ディスク
+            {settings?.baseURL}
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '1vw' }}>

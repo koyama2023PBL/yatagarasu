@@ -12,20 +12,12 @@ interface Settings {
     postgresExporterDefaultInterval: string;
 }
 
-export const useSettings = () => {
-    const context = useContext(SettingsContext);
-    if(!context) {
-        throw new Error('useSettings must be used within a SettingsProvider');
-    }
-    return context;
-}
-
 type Props = {
     children?: ReactNode;
 };
 
 export const SettingsProvider =  ({children}: Props) => {
-    const [settings, setSettings] = useState<Settings>();
+    const [settings, setSettings] = useState<any>();
 
     useEffect(() => {
 
@@ -69,3 +61,7 @@ export const SettingsProvider =  ({children}: Props) => {
     );
 };
 
+export const useSettings = () => {
+    const context = useContext(SettingsContext);
+    return context;
+}
