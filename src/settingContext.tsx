@@ -25,12 +25,9 @@ type Props = {
 };
 
 export const SettingsProvider =  ({children}: Props) => {
-    const [settings, setSettings] = useState<Settings>();
-
+    const [settings, setSettings] = useState<any>();
+    
     useEffect(() => {
-
-        //const fetchSettings = async () => {
-
             fetch('/settings.yml')
                 .then(response => response.text())
                 .then(data => yaml.load(data) as Settings)
@@ -42,9 +39,6 @@ export const SettingsProvider =  ({children}: Props) => {
                 .catch(err => {
                     console.log("err:", err);
                 });
-
-                
-
             // const newSettings: Settings = {
             //     baseURL: 'http://www.example.com',
             //     dbname: 'exampleDB',
@@ -55,7 +49,6 @@ export const SettingsProvider =  ({children}: Props) => {
             // };
             // setSettings(newSettings);
         }
-
         // fetch('/settings.yml')
         //     .then(response => response.text())
         //     .then(data => yaml.load(data) as Settings)

@@ -1,8 +1,6 @@
-Yatagarasu:
-  - baseURL: 'http://www.koakjo.com:9290'
-  - dbname: 'explorer'
-  - nodeExporterJobName: 'node_exporter'
-  - postgresExporterJobName: 'postgres_exporter'
-Prometheus:
-  - nodeExporterDefaultInterval: '15s'
-  - postgresExporterDefaultInterval: '15s'
+baseURL: 'http://www.koakjo.com:9290'
+dbname: 'explorer'
+nodeExporterJobName: 'node_exporter'
+postgresExporterJobName: 'postgres_exporter'
+nodeExporterDefaultInterval: '15s'
+postgresExporterDefaultInterval: '15s'

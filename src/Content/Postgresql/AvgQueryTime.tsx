@@ -8,6 +8,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { green, yellow, red } from '@mui/material/colors';
+import { useSettings } from '../../settingContext';
 
 type AverageQueryTimeApiResponse = {
   starttime: string;
@@ -26,6 +27,8 @@ interface AvgQueryTimeProps {
   starttime: Date;
   endtime: Date;
 }
+
+  const test = useSettings().baseURL;
 
 const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: AverageQueryTimeApiRequest) => {
   try {
@@ -60,6 +63,8 @@ const AverageQueryTime: React.FC<AvgQueryTimeProps> = ({ starttime, endtime }) =
   const open = Boolean(anchorEl);
 
   useEffect(() => {
+
+    console.log("test:", test);
     
     const fetchQueryTimes = async () => {
       const newAvgQueryTimes: {[key: string]: number | string | null} = {
