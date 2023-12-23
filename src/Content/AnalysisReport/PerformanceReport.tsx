@@ -4,6 +4,9 @@ import {CPUUsageRatio, getCPUUsageRatioStatus} from "./ReportingItem/CPUUsageRat
 import {MemorySwapIO, getMemorySwapIOStatus} from "./ReportingItem/MemorySwapIO";
 import {CheckPointProgress, getCheckPointProgressStatus} from "./ReportingItem/CheckpointProgress";
 import {StatusType} from "./AnalysisReportUtil";
+import {useCPUUsageRatio} from "./DataProvider/CPUUsageRatioProvider";
+import {useMemorySwapIO} from "./DataProvider/MemorySwapIOProvider";
+import {useCheckpointProgress} from "./DataProvider/CheckpointProgressProvider";
 
 /**
  * パフォーマンスのステータスを取得する
@@ -34,9 +37,9 @@ export const PerformanceReport: React.FC = () => {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '1vw' }}>
-          <CPUUsageRatio />
-          <MemorySwapIO />
-          <CheckPointProgress />
+          <CPUUsageRatio data={useCPUUsageRatio()}/>
+          <MemorySwapIO data={useMemorySwapIO()}/>
+          <CheckPointProgress data={useCheckpointProgress()}/>
         </Box>
       </CardContent>
     </Card>

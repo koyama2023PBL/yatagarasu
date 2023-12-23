@@ -55,6 +55,7 @@ export const DiskUsageProvider: React.FC<DiskUsageProviderProps> = ({ children, 
   const [data, setData] = useState<DiskUsageData[] | null>(null);
 
   useEffect(() => {
+    setData(null);
     const fetchData = async () => {
       const {status, data} = await fetchFromAPIwithRequest(starttime, endtime);
       setStatusCode(status);

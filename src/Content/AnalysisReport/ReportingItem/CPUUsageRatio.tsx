@@ -3,7 +3,7 @@ import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/materia
 import {Chart, Filler} from "chart.js";
 import {CPUUsageRatioData, useCPUUsageRatio} from "../DataProvider/CPUUsageRatioProvider";
 import {Bar} from "react-chartjs-2";
-import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -23,9 +23,8 @@ export const getCPUUsageRatioStatus = (): StatusType | null => {
 /**
  * CPU使用率のJSX
  */
-export const CPUUsageRatio: React.FC = () => {
+export const CPUUsageRatio: React.FC<ReportingItemProps<CPUUsageRatioData[]>> = ({data}) => {
   const [chartData, setChartData] = useState<any | null>(null);
-  const data: CPUUsageRatioData[] | null = useCPUUsageRatio();
 
   useEffect(() => {
     const fetchChartData = async () => {

@@ -10,6 +10,8 @@ import {CheckpointProgressProvider} from "../../Content/AnalysisReport/DataProvi
 import {DiskBusyRatioProvider} from "../../Content/AnalysisReport/DataProvider/DiskBusyRatioProvider";
 import {DiskUsageProvider} from "../../Content/AnalysisReport/DataProvider/DiskUsageProvider";
 import {DiskReport} from "../../Content/AnalysisReport/DiskReport";
+import {PeriodSelector} from "../../Content/AnalysisReport/PeriodSelector";
+import ReportingInfo, {reportCreated} from "../../Content/AnalysisReport/ReportingInfo";
 
 /**
  * 診断レポート画面のメニューのJSX
@@ -21,29 +23,37 @@ export const CheckModeMenu: React.FC = () => {
 
   return (
       <div>
-        <MemorySwapIOProvider       starttime={starttime} endtime={endtime}>
-        <CPUUsageRatioProvider      starttime={starttime} endtime={endtime}>
-        <CheckpointProgressProvider starttime={starttime} endtime={endtime}>
-        <DiskBusyRatioProvider      starttime={starttime} endtime={endtime}>
-        <DiskUsageProvider          starttime={starttime} endtime={endtime}>
-          <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
-            <ReportingOverview />
-          </Box>
-          <Box sx={{display: 'flex', flexDirection: 'column', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
-            <Box sx={{p: 1, display: 'flex', flexDirection: 'column', marginTop: '-1vh'}}>
-              <PerformanceReport />
+        <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
+          <PeriodSelector/>
+        </Box>
+        <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
+          <ReportingInfo/>
+        </Box>
+        {reportCreated() ? (
+          <MemorySwapIOProvider       starttime={starttime} endtime={endtime}>
+          <CPUUsageRatioProvider      starttime={starttime} endtime={endtime}>
+          <CheckpointProgressProvider starttime={starttime} endtime={endtime}>
+          <DiskBusyRatioProvider      starttime={starttime} endtime={endtime}>
+          <DiskUsageProvider          starttime={starttime} endtime={endtime}>
+            <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
+              <ReportingOverview />
             </Box>
-          </Box>
-          <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'left', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
-            <Box sx={{p: 1, display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: '-1vh'}}>
-              <DiskReport />
+            <Box sx={{display: 'flex', flexDirection: 'column', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
+              <Box sx={{p: 1, display: 'flex', flexDirection: 'column', marginTop: '-1vh'}}>
+                <PerformanceReport />
+              </Box>
             </Box>
-          </Box>
-        </DiskUsageProvider>
-        </DiskBusyRatioProvider>
-        </CheckpointProgressProvider>
-        </CPUUsageRatioProvider>
-        </MemorySwapIOProvider>
+            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'left', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
+              <Box sx={{p: 1, display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: '-1vh'}}>
+                <DiskReport />
+              </Box>
+            </Box>
+          </DiskUsageProvider>
+          </DiskBusyRatioProvider>
+          </CheckpointProgressProvider>
+          </CPUUsageRatioProvider>
+          </MemorySwapIOProvider>
+        ) : (<div/>)}
     </div>
   );
 }

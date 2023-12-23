@@ -99,6 +99,7 @@ export const DiskBusyRatioProvider: React.FC<DiskBusyRatioProviderProps> = ({ ch
   const [data, setData] = useState<DiskBusyRatioData[] | null>(null);
 
   useEffect(() => {
+    setData(null);
     const fetchData = async () => {
       const {status, data} = await fetchFromAPIwithRequest(starttime, endtime);
       setStatusCode(status);
