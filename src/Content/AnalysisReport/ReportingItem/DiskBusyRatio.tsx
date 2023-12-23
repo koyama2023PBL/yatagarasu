@@ -3,7 +3,7 @@ import {DiskBusyRatioData, useDiskBusyRatio} from "../DataProvider/DiskBusyRatio
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {Bar} from "react-chartjs-2";
-import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -22,9 +22,8 @@ export const getDiskBusyRatioStatus = (): StatusType | null => {
 /**
  * ディスクビジー率のコンポーネント
  */
-export const DiskBusyRatio: React.FC = () => {
+export const DiskBusyRatio: React.FC<ReportingItemProps<DiskBusyRatioData[]>> = ({data}) => {
   const [chartData, setChartData] = useState<any | null>(null);
-  const data: DiskBusyRatioData[] | null = useDiskBusyRatio();
 
   useEffect(() => {
     const fetchChartData = async () => {

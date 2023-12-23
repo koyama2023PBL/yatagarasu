@@ -100,6 +100,7 @@ export const CPUUsageRatioProvider: React.FC<CPUUsageRatioProps> = ({children, s
   const [data, setData] = useState<CPUUsageRatioData[] | null>(null);
 
   useEffect(() => {
+    setData(null);
     const fetchData = async () => {
       const {status, data} = await fetchFromAPIwithRequest(new Date(starttime), new Date(endtime));
       setStatusCode(status);

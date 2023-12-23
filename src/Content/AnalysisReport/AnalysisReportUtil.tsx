@@ -2,6 +2,10 @@ import {green, red, yellow} from "@mui/material/colors";
 
 export type StatusType = 'OK' | 'WARNING' | 'ERROR';
 
+export interface ReportingItemProps<T> {
+  data: T | null;
+}
+
 export const getColorFromStatus = (status: StatusType) => {
   switch (status) {
     case 'OK':

@@ -57,6 +57,7 @@ export const MemorySwapIOProvider: React.FC<MemorySwapIOProviderProps> = ({child
   const [data, setData] = useState<MemorySwapIOData[] | null>(null);
 
   useEffect(() => {
+    setData(null);
     const fetchData = async () => {
       const {status, data} = await fetchFromAPIwithRequest(starttime, endtime);
       setStatusCode(status);

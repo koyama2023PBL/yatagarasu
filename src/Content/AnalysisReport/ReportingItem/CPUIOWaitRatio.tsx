@@ -3,7 +3,7 @@ import {CPUUsageRatioData, useCPUUsageRatio} from "../DataProvider/CPUUsageRatio
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {Bar} from "react-chartjs-2";
-import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -23,9 +23,8 @@ export const getCPUIOWaitRatioStatus = (): StatusType | null => {
  * CPU I/O待ち率のコンポーネント
  * @constructor
  */
-export const CPUIOWaitRatio: React.FC = () => {
+export const CPUIOWaitRatio: React.FC<ReportingItemProps<CPUUsageRatioData[]>> = ({data}) => {
   const [chartData, setChartData] = useState<any | null>(null);
-  const data: CPUUsageRatioData[] | null = useCPUUsageRatio();
 
   useEffect(() => {
     const fetchChartData = async () => {

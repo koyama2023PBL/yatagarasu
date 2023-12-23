@@ -3,7 +3,7 @@ import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/materia
 import { Chart, Filler } from 'chart.js';
 import {Bar} from "react-chartjs-2";
 import {MemorySwapIOData, useMemorySwapIO} from "../DataProvider/MemorySwapIOProvider";
-import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -25,9 +25,8 @@ export const getMemorySwapIOStatus = (): StatusType | null => {
 /**
  * メモリスワップI/OのJSX
  */
-export const MemorySwapIO = () => {
+export const MemorySwapIO: React.FC<ReportingItemProps<MemorySwapIOData[]>> = ({data}) => {
   const [chartData, setChartData] = useState<any | null>(null);
-  const data: MemorySwapIOData[] | null = useMemorySwapIO();
 
   useEffect(() => {
     const fetchChartData = async () => {

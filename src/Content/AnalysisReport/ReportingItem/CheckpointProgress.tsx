@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {CheckpointProgressData, useCheckpointProgress} from "../DataProvider/CheckpointProgressProvider";
 import {Chart, Filler} from "chart.js";
-import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -21,9 +21,8 @@ export const getCheckPointProgressStatus = (): StatusType | null => {
 /**
  * チェックポイント実行状況のJSX
  */
-export const CheckPointProgress: React.FC = () => {
+export const CheckPointProgress: React.FC<ReportingItemProps<CheckpointProgressData>> = ({data}) => {
   const [text, setText] = useState<any | null>(null);
-  const data: CheckpointProgressData | null = useCheckpointProgress();
 
   useEffect(() => {
     if (data) setText(`${data.timed}回 / ${data.req}回`);

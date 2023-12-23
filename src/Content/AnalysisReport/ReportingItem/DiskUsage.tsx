@@ -3,7 +3,7 @@ import {DiskUsageData, useDiskUsage} from "../DataProvider/DiskUsageProvider";
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {Bar} from "react-chartjs-2";
-import {getItemTitleSx, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -22,9 +22,8 @@ export const getDiskUsageStatus = (): StatusType | null => {
 /**
  * ディスク使用率のコンポーネント
  */
-export const DiskUsage: React.FC = () => {
+export const DiskUsage: React.FC<ReportingItemProps<DiskUsageData[]>> = ({data}) => {
   const [chartData, setChartData] = useState<any | null>(null);
-  const data: DiskUsageData[] | null = useDiskUsage();
 
   useEffect(() => {
     const fetchChartData = async () => {

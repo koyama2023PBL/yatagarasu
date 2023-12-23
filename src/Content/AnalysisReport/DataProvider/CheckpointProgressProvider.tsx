@@ -60,6 +60,7 @@ export const CheckpointProgressProvider: React.FC<CheckpointProgressProps> = ({ 
   const [data, setData] = useState<CheckpointProgressData | null>(null);
 
   useEffect(() => {
+    setData(null);
     const fetchData = async () => {
       const {status, data} = await fetchFromAPIwithRequest(new Date(starttime), new Date(endtime));
       setStatusCode(status);
