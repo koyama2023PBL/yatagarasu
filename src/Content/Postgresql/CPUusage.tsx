@@ -116,88 +116,25 @@ const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
   const handlePopoverClose = () => {setAnchorEl(null)};
   const open = Boolean(anchorEl);
 
-  function culculateCpuUsageFunc(data) {
-    
-    let idleData;
-    let timestamps;
-    
-    for(let i = 0; i < data.length; i++){
-        timestamps.add(data[i].values[0]);
-      }
-    
-    for(let i = 0; i < data.length; i++){
-      if (data[i].metric.mode === 'idle') {
-        //idleData[] += data[i].values;
-      }
-    }
-
-    for (let i = 0; i < data.length; i++) {
-      data[i].usage = data[i].usage * 100;
-    }
-  } 
-
-
-  //CPU使用率の計算
-  const calculateCpuUsage = (data) => {
-
-    // 各モードのデータを抽出
-    const idleData = data.map((acc, d) => {
-      d.values.forEach((value, index) => {
-        if(d.metric.mode === 'idle'){
-          acc[index] = acc[index] || [value[0], 0]; // 時間をキーにして初期化
-          acc[index][1] += parseFloat(value[1]); // CPU使用時間を加算
-        }
-      });
-      return acc;
-    });
-        //data.filter(d => d.metric.mode === 'idle')[0].values;
-    const stealData = data.map((acc, d) => {
-      d.values.forEach((value, index) => {
-        if(d.metric.mode === 'steal'){
-          acc[index] = acc[index] || [value[0], 0]; // 時間をキーにして初期化
-          acc[index][1] += parseFloat(value[1]); // CPU使用時間を加算
-        }
-      });
-      return acc;
-    });//data.filter(d => d.metric.mode === 'steal')[0].values;
-    const totalData = data.map((acc, d) => {
-      d.values.forEach((value, index) => {
-        acc[index] = acc[index] || [value[0], 0]; // 時間をキーにして初期化
-        acc[index][1] += parseFloat(value[1]); // CPU使用時間を加算
-      });
-      return acc;
-    }, []);
-  
-    // 各時間点でのCPU使用率を計算
-    return totalData.map(([timestamp, totalValue]) => {
-      const idleValue = idleData.find(([t]) => t === timestamp)?.[1] || 0;
-      console.log(idleValue);
-      const stealValue = stealData.find(([t]) => t === timestamp)?.[1] || 0;
-      if(totalValue === 0 ){
-        return [timestamp, -1];
-      }else{
-        return [timestamp, (1 - ((idleValue + stealValue) / totalValue)) * 100];  // 百分率で表現
-      }
-    });
-  };
 
   useEffect(() => {
     const fetchChartData = async () => {
       const endpoint = "/api/v1/query_range?query=";
-      const query = 'node_cpu_seconds_total'
+      const query = 'sum(avg without(cpu)(rate(node_cpu_seconds_total{mode!="idle"}[1m])))*100'
 
       const requestBody: CpuUsageApiRequest = {
         start: new Date(starttime),
         end: new Date(endtime)
       };
 
-      const { status, data: response } = await fetchFromAPIwithRequest(endpoint, requestBody, query);
+      const { status, data: response }:{status: number, data: CpuUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody, query);
       setStatusCode(status);
-      const cpuUsageData = culculateCpuUsageFunc(response.data.result);
-      //const cpuUsageData = calculateCpuUsage(response.data.result);
-      const labels = cpuUsageData.flatMap(value => unixTimeToDate(value[0]));
-      const data = cpuUsageData.map(value => Number(value[1])); //response.data.result.flatMap(data => data.values).map(value => Number(value[1]));
-      const backgroundColor = cpuUsageData.flatMap(value => {
+
+      const labels = response.data.result.flatMap(data => data.values).map(value => unixTimeToDate(Number(value[0])));
+      const data = response.data.result.flatMap(data => data.values).map(value => Number(value[1]));
+
+      const backgroundColor = response.data.result.flatMap(data => 
+        data.values.map(value => {
           let status: Status;
           if (Number(value[1]) <= Thresholds.cpu.ok) {
             status = 'ok';
@@ -208,8 +145,20 @@ const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
           }
           return rgbToRgba(statusColors[status], 0.1);
         })
-        ;
-      const borderColor = backgroundColor.map(color => rgbToRgba(color, 1));
+        );
+      const borderColor = response.data.result.flatMap(data => 
+        data.values.map(value => {
+          let status: Status;
+          if (Number(value[1]) <= Thresholds.cpu.ok) {
+            status = 'ok';
+          } else if (Number(value[1]) <= Thresholds.cpu.watch) {
+            status = 'watch';
+          } else {
+            status = 'alert';
+          }
+          return rgbToRgba(statusColors[status], 1);
+        })
+        );
       const length = labels.length;
 
       setChartData({
