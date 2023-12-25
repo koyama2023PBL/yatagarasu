@@ -25,19 +25,19 @@ const QueryAnalyze: React.FC = () => {
                 <Typography fontSize="14pt" gutterBottom>
                   クエリの解析とは？
                 </Typography>
-                <Typography fontSize="10pt" sx={{ marginBottom: '4px' }}>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
                   このフェーズでは、クエリの解析によって実行を依頼されたクエリが本当に実行できるのかがチェックされます。
                 </Typography>
-                <Typography fontSize="10pt" sx={{ marginBottom: '4px' }}>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
                   具体的には、指定されたテーブルやリレーションなどが本当に実在するのかを確認してくれるフェーズです。
                 </Typography>
-                <Typography fontSize="10pt" sx={{ marginBottom: '4px' }}>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
                   確認する先の情報として、PostgreSQLが管理・保管する"システムカタログ"と呼ばれる、テーブルやスキーマなどの情報が詰まった内部データを用います。
                 </Typography>
-                <Typography fontSize="10pt" sx={{ marginBottom: '4px' }}>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
                   システムカタログは"pg_catalog"スキーマにあるのでSELECT文などで覗くことが可能です。
                 </Typography>
-                <Typography fontSize="10pt" sx={{ marginBottom: '4px' }}>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
                   この他、#1のパースによってクエリツリー（Query構造体）になったクエリの書き換え処理（rewrite）が行われます。
                 </Typography>
               </CardContent>

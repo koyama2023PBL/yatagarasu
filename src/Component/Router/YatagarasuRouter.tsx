@@ -11,17 +11,18 @@ import QueryRoot from '../../Content/Postgresql/Explore/Query/QueryRoot';
 import QueryAdvanceHome from '../../Content/Postgresql/Explore/Query/QueryAdvanceHome';
 import ExploreRoot from '../../Content/Postgresql/Explore/ExploreRoot';
 import QueryHome from '../../Content/Postgresql/Explore/Query/QueryHome';
-import WelcomeExplore from '../../Content/Postgresql/Explore/Welcome/WelcomeExplore';
 import OverviewHome from '../../Content/Postgresql/Explore/Overview/OverviewHome';
 
 
 
 const renderRoutes = () => (
   <Routes>
-    <Route path="/" element={<HomeMenu/>} />
-    <Route path="/check" element={<CheckModeMenu/>}/>
-    <Route path="/advance" element={<CustomDashboard/>}/>
-    <Route path="/settings" element={<SettingsMenu/>}/>
+    <Route path="" element={<HomeMenu/>} />
+    <Route path="check" element={<CheckModeMenu/>}/>
+    <Route path="advance">
+      <Route index element={<CustomDashboard/>}/>
+    </Route>
+    <Route path="settings" element={<SettingsMenu/>}/>
 
     <Route path="explore" element={<ExploreModeMenu />}>
       <Route index element={<ExploreRoot />} />

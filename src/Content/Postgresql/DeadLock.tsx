@@ -102,7 +102,7 @@ const DeadLocks: React.FC<DeadLocksProps> = ({ starttime, endtime }) => {
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' , marginTop: '-5px'}}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            Deadlocks
+            デッドロック数
           </Typography>
           {deadLocksData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
