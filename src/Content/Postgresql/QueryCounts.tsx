@@ -197,7 +197,7 @@ const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '-15px', marginTop: '-5px', width: '100%' }}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            Total Query Count
+            トータルクエリ数
           </Typography>
           {chartData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
@@ -229,7 +229,7 @@ const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
             </Box>
             <Box sx={{ border: '1px solid ' + statusColors['watch'], borderRadius: '5px', padding: '1.5px',alignItems: 'center', marginRight: '0.5vw'}}>  
               <Typography variant="body2" sx={{ color: statusColors['watch'] }}>
-                {Thresholds.querycounts.ok +  +'< ~ ≦ '+ Thresholds.querycounts.watch }
+                {Thresholds.querycounts.ok +'< ~ ≦ '+ Thresholds.querycounts.watch }
               </Typography>
             </Box>
             <Box sx={{ border: '1px solid ' + statusColors['alert'], borderRadius: '5px', padding: '1.5px',alignItems: 'center', marginRight: '0.5vw'}}>  

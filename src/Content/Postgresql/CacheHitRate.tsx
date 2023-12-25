@@ -103,7 +103,7 @@ const CacheHitRate: React.FC<CacheHitRateProps> = ({ starttime, endtime }) => {
           }}
         >
           <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-            Cache Hit Rate (%)
+            キャッシュヒット率 (%)
           </Typography>
           {cacheHitRateData &&
             React.createElement(getIcon(), {

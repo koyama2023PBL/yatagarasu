@@ -196,7 +196,7 @@ const SlowQuery: React.FC<SlowQueryProps> = ({ starttime, endtime }) => {
         <CardContent>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '-15px', marginTop: '-5px', width: '100%' }}>
             <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-              SlowQuery(ms)
+              レイテンシー(ms)
             </Typography>
             {chartData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
             <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
@@ -228,7 +228,7 @@ const SlowQuery: React.FC<SlowQueryProps> = ({ starttime, endtime }) => {
               </Box>
               <Box sx={{ border: '1px solid ' + statusColors['watch'], borderRadius: '5px', padding: '1.5px',alignItems: 'center', marginRight: '0.5vw'}}>
                 <Typography variant="body2" sx={{ color: statusColors['watch'] }}>
-                  {Thresholds.slowquery.ok +  +'< ~ ≦ '+ Thresholds.slowquery.watch }
+                  {Thresholds.slowquery.ok  +'< ~ ≦ '+ Thresholds.slowquery.watch}
                 </Typography>
               </Box>
               <Box sx={{ border: '1px solid ' + statusColors['alert'], borderRadius: '5px', padding: '1.5px',alignItems: 'center', marginRight: '0.5vw'}}>
