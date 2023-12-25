@@ -21,36 +21,71 @@ import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 
 import instance from '../../Axios/AxiosInstance';
-import { getDate, rgbToRgba} from '../../Component/Common/Util';
+import { getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { StatusColor, Status, Thresholds, statusColors } from '../../Component/Threshold/Threshold';
+import { prometheusSettings } from "../../Component/Redux/PrometheusSettings";
+
+export interface CpuUsageApiResponse {
+  data: CpuUsageResponseData;
+  status: string;
+}
+
+export interface CpuUsageResponseData {
+  resultType: string;
+  result: CpuUsageResponseResult[];
+}
+
+export interface CpuUsageResponseResult {
+  metric: CpuUsageResponseMetric;
+  values: [number, string][];
+}
+
+export interface CpuUsageResponseMetric {
+  __name__: string;
+  cpu: string;
+  instance: string;
+  job: string;
+  mode: string;
+}
+
+export interface CpuUsageApiRequest {
+  //query: string;
+  start: Date;
+  end: Date;
+}
 
 
-interface CpuUsageData {
-  date: string;
-  usage: number;
-};
+// interface CpuUsageData {
+//   date: string;
+//   usage: number;
+// };
 
-interface CpuUsageApiResponse {
-  starttime: string;
-  endtime: string;
-  data: CpuUsageData[];
-};
+// interface CpuUsageApiResponse {
+//   starttime: string;
+//   endtime: string;
+//   data: CpuUsageData[];
+// };
 
-interface CpuUsageApiRequest {
-  starttime: Date;
-  endtime: Date;
-};
+// interface CpuUsageApiRequest {
+//   starttime: Date;
+//   endtime: Date;
+// };
 
 interface CpuUsageProps {
   starttime: Date;
   endtime: Date;
 }
 
-const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CpuUsageApiRequest) => {
+const fetchFromAPIwithRequest = async (endpoint: string, queryParameters: CpuUsageApiRequest, query: string) => {
   try {
-      const startTimeString = getDate(queryParameters.starttime);
-      const endTimeString = getDate(queryParameters.endtime);
-      const response = await instance.get(`${endpoint}?starttime=${startTimeString}&endtime=${endTimeString}`);
+      const startTimeString = queryParameters.start.toISOString();
+      const endTimeString = queryParameters.end.toISOString();
+      const response = await instance.get<CpuUsageApiResponse>(
+        `${endpoint}${encodeURIComponent(
+          query
+        )}&start=${startTimeString}&end=${endTimeString}&step=${prometheusSettings?.postgresqlScrapeInterval
+        }`
+      );
 
       return { status: response.status, data: response.data };
 
@@ -81,45 +116,51 @@ const CPUusage: React.FC<CpuUsageProps> = ({ starttime, endtime }) => {
   const handlePopoverClose = () => {setAnchorEl(null)};
   const open = Boolean(anchorEl);
 
+
   useEffect(() => {
     const fetchChartData = async () => {
-      const endpoint = "/database-explorer/api/visualization/cpu-usage";
+      const endpoint = "/api/v1/query_range?query=";
+      const query = 'sum(avg without(cpu)(rate(node_cpu_seconds_total{mode!="idle"}[1m])))*100'
+
       const requestBody: CpuUsageApiRequest = {
-        starttime: new Date(starttime),
-        endtime: new Date(endtime)
+        start: new Date(starttime),
+        end: new Date(endtime)
       };
-  
-      const { status, data: response }: {status: number, data: CpuUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody);
+
+      const { status, data: response }:{status: number, data: CpuUsageApiResponse} = await fetchFromAPIwithRequest(endpoint, requestBody, query);
       setStatusCode(status);
-  
-      const labels = response.data.map((item) => item.date);
-      const data = response.data.map((item) => item.usage);
-      const borderColor = data.map((value) => {
-        let status: Status;
-        if (value <= Thresholds.cpu.ok) {
-          status = 'ok';
-        } else if (value <= Thresholds.cpu.watch) {
-          status = 'watch';
-        } else {
-          status = 'alert';
-        }
-        return rgbToRgba(statusColors[status], 1);
-      });
-      const backgroundColor = data.map((value) => {
-        let status: Status;
-        if (value <= Thresholds.cpu.ok) {
-          status = 'ok';
-        } else if (value <= Thresholds.cpu.watch) {
-          status = 'watch';
-        } else {
-          status = 'alert';
-        }
-        return rgbToRgba(statusColors[status], 0.1);
-      });
+
+      const labels = response.data.result.flatMap(data => data.values).map(value => unixTimeToDate(Number(value[0])));
+      const data = response.data.result.flatMap(data => data.values).map(value => Number(value[1]));
+
+      const backgroundColor = response.data.result.flatMap(data => 
+        data.values.map(value => {
+          let status: Status;
+          if (Number(value[1]) <= Thresholds.cpu.ok) {
+            status = 'ok';
+          } else if (Number(value[1]) <= Thresholds.cpu.watch) {
+            status = 'watch';
+          } else {
+            status = 'alert';
+          }
+          return rgbToRgba(statusColors[status], 0.1);
+        })
+        );
+      const borderColor = response.data.result.flatMap(data => 
+        data.values.map(value => {
+          let status: Status;
+          if (Number(value[1]) <= Thresholds.cpu.ok) {
+            status = 'ok';
+          } else if (Number(value[1]) <= Thresholds.cpu.watch) {
+            status = 'watch';
+          } else {
+            status = 'alert';
+          }
+          return rgbToRgba(statusColors[status], 1);
+        })
+        );
       const length = labels.length;
 
-
-  
       setChartData({
         labels: labels,
         datasets: [
