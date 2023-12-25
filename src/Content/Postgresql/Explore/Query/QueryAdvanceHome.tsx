@@ -1,29 +1,17 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { Card, CardContent, CircularProgress, IconButton, Popover, Typography } from '@mui/material';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
-import WarningIcon from '@mui/icons-material/Warning';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import OpenInNew from '@mui/icons-material/OpenInNew';
-import { green, yellow, red } from '@mui/material/colors';
-import { DateTostring, getDate, roundToThreeDecimalPlaces } from '../../Component/Common/Util';
-import instance from '../../Axios/AxiosInstance';
-import { useEffect, useState } from 'react';
-import { Thresholds } from '../../Component/Threshold/Threshold';
-import { useDispatch } from 'react-redux';
-import { setSelected } from '../../Component/Redux/MenuState'; 
+import { useState } from 'react';
 import { useTheme } from '@mui/system';
-import {useMediaQuery} from '@mui/material';
-import SvgPostgresOverviewLight from './SVGs/PostgresOverviewLight';
-import ArchitectureMap from './ArchitectureMap';
+import SvgExploreQueryRoot from '../../SVGs/ReactComponent/Queries/ExploreQueryRoot';
+import SvgExploreComponentRoot from '../../SVGs/ReactComponent/Components/ExploreComponentRoot';
+import SvgExploreQueryHome from '../../SVGs/ReactComponent/Queries/ExploreQueryHome';
+import SvgExploreQueryAdvanceHome from '../../SVGs/ReactComponent/Queries/ExploreQueryAdvanceHome';
 
-interface ArchitectureOverviewProps {
-  starttime: Date;
-  endtime: Date;
-}
 
-const ArchitectureOverview: React.FC<ArchitectureOverviewProps> = ({ starttime, endtime }) => {
+
+const QueryAdvanceHome: React.FC = () => {
 
   const theme = useTheme();
 
@@ -33,11 +21,11 @@ const ArchitectureOverview: React.FC<ArchitectureOverviewProps> = ({ starttime, 
   const open = Boolean(anchorEl);
   
   return (
-    <Card sx={{ height: '61vh' }}>
+    <Card sx={{ height: '25vh' }}>
     <CardContent>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-          Architecture Overview
+          SQLクエリの処理フロー:Advance
         </Typography>
         <IconButton onClick={handlePopoverOpen} size="small" sx={{ marginLeft: '-3px', marginRight: '-1px' }}>
           <HelpOutlineIcon fontSize="small" />
@@ -58,12 +46,12 @@ const ArchitectureOverview: React.FC<ArchitectureOverviewProps> = ({ starttime, 
       >
         <Typography sx={{ p: 2 , alignItems: 'center'}} style={{ width: '600px', whiteSpace: 'pre-line' }}>
           <HelpOutlineIcon fontSize="small" sx={{ marginBottom: '-5px', marginLeft: '3px', marginRight: '3px'}}/>
-          全体概況を表示しています。
+          SQLクエリがどのように処理されるかについて、応用含めて説明します。
         </Typography>
       </Popover>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '2vw'}}>
-        <Box sx={{ width: '70%', height: '70%', mr: 2, mb: 2 }}>
-          <SvgPostgresOverviewLight highlight="masterProcess" style={{ width: '100%', height: 'auto' }} />
+        <Box sx={{  display: 'left' }}>
+          <SvgExploreQueryAdvanceHome/>
         </Box>
       </Box>
     </CardContent>
@@ -71,6 +59,6 @@ const ArchitectureOverview: React.FC<ArchitectureOverviewProps> = ({ starttime, 
   );
 }
 
-export default ArchitectureOverview;
+export default QueryAdvanceHome;
 
 

@@ -42,6 +42,7 @@ import { RootState } from '../Redux/StateStore';
 import HomeMenu from '../Layers/HomeMenu';
 import {CustomDashboard} from "../Layers/CustomDashboard";
 import SettingsMenu from '../Layers/SettingsMenu';
+import renderRoutes from '../Router/YatagarasuRouter';
 
 const drawerWidth = 200;
 
@@ -139,19 +140,10 @@ export default function BaseDisplayMenu() {
   const isSelected = (itemId: string): boolean => selected === itemId;
 
   React.useEffect(() => {
-    const path = location.pathname.replace('/', '') || 'home';
-    dispatch(setSelected(path));
+    const path = location.pathname.split('/')[1];
+    if (path) dispatch(setSelected(path));
   }, [location, dispatch]);
 
-  const renderRoutes = () => (
-    <Routes>
-      <Route path="/" element={<HomeMenu/>} />
-      <Route path="/explore" element={<ExploreModeMenu />} />
-      <Route path="/check" element={<CheckModeMenu/>}/>
-      <Route path="/advance" element={<CustomDashboard/>}/>
-      <Route path="/settings" element={<SettingsMenu/>}/>
-    </Routes>
-  );
   const handleSettingsClick = () => {
     navigate('/settings'); 
   };
