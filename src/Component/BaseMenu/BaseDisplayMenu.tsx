@@ -176,7 +176,7 @@ export default function BaseDisplayMenu() {
             }}
           >
           <img src={icon} alt="icon" style={{ height: '50px', marginRight: '12px' }} />
-          Yatagarasu
+          Yatagarasu(DEMO)
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
             <IconButton color="inherit" aria-label="open settings" edge="end" onClick={handleSettingsClick} sx={{fontSize: '2rem', padding: '12px', margin: '-12px' }}>

@@ -12,11 +12,11 @@ const WelcomeQuery: React.FC = () => {
 
   
   return (
-    <Card sx={{ height: '25vh' }}>
+  <Card sx={{ height: '25vh' }}>
     <CardContent>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-          SQLクエリ
+          ①SQLクエリ
         </Typography>
       </Box>
       <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '2vw'}}>
@@ -26,6 +26,7 @@ const WelcomeQuery: React.FC = () => {
       </Box>
     </CardContent>
   </Card>
+
   );
 }
 
