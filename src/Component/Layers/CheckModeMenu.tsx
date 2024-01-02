@@ -12,6 +12,7 @@ import {DiskUsageProvider} from "../../Content/AnalysisReport/DataProvider/DiskU
 import {DiskReport} from "../../Content/AnalysisReport/DiskReport";
 import {PeriodSelector} from "../../Content/AnalysisReport/PeriodSelector";
 import ReportingInfo, {reportCreated} from "../../Content/AnalysisReport/ReportingInfo";
+import {TableSizeProvider} from "../../Content/AnalysisReport/DataProvider/TableSizeProvider";
 
 /**
  * 診断レポート画面のメニューのJSX
@@ -35,6 +36,7 @@ export const CheckModeMenu: React.FC = () => {
           <CheckpointProgressProvider starttime={starttime} endtime={endtime}>
           <DiskBusyRatioProvider      starttime={starttime} endtime={endtime}>
           <DiskUsageProvider          starttime={starttime} endtime={endtime}>
+          <TableSizeProvider                                endtime={endtime}>
             <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
               <ReportingOverview />
             </Box>
@@ -48,6 +50,7 @@ export const CheckModeMenu: React.FC = () => {
                 <DiskReport />
               </Box>
             </Box>
+          </TableSizeProvider>
           </DiskUsageProvider>
           </DiskBusyRatioProvider>
           </CheckpointProgressProvider>
