@@ -4,12 +4,16 @@ interface YatagarasuSettings {
   dbname: string;
   nodeExporterJobName: string;
   postgresExporterJobName: string;
+  grafanaDashboardUrl: string;
+  grafanaDashboardOrgId: number;
 }
 
 const yatagarasuSettings: YatagarasuSettings = {
   dbname: 'explorer',
   nodeExporterJobName: 'node_exporter',
   postgresExporterJobName: 'postgres_exporter',
+  grafanaDashboardUrl: 'http://localhost:8080/d/000000039/postgresql-database',
+  grafanaDashboardOrgId: 1,
 };
 
 export default yatagarasuSettings;
