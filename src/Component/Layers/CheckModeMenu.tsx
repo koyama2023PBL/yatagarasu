@@ -13,6 +13,10 @@ import {DiskReport} from "../../Content/AnalysisReport/DiskReport";
 import {PeriodSelector} from "../../Content/AnalysisReport/PeriodSelector";
 import ReportingInfo, {reportCreated} from "../../Content/AnalysisReport/ReportingInfo";
 import {TableSizeProvider} from "../../Content/AnalysisReport/DataProvider/TableSizeProvider";
+import {TransactionCountProvider} from "../../Content/AnalysisReport/DataProvider/TransactionCountProvider";
+import {LongTransactionProvider} from "../../Content/AnalysisReport/DataProvider/LongTransactionProvider";
+import {HighLoadQueryProvider} from "../../Content/AnalysisReport/DataProvider/HighLoadQueryProvider";
+import {QueryReport} from "../../Content/AnalysisReport/QueryReport";
 
 /**
  * 診断レポート画面のメニューのJSX
@@ -37,6 +41,9 @@ export const CheckModeMenu: React.FC = () => {
           <DiskBusyRatioProvider      starttime={starttime} endtime={endtime}>
           <DiskUsageProvider          starttime={starttime} endtime={endtime}>
           <TableSizeProvider                                endtime={endtime}>
+          <TransactionCountProvider   starttime={starttime} endtime={endtime}>
+          <LongTransactionProvider                          endtime={endtime}>
+          <HighLoadQueryProvider      starttime={starttime} endtime={endtime}>
             <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
               <ReportingOverview />
             </Box>
@@ -50,6 +57,14 @@ export const CheckModeMenu: React.FC = () => {
                 <DiskReport />
               </Box>
             </Box>
+            <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'left', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
+              <Box sx={{p: 1, display: 'flex', flexDirection: 'column', alignItems: 'left', marginTop: '-1vh'}}>
+                <QueryReport />
+              </Box>
+            </Box>
+          </HighLoadQueryProvider>
+          </LongTransactionProvider>
+          </TransactionCountProvider>
           </TableSizeProvider>
           </DiskUsageProvider>
           </DiskBusyRatioProvider>

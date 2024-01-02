@@ -7,6 +7,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import {getPerformanceStatus} from "./PerformanceReport";
 import {StatusType} from "./AnalysisReportUtil";
 import {getDiskStatus} from "./DiskReport";
+import {getQueryStatus} from "./QueryReport";
 
 
 /**
@@ -50,13 +51,34 @@ export const ReportingOverview: React.FC = () => {
               </Box>
             </CardContent>
           </Card>
-          <Card sx={{width: '15vw', height: '20vh', marginLeft: '2vw' }}>
+          <Card sx={{width: '15vw', height: '20vh', marginLeft: '1.5vw' }}>
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
                   ディスク
                 </Typography>
                 {getStatusIcon(getDiskStatus())}
+              </Box>
+            </CardContent>
+          </Card>
+          <Card sx={{width: '15vw', height: '20vh', marginLeft: '1.5vw' }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
+                  クエリ
+                </Typography>
+                {getStatusIcon(getQueryStatus())}
+              </Box>
+            </CardContent>
+          </Card>
+          <Card sx={{width: '15vw', height: '20vh', marginLeft: '1.5vw' }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
+                  死活
+                </Typography>
+                {/* TODO: アイコン↓を置き換え */}
+                <CircularProgress style={{ marginTop: '3vh' }}/>
               </Box>
             </CardContent>
           </Card>
