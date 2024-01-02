@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import HomeMenu from '../Layers/HomeMenu';
 import ExploreModeMenu from '../Layers/ExploreModeMenu';
 import { CheckModeMenu } from '../Layers/CheckModeMenu';
-import { CustomDashboard } from '../Layers/CustomDashboard';
+import { AdvancedModeMenu } from '../Layers/AdvancedModeMenu';
 import SettingsMenu from '../Layers/SettingsMenu';
 import ServerRoot from '../../Content/Postgresql/Explore/Server/ServerRoot';
 import ComponentRoot from '../../Content/Postgresql/Explore/Component/ComponentRoot';
@@ -20,7 +20,7 @@ const renderRoutes = () => (
     <Route path="" element={<HomeMenu/>} />
     <Route path="check" element={<CheckModeMenu/>}/>
     <Route path="advance">
-      <Route index element={<CustomDashboard/>}/>
+      <Route index element={<AdvancedModeMenu/>}/>
     </Route>
     <Route path="settings" element={<SettingsMenu/>}/>
 

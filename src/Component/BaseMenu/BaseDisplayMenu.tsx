@@ -40,7 +40,7 @@ import { CheckModeMenu } from "../Layers/CheckModeMenu";
 import { setSelected } from '../Redux/MenuState';
 import { RootState } from '../Redux/StateStore';
 import HomeMenu from '../Layers/HomeMenu';
-import {CustomDashboard} from "../Layers/CustomDashboard";
+import {AdvancedModeMenu} from "../Layers/AdvancedModeMenu";
 import SettingsMenu from '../Layers/SettingsMenu';
 import renderRoutes from '../Router/YatagarasuRouter';
 
