@@ -78,12 +78,18 @@ const DiskWrite: React.FC<DiskWriteProps> = ({starttime, endtime}) => {
 
       // チャート用データの形成
       const labels = response.data.data.result[0].values.map((key) => unixTimeToDate(Number(key[0])).toLocaleString());
-      const datasets = response.data.data.result.map(ds => ({
-        label: ds.metric.device,
-        data: ds.values.map(v => v[1]),
-        type: 'line',
-        backgroundColor: getRandomColor()
-      }));
+      const datasets = response.data.data.result.map(ds => {
+        const borderColor = getRandomColor();  // 先に borderColor を定義
+        return {
+          label: ds.metric.device,
+          data: ds.values.map(v => v[1]),
+          type: 'line',
+          pointRadius: 0,
+          borderWidth: 1,
+          borderColor: borderColor,  // borderColor を使用
+          backgroundColor: borderColor  // 同じ値を backgroundColor にも使用
+        };
+      });
       setChartData({ labels, datasets });
     };
     fetchDiskWriteData();
