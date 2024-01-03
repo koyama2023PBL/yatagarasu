@@ -26,7 +26,7 @@ export const LongTransaction: React.FC<ReportingItemProps<LongTransactionData[]>
     {
       header: 'クライアント',
       accessorKey: 'client',
-      size: 150,
+      size: 160,
       muiTableHeadCellProps: {
         align: 'center',
       },
@@ -34,7 +34,7 @@ export const LongTransaction: React.FC<ReportingItemProps<LongTransactionData[]>
     {
       header: '開始日時',
       accessorKey: 'start_at',
-      size: 150,
+      size: 160,
       muiTableHeadCellProps: {
         align: 'center',
       },
@@ -42,7 +42,7 @@ export const LongTransaction: React.FC<ReportingItemProps<LongTransactionData[]>
     {
       header: '経過秒数',
       accessorKey: 'duration',
-      size: 100,
+      size: 120,
       muiTableHeadCellProps: {
         align: 'center',
       },
@@ -53,7 +53,7 @@ export const LongTransaction: React.FC<ReportingItemProps<LongTransactionData[]>
     {
       header: 'ステータス',
       accessorKey: 'state',
-      size: 150,
+      size: 180,
       muiTableHeadCellProps: {
         align: 'center',
       },
@@ -87,43 +87,43 @@ export const LongTransaction: React.FC<ReportingItemProps<LongTransactionData[]>
   }
 
   return (
-      <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
-        <CardContent>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography variant="h6" align="left" sx={ getItemTitleSx(getLongTransactionStatus()) }>
-              長時間トランザクション
-            </Typography>
-            <Box sx={{ display: 'flex', marginTop: '3vh' }}>
-              <Box sx={{ display: 'flex', width: '35vw' }}>
-                <div style={{ width: '100%' }}>
-                  { tableData ?
-                    <ThemeProvider theme={tableTheme}>
-                      <MRT_Table table={table} style={{ width: '500px' }}/>
-                    </ThemeProvider> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
-                </div>
-              </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column', width: '25vw', marginLeft: '2vw' }}>
-                <Typography variant="body2" align="left">
-                  診断結果
-                </Typography>
-                <Divider />
-                <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
-                  { analysisResult() }
-                </Typography>
-                <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
-                  チェックポイント
-                </Typography>
-                <Divider />
-                <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
-                  <ul>
-                    <li>リストされているトランザクションは、ロックを保持したまま何もしていない可能性ガあります。</li>
-                    <li>リストされているトランザクションは、ロック待ちに陥っている可能性もあります。</li>
-                  </ul>
-                </Typography>
-              </Box>
+    <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
+      <CardContent>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h6" align="left" sx={ getItemTitleSx(getLongTransactionStatus()) }>
+            長時間トランザクション
+          </Typography>
+          <Box sx={{ display: 'flex', marginTop: '3vh' }}>
+            <Box sx={{ display: 'flex', width: '35vw' }}>
+              <div style={{ width: '100%' }}>
+                { tableData ?
+                  <ThemeProvider theme={tableTheme}>
+                    <MRT_Table table={table} style={{ width: '500px' }}/>
+                  </ThemeProvider> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
+              </div>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '25vw', marginLeft: '2vw' }}>
+              <Typography variant="body2" align="left">
+                診断結果
+              </Typography>
+              <Divider />
+              <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
+                { analysisResult() }
+              </Typography>
+              <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
+                チェックポイント
+              </Typography>
+              <Divider />
+              <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
+                <ul>
+                  <li>リストされているトランザクションは、ロックを保持したまま何もしていない可能性があります。</li>
+                  <li>リストされているトランザクションは、ロック待ちに陥っている可能性もあります。</li>
+                </ul>
+              </Typography>
             </Box>
           </Box>
-        </CardContent>
-      </Card>
+        </Box>
+      </CardContent>
+    </Card>
   );
 }

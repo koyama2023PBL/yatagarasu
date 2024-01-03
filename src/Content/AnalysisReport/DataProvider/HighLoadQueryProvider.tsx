@@ -1,4 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
+import yatagarasuSettings from "../../../Component/Redux/YatagarasuSettings";
+import {invokeQuery, QueryResponse, QueryResult} from "../../../Component/Common/PrometheusClient";
 
 /**
  * データプロバイダのプロパティ
@@ -21,6 +23,22 @@ export interface HighLoadQueryData {
 }
 
 /**
+ * pg_stat_statementsのメトリクス
+ */
+interface StatStatementsMetrics {
+  queryid: number;
+  user: string;
+}
+
+/**
+ * クエリのメトリクス
+ */
+interface SQLMetrics {
+  queryid: number;
+  query: string;
+}
+
+/**
  * 高負荷クエリのデータプロバイダ
  */
 const DataContext: React.Context<any> = createContext<HighLoadQueryData | null>(null);
@@ -31,7 +49,36 @@ const DataContext: React.Context<any> = createContext<HighLoadQueryData | null>(
  * @param endtime
  */
 const fetchDataFromAPI = async (starttime: Date, endtime: Date) => {
-  return {status: 0, data: null};
+  const duringSeconds = Math.floor((endtime.getTime() - starttime.getTime()) / 1000);
+  const datname = yatagarasuSettings?.dbname;
+  const callsQuery = `increase(pg_stat_statements_calls_total{datname="${datname}"}[${duringSeconds}s])>0`;
+  const timeQuery  = `increase(pg_stat_statements_seconds_total{datname="${datname}"}[${duringSeconds}s])>0`;
+
+  const { status: statusCalls, data: callsData } = await invokeQuery<QueryResponse<StatStatementsMetrics>>(callsQuery, endtime);
+  const { status: statusTime, data: timeData }  = await invokeQuery<QueryResponse<StatStatementsMetrics>>(timeQuery, endtime);
+  const { status: statusSql, data: sqlData } = await invokeQuery<QueryResponse<SQLMetrics>>('pg_stat_statements_queries', endtime);
+
+  const callsObj: { [key: string]: number } = {}
+  const timeObj: { [key: string]: number } = {}
+  const sqlObj: { [key: string]: string } = {}
+  callsData.data.result.forEach((item: QueryResult<StatStatementsMetrics>) => callsObj[item.metric.queryid] = Number(item.value[1]));
+  timeData.data.result.forEach((item: QueryResult<StatStatementsMetrics>) => timeObj[item.metric.queryid] = Number(item.value[1]));
+  sqlData.data.result.forEach((item: QueryResult<SQLMetrics>) => sqlObj[item.metric.queryid] = item.metric.query);
+
+  const response: HighLoadQueryData[] = [];
+  Object.keys(callsObj).forEach((queryid) => {
+    const mean_time = Math.round(timeObj[queryid] / callsObj[queryid] * 1000) / 1000;
+    if (mean_time < 0.1) return;
+    response.push({
+      queryid: Number(queryid),
+      query: sqlObj[queryid],
+      calls: Math.round(callsObj[queryid]),
+      total_time: Math.round(timeObj[queryid] * 100) / 100,
+      mean_time: Math.round(timeObj[queryid] / callsObj[queryid] * 1000) / 1000,
+    });
+  });
+
+  return {status: Math.max(statusCalls, statusTime, statusSql), data: response};
 }
 
 /**
@@ -55,9 +102,9 @@ export const HighLoadQueryProvider: React.FC<HighLoadQueryProviderProps> = ({ ch
   }, [starttime, endtime]);
 
   return (
-      <DataContext.Provider value={data}>
-        {children}
-      </DataContext.Provider>
+    <DataContext.Provider value={data}>
+      {children}
+    </DataContext.Provider>
   );
 }
 

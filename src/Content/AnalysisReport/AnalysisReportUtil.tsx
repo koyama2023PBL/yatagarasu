@@ -85,8 +85,10 @@ export function tableObject<T extends MRT_RowData>(columns: MRT_ColumnDef<T>[], 
     data: data,
     enableColumnActions: false,
     enableColumnFilters: false,
-    enablePagination: true,
-    enableSorting: true,
-    muiTableBodyRowProps: { hover: false },
+    enableSorting: false,
+    muiTableBodyRowProps: {
+      hover: false,
+      sx: {maxHeight: '20px'},
+    },
   });
 }
