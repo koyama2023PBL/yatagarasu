@@ -7,6 +7,8 @@ import {StatusType} from "./AnalysisReportUtil";
 import {useCPUUsageRatio} from "./DataProvider/CPUUsageRatioProvider";
 import {useDiskBusyRatio} from "./DataProvider/DiskBusyRatioProvider";
 import {useDiskUsage} from "./DataProvider/DiskUsageProvider";
+import {TableSize} from "./ReportingItem/TableSize";
+import {useTableSize} from "./DataProvider/TableSizeProvider";
 
 /**
  * ディスク診断のステータスを取得する
@@ -40,6 +42,7 @@ export const DiskReport: React.FC = () => {
           <CPUIOWaitRatio data={useCPUUsageRatio()}/>
           <DiskBusyRatio data={useDiskBusyRatio()}/>
           <DiskUsage data={useDiskUsage()}/>
+          <TableSize data={useTableSize()}/>
         </Box>
       </CardContent>
     </Card>

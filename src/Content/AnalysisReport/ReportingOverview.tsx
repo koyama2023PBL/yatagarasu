@@ -7,6 +7,8 @@ import ErrorIcon from "@mui/icons-material/Error";
 import {getPerformanceStatus} from "./PerformanceReport";
 import {StatusType} from "./AnalysisReportUtil";
 import {getDiskStatus} from "./DiskReport";
+import {getQueryStatus} from "./QueryReport";
+
 
 /**
  * ステータスに応じたアイコンを返す
@@ -14,15 +16,15 @@ import {getDiskStatus} from "./DiskReport";
  */
 export const getStatusIcon = (status: StatusType | null): React.JSX.Element => {
   if (status === null) {
-    return <CircularProgress style={{ width: "80%", height: "80%" }} sx={{ marginTop: '3vh' }}/>;
+    return <CircularProgress style={{ marginTop: '3vh' }}/>;
   }
   switch (status) {
     case 'OK':
-      return <CheckCircleIcon style={{ width: "50%", height: "50%" }} sx={{ color: green[500], height: '10vh' }} />;
+      return <CheckCircleIcon style={{ width: "50%", height: "50%" }} sx={{ color: green[500] }} />;
     case 'WARNING':
-      return <WarningIcon style={{ width: "50%", height: "50%" }} sx={{ color: yellow[700], height: '10vh'}} />;
+      return <WarningIcon style={{ width: "50%", height: "50%" }} sx={{ color: yellow[700] }} />;
     case 'ERROR':
-      return <ErrorIcon style={{ width: "50%", height: "50%" }} sx={{ color: red[500], height: '10vh'}} />;
+      return <ErrorIcon style={{ width: "50%", height: "50%" }} sx={{ color: red[500] }} />;
   }
 };
 
@@ -39,7 +41,7 @@ export const ReportingOverview: React.FC = () => {
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '2vw' }}>
-          <Card sx={{width: '15vw'}}>
+          <Card sx={{width: '15vw', height: '20vh'}}>
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
@@ -49,13 +51,34 @@ export const ReportingOverview: React.FC = () => {
               </Box>
             </CardContent>
           </Card>
-          <Card sx={{width: '15vw', marginLeft: '2vw' }}>
+          <Card sx={{width: '15vw', height: '20vh', marginLeft: '1.5vw' }}>
             <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
                   ディスク
                 </Typography>
                 {getStatusIcon(getDiskStatus())}
+              </Box>
+            </CardContent>
+          </Card>
+          <Card sx={{width: '15vw', height: '20vh', marginLeft: '1.5vw' }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
+                  クエリ
+                </Typography>
+                {getStatusIcon(getQueryStatus())}
+              </Box>
+            </CardContent>
+          </Card>
+          <Card sx={{width: '15vw', height: '20vh', marginLeft: '1.5vw' }}>
+            <CardContent sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
+                  死活
+                </Typography>
+                {/* TODO: アイコン↓を置き換え */}
+                <CircularProgress style={{ marginTop: '3vh' }}/>
               </Box>
             </CardContent>
           </Card>

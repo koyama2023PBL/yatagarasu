@@ -1,29 +1,27 @@
+import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
+import {TransactionCountData, useTransactionCount} from "../DataProvider/TransactionCountProvider";
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
-import {Chart, Filler} from "chart.js";
-import {CPUUsageRatioData, useCPUUsageRatio} from "../DataProvider/CPUUsageRatioProvider";
 import {Bar} from "react-chartjs-2";
-import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
-
-Chart.register(Filler);
+import {getDiskUsageStatus} from "./DiskUsage";
 
 /**
- * CPU使用率のステータスを取得する
- * TODO: 閾値の設定
+ * トランザクション数のステータスを取得する
  */
-export const getCPUUsageRatioStatus = (): StatusType | null => {
-  const data: CPUUsageRatioData[] | null = useCPUUsageRatio();
+export const getTransactionCountStatus = (): StatusType | null => {
+  const data: TransactionCountData[] | null = useTransactionCount();
   if (!data) return null;
-  if (data.find((item) => item.user + item.system > 80)) return 'ERROR';
-  if (data.find((item) => item.user + item.system > 50)) return 'WARNING';
+  if (data.find((item) => item.transaction_count >=  item.max_transaction * 0.9)) return 'ERROR';
+  if (data.find((item) => item.transaction_count === item.max_transaction))       return 'WARNING';
   return 'OK';
 }
 
 /**
- * CPU使用率のJSX
+ * トランザクション数のコンポーネント
+ * @param data
  */
-export const CPUUsageRatio: React.FC<ReportingItemProps<CPUUsageRatioData[]>> = ({data}) => {
+export const TransactionCount: React.FC<ReportingItemProps<TransactionCountData[]>> = ({data}) => {
   const [chartData, setChartData] = useState<any | null>(null);
 
   useEffect(() => {
@@ -31,60 +29,59 @@ export const CPUUsageRatio: React.FC<ReportingItemProps<CPUUsageRatioData[]>> = 
       if (data) {
         const labels = data.map((item) => item.datetime);
         const length = labels.length;
-        const user = data.map((item) => item.user);
-        const system = data.map((item) => item.system);
+        const maxConn = data.map((item) => item.max_transaction);
+        const connCount = data.map((item) => item.transaction_count);
 
         setChartData({
           labels: labels,
           length: length,
           datasets: [
             {
-              label: 'ユーザ',
-              data: user,
-              backgroundColor: 'rgba(136, 204, 238, 1)',
-              borderColor: 'rgb(136, 204, 238)',
-              fill: true,
+              label: '接続数',
+              data: connCount,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgb(54, 162, 235)',
               type: 'line',
               pointRadius: 0,
               borderWidth: 1,
               pointStyle: 'rect',
             },
             {
-              label: 'システム',
-              data: system,
+              label: '最大接続数',
+              data: maxConn,
               backgroundColor: 'rgba(51, 34, 136, 1)',
               borderColor: 'rgb(51, 34, 136)',
-              fill: true,
               type: 'line',
               pointRadius: 0,
               borderWidth: 1,
               pointStyle: 'rect',
-            }
-          ],
+            },
+          ]
         });
       }
     }
     void fetchChartData();
   }, [data]);
 
+  const options = lineChartOptions(chartData, '件');
+  options.plugins.legend.display = true;
+  // @ts-ignore
+  delete options.scales?.y?.max;
+
   const analysisResult = (): string | null => {
-    const status: StatusType | null = getCPUUsageRatioStatus();
-    if (!status) return null;
-    if (status === 'ERROR') return 'CPU使用率が非常に高いです。';
-    if (status === 'WARNING') return 'CPU使用率が高いです。';
-    return 'CPU使用率は正常です。';
+    const status: StatusType | null = getDiskUsageStatus();
+    if (!status)              return null;
+    if (status === 'ERROR')   return '同時接続数が最大接続数に到達しています。';
+    if (status === 'WARNING') return '同時接続数が最大接続数に近づいています。';
+    return '同時接続数は適切な範囲で推移しています。';
   }
 
-  const options = lineChartOptions(chartData);
-  options.scales.y.stacked = true;
-  options.plugins.legend.display = true;
-
   return (
-    <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto' }}>
+    <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
       <CardContent sx={{ display: 'flex' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-          <Typography variant="h6" align="left" sx={ getItemTitleSx(getCPUUsageRatioStatus()) }>
-            CPU使用率
+          <Typography variant="h6" align="left" sx={ getItemTitleSx(getTransactionCountStatus()) }>
+            トランザクション数
           </Typography>
           <Box sx={{ display: 'flex', marginTop: '3vh' }}>
             <Box sx={{ display: 'flex', width: '25vw' }}>
@@ -106,8 +103,9 @@ export const CPUUsageRatio: React.FC<ReportingItemProps<CPUUsageRatioData[]>> = 
               <Divider />
               <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
                 <ul>
-                  <li>ユーザープロセスおよびシステムプロセスによるCPU使用率です。</li>
-                  <li>CPU使用率が高騰している時間帯に非効率な処理が行われていた可能性があります。</li>
+                  <li>同時最大接続数の設定値に対して、同時にどれだけ接続されているかを確認します。</li>
+                  <li>同時接続数が同時最大接続数に到達している場合、接続待ちが発生している可能性があります。</li>
+                  <li>中長期的に見て、同時接続数が増加傾向にないかどうかも確認してください。</li>
                 </ul>
               </Typography>
             </Box>

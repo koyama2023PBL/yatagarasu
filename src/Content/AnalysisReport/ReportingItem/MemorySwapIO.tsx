@@ -3,7 +3,7 @@ import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/materia
 import { Chart, Filler } from 'chart.js';
 import {Bar} from "react-chartjs-2";
 import {MemorySwapIOData, useMemorySwapIO} from "../DataProvider/MemorySwapIOProvider";
-import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -78,46 +78,11 @@ export const MemorySwapIO: React.FC<ReportingItemProps<MemorySwapIOData[]>> = ({
     return 'メモリは充足しています。';
   }
 
-  // noinspection JSUnusedGlobalSymbols, JSUnusedLocalSymbols
-  const options = () => ({
-    maintainAspectRatio: true,
-    scales: {
-      x: {
-        ticks: {
-          stacked: true,
-          autoSkip: false,
-          maxRotation: 0,
-          minRotation: 0,
-          callback: function(_value : any, index : any , _values : any) {
-            return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
-          }
-        },
-        grid: {
-          display: false,
-          drawBorder: false
-        }
-      },
-      y: {
-        stacked: true,
-        min: 0,
-        max: 10,
-        ticks: {
-          stepSize: 20,
-          callback: function(value: any, _index: any, _ticks: any) {
-            return value + '回';
-          },
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        position: 'bottom' as const,
-        labels: {
-          usePointStyle: true,
-        },
-      },
-    },
-  });
+  const options = lineChartOptions(chartData, '回');
+  options.scales.y.stacked = true;
+  options.plugins.legend.display = true;
+  options.scales.y.max = 10;
+  options.scales.y.ticks.stepSize = 2;
 
   return (
     <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
@@ -129,7 +94,7 @@ export const MemorySwapIO: React.FC<ReportingItemProps<MemorySwapIOData[]>> = ({
           <Box sx={{ display: 'flex', marginTop: '3vh' }}>
             <Box sx={{ display: 'flex', width: '25vw' }}>
               <div style={{ width: '100%' }}>
-                { chartData ? <Bar options={ options() } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
+                { chartData ? <Bar options={ options } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
               </div>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>

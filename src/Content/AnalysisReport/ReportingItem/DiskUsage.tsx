@@ -3,7 +3,7 @@ import {DiskUsageData, useDiskUsage} from "../DataProvider/DiskUsageProvider";
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {Bar} from "react-chartjs-2";
-import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -60,76 +60,40 @@ export const DiskUsage: React.FC<ReportingItemProps<DiskUsageData[]>> = ({data})
     return 'ディスク使用率は正常です。';
   }
 
-  const options = () => ({
-    scales: {
-      x: {
-        ticks: {
-          stacked: true,
-          autoSkip: false,
-          maxRotation: 0,
-          minRotation: 0,
-          callback: function(_value : any, index : any , _values : any) {
-            return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
-          }
-        },
-        grid: {
-          display: false,
-          drawBorder: false
-        }
-      },
-      y: {
-        stacked: true,
-        min: 0,
-        max: 100,
-        ticks: {
-          stepSize: 20,
-          callback: function(value: any, _index: any, _ticks: any) {
-            return value + '%';
-          }
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  });
-
   return (
-      <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
-        <CardContent sx={{ display: 'flex' }}>
-          <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <Typography variant="h6" align="left" sx={ getItemTitleSx(getDiskUsageStatus()) }>
-              ディスク使用率
-            </Typography>
-            <Box sx={{ display: 'flex', marginTop: '3vh' }}>
-              <Box sx={{ display: 'flex', width: '25vw' }}>
-                <div style={{ width: '100%' }}>
-                  { chartData ? <Bar options={ options() } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
-                </div>
-              </Box>
-              <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
-                <Typography variant="body2" align="left">
-                  診断結果
-                </Typography>
-                <Divider />
-                <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
-                  { analysisResult() }
-                </Typography>
-                <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
-                  チェックポイント
-                </Typography>
-                <Divider />
-                <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
-                  <ul>
-                    <li>(オブジェクト、VACUUM、インデックスとの関連も含めて整理予定)</li>
-                  </ul>
-                </Typography>
-              </Box>
+    <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
+      <CardContent sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h6" align="left" sx={ getItemTitleSx(getDiskUsageStatus()) }>
+            ディスク使用率
+          </Typography>
+          <Box sx={{ display: 'flex', marginTop: '3vh' }}>
+            <Box sx={{ display: 'flex', width: '25vw' }}>
+              <div style={{ width: '100%' }}>
+                { chartData ? <Bar options={ lineChartOptions(chartData) } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
+              </div>
+            </Box>
+            <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
+              <Typography variant="body2" align="left">
+                診断結果
+              </Typography>
+              <Divider />
+              <Typography variant="body1" align="left" sx={{ marginTop: '1vh', marginLeft: '2vw' }}>
+                { analysisResult() }
+              </Typography>
+              <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>
+                チェックポイント
+              </Typography>
+              <Divider />
+              <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
+                <ul>
+                  <li>(オブジェクト、VACUUM、インデックスとの関連も含めて整理予定)</li>
+                </ul>
+              </Typography>
             </Box>
           </Box>
-        </CardContent>
-      </Card>
+        </Box>
+      </CardContent>
+    </Card>
   );
 }
