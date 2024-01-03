@@ -41,7 +41,7 @@ export const lineChartOptions = (chartData: any | null, unit?: string) => {
         },
         grid: {
           display: false,
-            drawBorder: false
+          drawBorder: false
         }
       },
       y: {

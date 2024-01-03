@@ -3,7 +3,7 @@ import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/materia
 import {Chart, Filler} from "chart.js";
 import {CPUUsageRatioData, useCPUUsageRatio} from "../DataProvider/CPUUsageRatioProvider";
 import {Bar} from "react-chartjs-2";
-import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -75,45 +75,9 @@ export const CPUUsageRatio: React.FC<ReportingItemProps<CPUUsageRatioData[]>> = 
     return 'CPU使用率は正常です。';
   }
 
-  const options = () => ({
-    maintainAspectRatio: true,
-    scales: {
-      x: {
-        ticks: {
-          stacked: true,
-          autoSkip: false,
-          maxRotation: 0,
-          minRotation: 0,
-          callback: function(_value : any, index : any , _values : any) {
-            return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
-          },
-        },
-        grid: {
-          display: false,
-          drawBorder: false,
-        }
-      },
-      y: {
-        stacked: true,
-        min: 0,
-        max: 100,
-        ticks: {
-          stepSize: 20,
-          callback: function(value: any, _index: any, _ticks: any) {
-            return value + '%';
-          },
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        position: 'bottom' as const,
-        labels: {
-          usePointStyle: true,
-        },
-      }
-    },
-  });
+  const options = lineChartOptions(chartData);
+  options.scales.y.stacked = true;
+  options.plugins.legend.display = true;
 
   return (
     <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto' }}>
@@ -125,7 +89,7 @@ export const CPUUsageRatio: React.FC<ReportingItemProps<CPUUsageRatioData[]>> = 
           <Box sx={{ display: 'flex', marginTop: '3vh' }}>
             <Box sx={{ display: 'flex', width: '25vw' }}>
               <div style={{ width: '100%' }}>
-                { chartData ? <Bar options={ options() } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
+                { chartData ? <Bar options={ options } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
               </div>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>

@@ -66,8 +66,6 @@ export const TransactionCount: React.FC<ReportingItemProps<TransactionCountData[
   const options = lineChartOptions(chartData, '件');
   options.plugins.legend.display = true;
   // @ts-ignore
-  delete options.scales?.y?.min;
-  // @ts-ignore
   delete options.scales?.y?.max;
 
   const analysisResult = (): string | null => {

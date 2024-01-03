@@ -3,7 +3,7 @@ import {DiskBusyRatioData, useDiskBusyRatio} from "../DataProvider/DiskBusyRatio
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {Bar} from "react-chartjs-2";
-import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
+import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
 Chart.register(Filler);
@@ -60,42 +60,6 @@ export const DiskBusyRatio: React.FC<ReportingItemProps<DiskBusyRatioData[]>> = 
     return 'ディスクビジー率は正常です。';
   }
 
-  const options = () => ({
-    maintainAspectRatio: true,
-    scales: {
-      x: {
-        ticks: {
-          stacked: true,
-          autoSkip: false,
-          maxRotation: 0,
-          minRotation: 0,
-          callback: function(_value : any, index : any , _values : any) {
-            return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
-          }
-        },
-        grid: {
-          display: false,
-          drawBorder: false
-        }
-      },
-      y: {
-        min: 0,
-        max: 100,
-        ticks: {
-          stepSize: 20,
-          callback: function(value: any, _index: any, _ticks: any) {
-            return value + '%';
-          },
-        },
-      },
-    },
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  });
-
   return (
     <Card sx={{ width: '65vw', marginRight: 'auto', marginLeft: 'auto', marginTop: '2vh' }}>
       <CardContent sx={{ display: 'flex' }}>
@@ -106,7 +70,7 @@ export const DiskBusyRatio: React.FC<ReportingItemProps<DiskBusyRatioData[]>> = 
           <Box sx={{ display: 'flex', marginTop: '3vh' }}>
             <Box sx={{ display: 'flex', width: '25vw' }}>
               <div style={{ width: '100%' }}>
-                { chartData ? <Bar options={ options() } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
+                { chartData ? <Bar options={ lineChartOptions(chartData) } data={ chartData }/> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
               </div>
             </Box>
             <Box sx={{ display: 'flex', flexDirection: 'column', width: '35vw', marginLeft: '2vw' }}>
