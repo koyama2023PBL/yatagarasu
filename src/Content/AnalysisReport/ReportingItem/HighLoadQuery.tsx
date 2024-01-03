@@ -90,7 +90,7 @@ export const HighLoadQuery: React.FC<ReportingItemProps<HighLoadQueryData[]>> = 
   }, [data]);
 
   const analysisResult = (): string | null => {
-    const status: StatusType | null = getLongTransactionStatus();
+    const status: StatusType | null = getHighLoadQueryStatus();
     if (!status) return null;
     if (status === 'ERROR') return 'チューニングの余地が大きいクエリがあります。';
     if (status === 'WARNING') return '一部のクエリにチューニングの余地があります。';
