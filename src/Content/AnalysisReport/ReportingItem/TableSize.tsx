@@ -1,7 +1,7 @@
-import {ReportingItemProps} from "../AnalysisReportUtil";
+import {ReportingItemProps, tableObject, tableThemeOptions} from "../AnalysisReportUtil";
 import {TableSizeData} from "../DataProvider/TableSizeProvider";
 import React, {useEffect, useMemo, useState} from "react";
-import {MRT_Table, MRT_ColumnDef, useMaterialReactTable} from "material-react-table";
+import {MRT_Table, MRT_ColumnDef} from "material-react-table";
 import {Box, Card, CardContent, Typography} from "@mui/material";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
@@ -35,28 +35,8 @@ export const TableSize: React.FC<ReportingItemProps<TableSizeData[]>> = ({ data 
   ], []);
 
   const [tableData, setData] = useState<TableSizeData[]>([]);
-
-  const table = useMaterialReactTable<TableSizeData>({
-    columns: columns,
-    data: tableData,
-    enableColumnActions: false,
-    enableColumnFilters: false,
-    enablePagination: true,
-    enableSorting: true,
-    muiTableBodyRowProps: { hover: false },
-  });
-
-  const tableTheme = useMemo(
-      () =>
-          createTheme({
-            palette: {
-              background: {
-                default: 'rgb(240,244,249)',
-              },
-            },
-          }),
-      [],
-  );
+  const table = tableObject<TableSizeData>(columns, tableData);
+  const tableTheme = useMemo(() => createTheme(tableThemeOptions()), []);
 
   useEffect(() => {
     const fetchData = async () => {

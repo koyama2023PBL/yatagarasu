@@ -1,4 +1,5 @@
 import {green, red, yellow} from "@mui/material/colors";
+import {MRT_ColumnDef, MRT_RowData, useMaterialReactTable} from "material-react-table";
 
 export type StatusType = 'OK' | 'WARNING' | 'ERROR';
 
@@ -66,4 +67,26 @@ export const lineChartOptions = (chartData: any | null, unit?: string) => {
       },
     },
   }
+}
+
+export const tableThemeOptions = () => {
+  return {
+    palette: {
+      background: {
+        default: 'rgb(240,244,249)',
+      },
+    },
+  }
+}
+
+export function tableObject<T extends MRT_RowData>(columns: MRT_ColumnDef<T>[], data: T[]) {
+  return useMaterialReactTable<T>({
+    columns: columns,
+    data: data,
+    enableColumnActions: false,
+    enableColumnFilters: false,
+    enablePagination: true,
+    enableSorting: true,
+    muiTableBodyRowProps: { hover: false },
+  });
 }
