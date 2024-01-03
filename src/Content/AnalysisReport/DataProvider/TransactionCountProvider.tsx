@@ -1,4 +1,13 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
+import yatagarasuSettings from "../../../Component/Redux/YatagarasuSettings";
+import {
+  invokeQuery,
+  invokeQueryRange,
+  QueryRangeResponse,
+  QueryResponse
+} from "../../../Component/Common/PrometheusClient";
+import {prometheusSettings} from "../../../Component/Redux/PrometheusSettings";
+import {unixTimeToDate} from "../../../Component/Common/Util";
 
 /**
  * データプロバイダのプロパティ
@@ -29,7 +38,22 @@ const DataContext: React.Context<any> = createContext<TransactionCountData[] | n
  * @param endtime
  */
 const fetchDataFromAPI = async (starttime: Date, endtime: Date) => {
-  return {status: 0, data: null};
+  const queryMax  = 'pg_settings_max_connections';
+  const queryCount = `pg_stat_activity_count{datname="${yatagarasuSettings?.dbname}",state="active"}`;
+
+  const { status: statusMax,   data: resMax }   = await invokeQuery<QueryResponse<any>>(queryMax, endtime);
+  const { status: statusCount, data: resCount } = await invokeQueryRange<QueryRangeResponse<any>>(queryCount, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
+
+  const maxConnections = Number(resMax.data.result[0].value[1]);
+  const data: TransactionCountData[] = resCount.data.result[0].values.map(([timestamp, value]) => {
+    return {
+      datetime: unixTimeToDate(timestamp).toLocaleString(),
+      max_transaction: maxConnections,
+      transaction_count: Number(value)
+    };
+  });
+
+  return {status: Math.max(statusMax, statusCount), data: data};
 }
 
 /**

@@ -26,3 +26,44 @@ export const getItemTitleSx = (status: StatusType | null) => {
     color: getColorFromStatus(status),
   };
 }
+
+export const lineChartOptions = (chartData: any | null, unit?: string) => {
+  return {
+    scales: {
+      x: {
+        ticks: {
+          autoSkip: false,
+          maxRotation: 0,
+          minRotation: 0,
+          callback: function(_value : any, index : any , _values : any) {
+            return index === 0 || index === chartData?.labels.length - 1 ? chartData?.labels[index] : '';
+          }
+        },
+        grid: {
+          display: false,
+            drawBorder: false
+        }
+      },
+      y: {
+        stacked: false,
+        min: 0,
+        max: 100,
+        ticks: {
+          stepSize: 20,
+          callback: function(value: any, _index: any, _ticks: any) {
+            return value + (unit?? '%');
+          }
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        display: false,
+        position: 'bottom' as const,
+        labels: {
+          usePointStyle: true,
+        },
+      },
+    },
+  }
+}
