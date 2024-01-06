@@ -23,6 +23,9 @@ const WelcomeQuery: React.FC = () => {
         <Box sx={{  display: 'left' }}>
           <SvgExploreQueryRoot style={{ width: '100%', height: 'auto' }} />
         </Box>
+        <Typography variant="body2" sx={{ marginLeft: '14pt', marginBottom: '4px' }}>
+          PostgreSQLへ入力されたSQLがどのような順序で実行されていくのかを示します。
+        </Typography>
       </Box>
     </CardContent>
   </Card>

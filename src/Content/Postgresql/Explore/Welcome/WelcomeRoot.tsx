@@ -9,26 +9,25 @@ import WelcomeOverview from './WelcomeOverview';
 
 const WelcomeRoot: React.FC = () => (
   <div>
-    {/*<WelcomeExplore />*/}
+    <WelcomeExplore />
 
     <Box sx={{ marginTop: '1vh' }}>
       <NavLink to ="/explore/query">
         <WelcomeQuery />
       </NavLink>
     </Box>
-    {/*
-      <Box sx={{ marginTop: '10px' }}>
-        <NavLink to="/explore/component">
-          <WelcomeComponent />
-        </NavLink>
-      </Box>
 
-      <Box sx={{ marginTop: '10px' }}>
-        <NavLink to="/explore/server">
-          <WelcomeServer />
-        </NavLink>
-      </Box>
-    */}
+    <Box sx={{ marginTop: '10px' }}>
+      <NavLink to="/explore/component">
+        <WelcomeComponent />
+      </NavLink>
+    </Box>
+
+    <Box sx={{ marginTop: '10px' }}>
+      <NavLink to="/explore/server">
+        <WelcomeServer />
+      </NavLink>
+    </Box>
 
     <Box sx={{ marginTop: '1vh' }}>
       <NavLink to="/explore/overview">
