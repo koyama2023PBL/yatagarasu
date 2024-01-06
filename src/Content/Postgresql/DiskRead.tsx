@@ -19,7 +19,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
 import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
-import {rgbToRgba, unixTimeToDate} from "../../Component/Common/Util";
+import {getRandomColor, rgbToRgba, unixTimeToDate} from "../../Component/Common/Util";
 import {Status, statusColors, Thresholds} from "../../Component/Threshold/Threshold";
 
 
@@ -59,16 +59,6 @@ const DiskRead: React.FC<DiskReadProps> = ({starttime, endtime}) => {
   };
   const open = Boolean(anchorEl);
 
-  // ランダムな色を生成
-  const getRandomColor = () => {
-    var letters = '0123456789ABCDEF';
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
-
   useEffect(() => {
     const fetchDiskReadData = async () => {
       const query = `rate(node_disk_reads_completed_total[30s])`;
@@ -78,8 +68,8 @@ const DiskRead: React.FC<DiskReadProps> = ({starttime, endtime}) => {
 
       // チャート用データの形成
       const labels = response.data.data.result[0].values.map((key) => unixTimeToDate(Number(key[0])).toLocaleString());
-      const datasets = response.data.data.result.map(ds => {
-        const borderColor = getRandomColor();  // 先に borderColor を定義
+      const datasets = response.data.data.result.map((ds, index) => {
+        const borderColor = getRandomColor(index);  // 先に borderColor を定義
         return {
           label: ds.metric.device,
           data: ds.values.map(v => v[1]),

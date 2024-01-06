@@ -136,3 +136,25 @@ export function calcMaxStep(from: Date, to: Date, scrape_interval: string, recor
 
   return String(Math.max(max_step, interval_second)) + 's';
 }
+
+// ランダムな色を生成
+export function getRandomColor(index: number)  {
+  const colorSegment: number = 360 / 6; // 色相ホイールを6つのセグメントに分割
+  const h: number = Math.floor((Math.random() * colorSegment) + (index * colorSegment));
+  const s: number = Math.floor(Math.random() * 25 + 25); // 彩度は25%から50%
+  const l: number = Math.floor(Math.random() * 20 + 40); // 明度は40%から60%
+
+  const hslToRgb = (h: number, s: number, l: number): [number, number, number] => {
+    s /= 100;
+    l /= 100;
+    const k = (n: number): number => (n + h / 30) % 12;
+    const a: number = s * Math.min(l, 1 - l);
+    const f = (n: number): number => l - a * Math.max(Math.min(k(n) - 3, 9 - k(n), 1), -1);
+    return [Math.floor(255 * f(0)), Math.floor(255 * f(8)), Math.floor(255 * f(4))];
+  };
+
+  const rgbToHex = ([r, g, b]: [number, number, number]): string =>
+    `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+
+  return rgbToHex(hslToRgb(h, s, l));
+}
