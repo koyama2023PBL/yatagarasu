@@ -1,0 +1,22 @@
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Server/ExploreServerHome src/Content/Postgresql/SVGs/explore/server/explore_server_home.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Server/ src/Content/Postgresql/SVGs/explore/server/explore_server_home.svg
+
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_root.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_home.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_files.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_backendprocess.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess.svg
+
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_root.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_home.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_advance_home.svg
+
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_home_1_parse.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_home_2_analyze.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_home_3_planning.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_home_4_execution.svg
+
+
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Overview/ src/Content/Postgresql/SVGs/explore/overview/explore_overview.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Overview/ src/Content/Postgresql/SVGs/explore/overview/explore_overview_root.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Welcome/ src/Content/Postgresql/SVGs/explore/explore_welcome.svg

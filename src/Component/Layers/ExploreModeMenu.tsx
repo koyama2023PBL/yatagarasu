@@ -20,7 +20,7 @@ const ExploreModeMenu: React.FC = () => {
       <Box sx={{ p: 1, flexDirection: 'column', height: '8vh', alignItems: 'center', marginTop: '-1vh'}}>
         <BreadcrumbsBar/>
       </Box>
-      <Box sx={{ p: 1, flexDirection: 'column', height: '63vh', alignItems: 'center', marginTop: '-20px'}}>
+      <Box sx={{ p: 1, flexDirection: 'column', height: '63vh', alignItems: 'center', marginTop: '-1vh'}}>
         <Outlet />
       </Box>
     </div>
