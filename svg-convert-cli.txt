@@ -1,5 +1,9 @@
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Server/ExploreServerHome src/Content/Postgresql/SVGs/explore/server/explore_server_home.svg
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Server/ src/Content/Postgresql/SVGs/explore/server/explore_server_home.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Server/ src/Content/Postgresql/SVGs/explore/server/explore_server_cpu.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Server/ src/Content/Postgresql/SVGs/explore/server/explore_server_memory.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Server/ src/Content/Postgresql/SVGs/explore/server/explore_server_network.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Server/ src/Content/Postgresql/SVGs/explore/server/explore_server_storage.svg
 
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_root.svg
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_home.svg

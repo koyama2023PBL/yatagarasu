@@ -11,14 +11,17 @@ import SvgExploreWelcome from '../../SVGs/ReactComponent/Welcome/ExploreWelcome'
 const WelcomeExplore: React.FC = () => {
   
   return (
-    <Card sx={{ height: '60vh' }}>
+    <Card sx={{ height: '50vh' }}>
     <CardContent>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
           ようこそ！
         </Typography>
       </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'left', p: '1.5', marginTop: '1vh', marginLeft: '2vw'}}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', p: '1.5', marginTop: '1vh', marginLeft: '2vw'}}>
+        <Box sx={{  display: 'left' }}>
+          <SvgExploreWelcome style={{ width: '80%', height: 'auto' }} />
+        </Box>
         <Box sx={{  display: 'left' }}>
           <SvgExploreWelcome style={{ width: '80%', height: 'auto' }} />
         </Box>

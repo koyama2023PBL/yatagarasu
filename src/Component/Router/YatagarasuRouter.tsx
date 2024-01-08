@@ -12,8 +12,8 @@ import QueryAdvanceHome from '../../Content/Postgresql/Explore/Query/QueryAdvanc
 import ExploreRoot from '../../Content/Postgresql/Explore/ExploreRoot';
 import QueryHome from '../../Content/Postgresql/Explore/Query/QueryHome';
 import OverviewHome from '../../Content/Postgresql/Explore/Overview/OverviewHome';
-
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../Redux/StateStore';
 
 const renderRoutes = () => (
   <Routes>
@@ -26,7 +26,7 @@ const renderRoutes = () => (
 
     <Route path="explore" element={<ExploreModeMenu />}>
       <Route index element={<ExploreRoot />} />
-      <Route path="server" element={<ServerRoot />} />
+      <Route path="server" element={<ServerRoot/>} />
       <Route path="component" element={<ComponentRoot />} />
       <Route path="query" >
         <Route index={true} element={<QueryHome />} />

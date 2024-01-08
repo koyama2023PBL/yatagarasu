@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgExploreServerHome = (props: SVGProps<SVGSVGElement>) => (
+const SvgExploreServerNetwork = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -79,8 +79,8 @@ const SvgExploreServerHome = (props: SVGProps<SVGSVGElement>) => (
       height={80}
       x={115}
       y={40}
-      fill="#fff2cc"
-      stroke="#d6b656"
+      fill="#FFF"
+      stroke="#000"
       pointerEvents="all"
       rx={12}
       ry={12}
@@ -148,8 +148,8 @@ const SvgExploreServerHome = (props: SVGProps<SVGSVGElement>) => (
       height={40}
       x={135}
       y={70}
-      fill="#ffe6cc"
-      stroke="#d79b00"
+      fill="#FFF"
+      stroke="#000"
       pointerEvents="all"
       rx={6}
       ry={6}
@@ -217,8 +217,8 @@ const SvgExploreServerHome = (props: SVGProps<SVGSVGElement>) => (
       height={40}
       x={265}
       y={70}
-      fill="#ffe6cc"
-      stroke="#d79b00"
+      fill="#FFF"
+      stroke="#000"
       pointerEvents="all"
       rx={6}
       ry={6}
@@ -355,8 +355,8 @@ const SvgExploreServerHome = (props: SVGProps<SVGSVGElement>) => (
       height={40}
       x={525}
       y={70}
-      fill="#ffe6cc"
-      stroke="#d79b00"
+      fill="#FFF"
+      stroke="#000"
       pointerEvents="all"
       rx={6}
       ry={6}
@@ -421,4 +421,4 @@ const SvgExploreServerHome = (props: SVGProps<SVGSVGElement>) => (
     </switch>
   </svg>
 );
-export default SvgExploreServerHome;
+export default SvgExploreServerNetwork;

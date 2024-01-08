@@ -11,7 +11,7 @@ const WelcomeRoot: React.FC = () => (
   <div>
     <WelcomeExplore />
 
-    <Box sx={{ marginTop: '1vh' }}>
+    <Box sx={{ marginTop: '10px' }}>
       <NavLink to ="/explore/query">
         <WelcomeQuery />
       </NavLink>
