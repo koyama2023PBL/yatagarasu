@@ -12,7 +12,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-import { rgbToRgba, unixTimeToDate } from '../../Component/Common/Util';
+import {rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { green, yellow, red } from '@mui/material/colors';
@@ -24,12 +24,12 @@ import { Status, statusColors, Thresholds } from "../../Component/Threshold/Thre
 import { prometheusSettings } from "../../Component/Redux/PrometheusSettings";
 import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
 
-export interface MemUsageRatioResponseMetric {
+export interface MemUsageResponseMetric {
   instance: string;
   job: string;
 }
 
-interface MemoryUsageRatioProps {
+interface MemoryUsageProps {
   starttime: Date;
   endtime: Date;
 }
@@ -46,7 +46,7 @@ ChartJS.register(
   Legend
 );
 
-const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, endtime }) => {
+const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
   const [statusCode, setStatusCode] = useState<number | null>(null);
   const [yAxisFixed, setYAxisFixed] = useState<boolean>(true);
@@ -57,30 +57,30 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
 
   useEffect(() => {
     const fetchChartData = async () => {
-      const query = '100*(1-(node_memory_MemAvailable_bytes/node_memory_MemTotal_bytes))'
-      const { status: status,  data: response }: {status: number, data: QueryRangeResponse<MemUsageRatioResponseMetric>}
-          = await invokeQueryRange<QueryRangeResponse<MemUsageRatioResponseMetric>>(query, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
+      const query = '(node_memory_MemTotal_bytes-node_memory_MemAvailable_bytes)/(1024*1024)'
+      const { status: status, data: response }: {status: number, data: QueryRangeResponse<MemUsageResponseMetric>}
+          = await invokeQueryRange<QueryRangeResponse<MemUsageResponseMetric>>(query, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
       setStatusCode(status);
       const labels = response.data.result.flatMap(data => data.values).map(value => unixTimeToDate(value[0]));
       const backgroundColor = response.data.result.flatMap(data => 
         data.values.map(value => {
           let status: Status;
-          if (Number(value[1]) <= Thresholds.memory_ratio.ok) {
+          if (Number(value[1]) <= Thresholds.memory.ok) {
             status = 'ok';
-          } else if (Number(value[1]) <= Thresholds.memory_ratio.watch) {
+          } else if (Number(value[1]) <= Thresholds.memory.watch) {
             status = 'watch';
           } else {
             status = 'alert';
           }
           return rgbToRgba(statusColors[status], 0.1);
         })
-        );
+      );
       const borderColor = response.data.result.flatMap(data => 
         data.values.map(value => {
           let status: Status;
-          if (Number(value[1]) <= Thresholds.memory_ratio.ok) {
+          if (Number(value[1]) <= Thresholds.memory.ok) {
             status = 'ok';
-          } else if (Number(value[1]) <= Thresholds.memory_ratio.watch) {
+          } else if (Number(value[1]) <= Thresholds.memory.watch) {
             status = 'watch';
           } else {
             status = 'alert';
@@ -90,7 +90,7 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
         );
       const length = labels.length;
       const data = response.data.result.flatMap(data => data.values).map(value => Number(value[1]));
-  
+
       setChartData({
         labels: labels,
         datasets: [
@@ -114,7 +114,7 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
     scales: {
       y: {
         min: 0,
-        max: yAxisFixed ? undefined : 100,
+        max: yAxisFixed ? undefined : 16384,
       },
       x: {
         barPercentage: 1.2,
@@ -153,7 +153,7 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
           label: function(context : any) {
             const index = context.dataIndex;
             const dataset = context.dataset.data;
-            return `${parseFloat(dataset[index]).toFixed(2) + ' %'}`;
+            return `${parseFloat(dataset[index]).toFixed(2) + ' MiB'}`;
           },
         },
       },
@@ -193,9 +193,8 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
       <CardContent>
         <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '-15px', marginTop: '-5px', width: '100%' }}>
           <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-            PostgresSQL Memory Usage-ratio (%)
+            メモリ使用量(MiB)
           </Typography>
-          {chartData && React.createElement(getIcon(), { style: { color: getIconColor() } })}
           <IconButton onClick={handlePopoverOpen} size="small" style={{ marginLeft: '-3px', marginRight: '-1px' }}>
             <HelpOutlineIcon fontSize="small" />
           </IconButton>
@@ -214,25 +213,25 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
           >
             <Typography sx={{ p: 2 , alignItems: 'center'}} style={{ width: '600px', whiteSpace: 'pre-line' }}>
               <HelpOutlineIcon fontSize="small" sx={{ marginBottom: '-5px', marginLeft: '3px', marginRight: '3px'}}/>
-              PostgresSQLが使用するメモリのうち、共有バッファを除いたプロセスメモリの使用率を表示します。
+              PostgresSQLが使用するメモリのうち、共有バッファを除いたプロセスメモリの使用量を表示します。
               クエリ実行のために使用するメモリの最大値は「ワークメモリのサイズ」×「同時接続可能数」となります。
-              この最大値がマシンのリソース内に収まるよう適切に設定してください。(TODO:定義が変わっているので要変更)
+              この最大値がマシンのリソース内に収まるよう適切に設定してください。
             </Typography>
           </Popover>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginLeft: 'auto', marginBottom: '-15px', marginTop: '-15px' }}>
             <Box sx={{ border: '1px solid ' + statusColors['ok'], borderRadius: '5px', padding: '1.5px',alignItems: 'center', marginRight: '0.5vw'}}>  
               <Typography variant="body2" sx={{ color: statusColors['ok'] }}>
-                {'≦ ' + Thresholds.memory_ratio.ok + '%'}
+                {'≦ ' + Thresholds.memory.ok + 'MiB'}
               </Typography>
             </Box>
             <Box sx={{ border: '1px solid ' + statusColors['watch'], borderRadius: '5px', padding: '1.5px',alignItems: 'center', marginRight: '0.5vw'}}>  
               <Typography variant="body2" sx={{ color: statusColors['watch'] }}>
-                {Thresholds.memory_ratio.ok + '%' +'< ~ ≦ '+ Thresholds.memory_ratio.watch + '%'}
+                {Thresholds.memory.ok + 'MiB' +'< ~ ≦ '+ Thresholds.memory.watch + 'MiB'}
               </Typography>
             </Box>
             <Box sx={{ border: '1px solid ' + statusColors['alert'], borderRadius: '5px', padding: '1.5px',alignItems: 'center', marginRight: '0.5vw'}}>  
               <Typography variant="body2" sx={{ color: statusColors['alert'] }}>
-                {'> ' + Thresholds.memory_ratio.watch + '%'}
+                {'> ' + Thresholds.memory.watch + 'MiB'}
               </Typography>
             </Box>
             
@@ -256,4 +255,4 @@ const PostgresMemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, 
   );
 };
 
-export default PostgresMemoryUsageRatio;
+export default MemoryUsage;
