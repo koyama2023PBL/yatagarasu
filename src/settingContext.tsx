@@ -10,6 +10,61 @@ interface Settings {
     postgresExporterJobName: string;
     nodeExporterDefaultInterval: string;
     postgresExporterDefaultInterval: string;
+    Thresholds: Thresholds;
+    statusColors: ColorCodeSet;
+}
+
+export interface ColorCodeSet {
+    ok: string;
+    watch: string;
+    alert: string;
+}
+
+export interface Thresholds {
+    cpu: {
+        ok: number;
+        watch: number;
+    };
+    memory_ratio: {
+        ok: number;
+        watch: number;
+    };
+    memory: {
+        ok: number;
+        watch: number;
+    };
+    disk: {
+        ok: number;
+        watch: number;
+    };
+    deadtuple: {
+        ok: number;
+        watch: number;
+    };
+    deadtuple_ratio: {
+        ok: number;
+        watch: number;
+    };
+    deadlocks: {
+        ok: number;
+        watch: number;
+    };
+    querycounts: {
+        ok: number;
+        watch: number;
+    };
+    queryruntime: {
+        ok: number;
+        watch: number;
+    };
+    avgquerytime_counts: {
+        ok: number;
+        watch: number;
+    };
+    slowquery: {
+        ok: number;
+        watch: number;
+    };
 }
 
 export const useSettings = () => {

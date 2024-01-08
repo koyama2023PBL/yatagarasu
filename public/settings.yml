@@ -4,3 +4,41 @@ nodeExporterJobName: 'node_exporter'
 postgresExporterJobName: 'postgres_exporter'
 nodeExporterDefaultInterval: '15s'
 postgresExporterDefaultInterval: '15s'
+Thresholds:
+  cpu:
+    ok: 80
+    watch: 90
+  memory_ratio:
+    ok: 40
+    watch: 70
+  memory:
+    ok: 1000
+    watch: 1500
+  disk:
+    ok: 40
+    watch: 70
+  deadtuple:
+    ok: 10
+    watch: 1500
+  deadtuple_ratio:
+    ok: 10
+    watch: 30
+  deadlocks:
+    ok: 2
+    watch: 5
+  querycounts:
+    ok: 1000
+    watch: 2000
+  queryruntime:
+    ok: 0.1
+    watch: 0.5
+  avgquerytime_counts:
+    ok: 0
+    watch: 1
+  slowquery:
+    ok: 0
+    watch: 1
+statusColors:
+  ok: '#00ff00'
+  watch: '#ffbf00'
+  alert: '#ff0000'
