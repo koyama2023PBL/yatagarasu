@@ -1,12 +1,19 @@
 pg_stat_statements:
   query: |
     SELECT
+      datname,
       queryid,
       query,
       1 AS queries
     FROM
       pg_stat_statements
+    LEFT JOIN
+      pg_database
+      ON pg_stat_statements.dbid = pg_database.oid
   metrics:
+    - datname:
+        usage: "LABEL"
+        description: "Database Name"
     - queryid:
         usage: "LABEL"
         description: "Query ID"
