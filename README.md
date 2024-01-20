@@ -6,9 +6,8 @@ PostgreSQLサーバーの監視ツール<br/>
 [こちらのデモサイト](https://www.koakjo.com/)から稼働中のYatagarasuを試すことができます.
 
 ## About
-YatagarasuはPrometheusからメトリクスを取得してビジュアライズするクライアントアプリケーションです. <br/>
-この他Grafanaとの連携も可能です.
-![image](https://github.com/koyama2023PBL/yatagarasu/assets/103348257/8bfc3ccc-b045-43ae-9316-13dd5d18ff3f)
+YatagarasuはPrometheusからメトリクスを取得してビジュアライズするクライアントアプリケーションです. この他Grafanaとの連携も可能です.<br/>
+<img src="https://github.com/koyama2023PBL/yatagarasu/assets/103348257/8bfc3ccc-b045-43ae-9316-13dd5d18ff3f" width="30%" />
 
 - [Prometheus](https://prometheus.io/)
 - [Node Exporter](https://github.com/prometheus/node_exporter)
@@ -70,9 +69,9 @@ threshold:
 - `dashboards_url`(optional): 連携するGrafanaのダッシュボードのURL. 複数設定可能です. URLには`orgId`のパラメータまで含めてください.
 
 ### threshold
-Yatagarasuで使用する各指標の閾値. モード, 指標, Warning or Errorごとに設定可能です. いずれの閾値も設定は任意(optional)です. `()`内は(`設定の単位`, `warningのデフォルト値`, `errorのデフォルト値`)です.
+Yatagarasuで使用する各指標の閾値. モード, 指標, Warning or Errorごとに設定可能です. いずれの閾値も設定は任意(optional)です.
 #### check: Checkモードで使用する閾値
-項目名 | 単位 | warinngの<br/>デフォルト値 | errorの<br/>デフォルト値 | 詳細
+項目名 | 単位 | warningの<br/>デフォルト値 | errorの<br/>デフォルト値 | 詳細
 -- | :--: | --: | --: | --
 `cpu_usage` | % | 50 | 80 | CPU使用率.
 `check_point` | 倍 | 2 | 3 | WAL契機のチェックポイント実行回数が<br/>時間契機の実行回数の何倍か
@@ -82,7 +81,7 @@ Yatagarasuで使用する各指標の閾値. モード, 指標, Warning or Error
 `transaction_count` | % | 90 | 100 | `max_connection`に対する<br/>トランザクション数の比率
 
 #### explore: Exploreモードで使用する閾値
-項目名 | 単位 | warinngの<br/>デフォルト値 | errorの<br/>デフォルト値 | 詳細
+項目名 | 単位 | warningの<br/>デフォルト値 | errorの<br/>デフォルト値 | 詳細
 -- | :--: | --: | --: | --
 `latency` | ms | 100 | 300 | レイテンシー
 `query_count_total` | 件 | 1000 | 3000 | トータルクエリ数
@@ -100,7 +99,5 @@ npm start
 ```
 
 ### PostgreSQL Server Exporterへのクエリ追加
-Yatagarasuには実際のSQLを表示する機能がありますが, デフォルトのPostgreSQL Server ExporterではSQLを取得できないため, 代わりに`queryid`が表示されます.<br/>
-実際のSQLを表示するにはPostgreSQL Server Exporterにクエリを追加してください.<br/>
-クエリの追加手順は[PostgreSQL Server Exporterのリポジトリ](https://github.com/prometheus-community/postgres_exporter?tab=readme-ov-file#adding-new-metrics)を参照してください.<br/>
-クエリを追加する際は本リポジトリの[queries.yaml](https://github.com/koyama2023PBL/yatagarasu/blob/update-readme/queries.yaml), または[queries.py](https://github.com/koyama2023PBL/yatagarasu/blob/update-readme/queries.py)を使用できます.
+Yatagarasuには実際のSQLを表示する機能がありますが, デフォルトのPostgreSQL Server ExporterではSQLを取得できないため, 代わりに`queryid`が表示されます. 実際のSQLを表示するにはPostgreSQL Server Exporterにクエリを追加してください.<br/>
+クエリの追加手順は[PostgreSQL Server Exporterのリポジトリ](https://github.com/prometheus-community/postgres_exporter?tab=readme-ov-file#adding-new-metrics)を参照してください. クエリを追加する際は本リポジトリの[queries.yaml](https://github.com/koyama2023PBL/yatagarasu/blob/update-readme/queries.yaml), または[queries.py](https://github.com/koyama2023PBL/yatagarasu/blob/update-readme/queries.py)を使用できます.
