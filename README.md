@@ -1,46 +1,106 @@
-# Getting Started with Create React App
+# Yatagarasu
+PostgreSQLサーバーの監視ツール<br/>
+サポートしているPostgreSQLのバージョン: `14`
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## デモサイト
+[こちらのデモサイト](https://www.koakjo.com/)から稼働中のYatagarasuを試すことができます.
 
-## Available Scripts
+## About
+YatagarasuはPrometheusからメトリクスを取得してビジュアライズするクライアントアプリケーションです. <br/>
+この他Grafanaとの連携も可能です.
+![image](https://github.com/koyama2023PBL/yatagarasu/assets/103348257/8bfc3ccc-b045-43ae-9316-13dd5d18ff3f)
 
-In the project directory, you can run:
+- [Prometheus](https://prometheus.io/)
+- [Node Exporter](https://github.com/prometheus/node_exporter)
+- [Process Exporter](https://github.com/ncabatoff/process-exporter)
+- [PostgreSQL Server Exporter](https://github.com/prometheus-community/postgres_exporter)
+- [Grafana](https://grafana.com/)
 
-### `npm start`
+## QuickStart
+YatagarasuのDockerイメージを公開予定です.
+```sh
+docker run \
+  -v /your/configuration-file/filepath:/yatagarasu.yaml \
+  /aiit/koyama2023PBL/yatagarasu
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Configuration File
+Yatagarasuの稼働に必要な項目を設定ファイルに記述します.<br/>
+設定項目はSettingsの項を参照してください.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Example:
+```yaml
+prometheus:
+  url: http://your.prometheus.url
+  node_exporter:
+    job_name: node_job_name
+  process_exporter:
+    job_name: process_job_name
+  postgres_exporter:
+    job_name: postgres_job_name
 
-### `npm test`
+target_db:
+  dbname: your_db_name
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+grafana:
+  dashboards_url: [
+    http://your.grafana.url/d/999999999/datasource_name?orgId=1
+  ]
 
-### `npm run build`
+threshold:
+  check:
+    cpu_usage:
+      warning: 50
+      error: 80
+  explore:
+    query_count:
+      warning: 1000
+      error: 3000
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Settings
+### prometheus
+- `url`(required): Yatagarasuで指標を取得するPrometheusのURL
+- `(node | process | postgres)_exporter.job_name`(required): 各Exporterのジョブ名. `prometheus.yml`で設定している`scrape_configs`を参照してください.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### target_db
+- `dbname`(required): 監視対象のDB名を指定してください. 単一のDBのみ設定可能です.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### grafana
+- `dashboards_url`(optional): 連携するGrafanaのダッシュボードのURL. 複数設定可能です. URLには`orgId`のパラメータまで含めてください.
 
-### `npm run eject`
+### threshold
+Yatagarasuで使用する各指標の閾値. モード, 指標, Warning or Errorごとに設定可能です. いずれの閾値も設定は任意(optional)です. `()`内は(`設定の単位`, `warningのデフォルト値`, `errorのデフォルト値`)です.
+#### check: Checkモードで使用する閾値
+項目名 | 単位 | warinngの<br/>デフォルト値 | errorの<br/>デフォルト値 | 詳細
+-- | :--: | --: | --: | --
+`cpu_usage` | % | 50 | 80 | CPU使用率.
+`check_point` | 倍 | 2 | 3 | WAL契機のチェックポイント実行回数が<br/>時間契機の実行回数の何倍か
+`cpu_io_wait` | % | 5 | 10 | CPUのIO待ち率
+`disk_busy` | % | 50 | 80 | ディスクビジー率
+`disk_usage` | % | 50 | 90 | ディスク使用率
+`transaction_count` | % | 90 | 100 | `max_connection`に対する<br/>トランザクション数の比率
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+#### explore: Exploreモードで使用する閾値
+項目名 | 単位 | warinngの<br/>デフォルト値 | errorの<br/>デフォルト値 | 詳細
+-- | :--: | --: | --: | --
+`latency` | ms | 100 | 300 | レイテンシー
+`query_count_total` | 件 | 1000 | 3000 | トータルクエリ数
+`mem_usage_vol` | MiB | 1000 | 1500 | メモリ使用量
+`mem_usage_ratio` | % | 40 | 70 | メモリ使用率
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Building and running
+### Dockerイメージを使用しない場合
+```sh
+git clone https://github.com/koyama2023PBL/yatagarasu.git
+cd yatagarasu
+vim yatagarasu.yml
+npm i
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### PostgreSQL Server Exporterへのクエリ追加
+Yatagarasuには実際のSQLを表示する機能がありますが, デフォルトのPostgreSQL Server ExporterではSQLを取得できないため, 代わりに`queryid`が表示されます.<br/>
+実際のSQLを表示するにはPostgreSQL Server Exporterにクエリを追加してください.<br/>
+クエリの追加手順は[PostgreSQL Server Exporterのリポジトリ](https://github.com/prometheus-community/postgres_exporter?tab=readme-ov-file#adding-new-metrics)を参照してください.<br/>
+クエリを追加する際は本リポジトリの[queries.yaml](https://github.com/koyama2023PBL/yatagarasu/blob/update-readme/queries.yaml), または[queries.py](https://github.com/koyama2023PBL/yatagarasu/blob/update-readme/queries.py)を使用できます.
