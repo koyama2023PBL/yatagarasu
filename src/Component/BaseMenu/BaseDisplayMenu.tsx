@@ -123,7 +123,7 @@ interface MenuItem {
 const menuItems: MenuItem[] = [
   { id: 'check', text: 'Check', icon: <SummarizeIcon style={{ fontSize: 40 }}/> },
   { id: 'explore', text: 'Explore', icon: <ExploreIcon style={{ fontSize: 40 }}/> },
-  { id: 'advance', text: 'Advance', icon: <QueryStatsIcon style={{ fontSize: 40 }}/> },
+  { id: 'advanced', text: 'Advanced', icon: <QueryStatsIcon style={{ fontSize: 40 }}/> },
 ];
 
 
