@@ -77,8 +77,10 @@ export const ReportingOverview: React.FC = () => {
                 <Typography variant="h6" sx={{marginRight: '0.3vw'}}>
                   死活
                 </Typography>
-                {/* TODO: アイコン↓を置き換え */}
-                <CircularProgress style={{ marginTop: '3vh' }}/>
+                {/* TODO: 死活監視の実装 */}
+                <Typography variant="h6" sx={{ marginTop: '4vh' }}>
+                  （準備中）
+                </Typography>
               </Box>
             </CardContent>
           </Card>
