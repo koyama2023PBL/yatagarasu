@@ -12,14 +12,15 @@ import QueryAdvanceHome from '../../Content/Postgresql/Explore/Query/QueryAdvanc
 import ExploreRoot from '../../Content/Postgresql/Explore/ExploreRoot';
 import QueryHome from '../../Content/Postgresql/Explore/Query/QueryHome';
 import OverviewHome from '../../Content/Postgresql/Explore/Overview/OverviewHome';
-import { useSelector } from 'react-redux';
-import { RootState } from '../Redux/StateStore';
+import ComponentBackend from '../../Content/Postgresql/Explore/Component/ComponentBackend';
+import ComponentHome from '../../Content/Postgresql/Explore/Component/ComponentHome';
+
 
 const renderRoutes = () => (
   <Routes>
     <Route path="" element={<HomeMenu/>} />
     <Route path="check" element={<CheckModeMenu/>}/>
-    <Route path="advance">
+    <Route path="advanced">
       <Route index element={<AdvancedModeMenu/>}/>
     </Route>
     <Route path="settings" element={<SettingsMenu/>}/>
@@ -27,10 +28,12 @@ const renderRoutes = () => (
     <Route path="explore" element={<ExploreModeMenu />}>
       <Route index element={<ExploreRoot />} />
       <Route path="server" element={<ServerRoot/>} />
-      <Route path="component" element={<ComponentRoot />} />
+      <Route path="component" />
+        <Route index={true} element={<ComponentHome />} />
+        <Route path="backend-process" element={<ComponentBackend />} />
       <Route path="query" >
         <Route index={true} element={<QueryHome />} />
-        <Route path="advance" element={<QueryAdvanceHome />} />
+        <Route path="advanced" element={<QueryAdvanceHome />} />
       </Route>
       <Route path="overview" element={<OverviewHome />} />
     </Route>
