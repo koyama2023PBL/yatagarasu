@@ -1,85 +1,21 @@
-baseURL: 'http://www.koakjo.com:9290'
-dbname: 'explorer'
-nodeExporterJobName: 'node_exporter'
-postgresExporterJobName: 'postgres_exporter'
-nodeExporterDefaultInterval: '15s'
-postgresExporterDefaultInterval: '15s'
+prometheus:
+  url: http://localhost:9090
+  node_exporter:
+    job_name: node_exporter
+  process_exporter:
+    job_name: process_exporter
+  postgres_exporter:
+    job_name: postgres_exporter
+
 target_db:
-  dbname: your_db_name
+  dbname: yatagarasu
 
 grafana:
-  dashboards_url: [http://your.grafana.url/d/999999999/datasource_name?orgId=1]
+  dashboard_urls: [
+    http://localhost:8080/d/000000039/postgresql-database?orgId=1
+  ]
 
-Thresholds:
-  check:
-    cpu:
-      ok: 80
-      watch: 90
-    memory_ratio:
-      ok: 40
-      watch: 70
-    memory:
-      ok: 1000
-      watch: 1500
-    disk:
-      ok: 40
-      watch: 70
-    deadtuple:
-      ok: 10
-      watch: 1500
-    deadtuple_ratio:
-      ok: 10
-      watch: 30
-    deadlocks:
-      ok: 2
-      watch: 5
-    querycounts:
-      ok: 1000
-      watch: 2000
-    queryruntime:
-      ok: 0.1
-      watch: 0.5
-    avgquerytime_counts:
-      ok: 0
-      watch: 1
-    slowquery:
-      ok: 0
-      watch: 1
-  explore:
-    cpu:
-      ok: 80
-      watch: 90
-    memory_ratio:
-      ok: 40
-      watch: 70
-    memory:
-      ok: 1000
-      watch: 1500
-    disk:
-      ok: 40
-      watch: 70
-    deadtuple:
-      ok: 10
-      watch: 1500
-    deadtuple_ratio:
-      ok: 10
-      watch: 30
-    deadlocks:
-      ok: 2
-      watch: 5
-    querycounts:
-      ok: 1000
-      watch: 2000
-    queryruntime:
-      ok: 0.1
-      watch: 0.5
-    avgquerytime_counts:
-      ok: 0
-      watch: 1
-    slowquery:
-      ok: 0
-      watch: 1
-statusColors:
+status_colors:
   ok: '#00ff00'
   watch: '#ffbf00'
   alert: '#ff0000'
