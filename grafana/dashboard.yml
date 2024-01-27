@@ -1,7 +1,7 @@
 apiVersion: 1
 
 providers:
-  - name: 'default'
+  - name: 'postgres'
     orgId: 1
     folder: 'Server'
     type: file
@@ -9,5 +9,16 @@ providers:
     updateIntervalSeconds: 10
     allowUiUpdates: false
     options:
-      path: /var/lib/grafana/dashboards/dashboard-default.json
+      path: /var/lib/grafana/dashboards/postgres.json
+      foldersFromFilesStructure: false
+
+  - name: 'node'
+    orgId: 1
+    folder: 'Server'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /var/lib/grafana/dashboards/node.json
       foldersFromFilesStructure: false
