@@ -87,7 +87,9 @@ export const DiskUsage: React.FC<ReportingItemProps<DiskUsageData[]>> = ({data})
               <Divider />
               <Typography variant="body2" align="left" sx={{ marginLeft: '1vw' }}>
                 <ul>
-                  <li>(オブジェクト、VACUUM、インデックスとの関連も含めて整理予定)</li>
+                  <li>ディスク使用率が50%を超えた時点から、ディスク性能が徐々に劣化する可能性があります。</li>
+                  <li>ディスクの空き容量がゼロになると動作障害が生じるリスクが高まります。</li>
+                  <li>ディスク使用率が高騰している場合、ディスク使用量の大きいテーブルから順に、自動VACUUMの実行状況などを確認してください。</li>
                 </ul>
               </Typography>
             </Box>
