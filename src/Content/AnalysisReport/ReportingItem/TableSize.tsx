@@ -1,7 +1,7 @@
 import {ReportingItemProps, tableObject, tableThemeOptions} from "../AnalysisReportUtil";
 import {TableSizeData} from "../DataProvider/TableSizeProvider";
 import React, {useEffect, useMemo, useState} from "react";
-import {MRT_Table, MRT_ColumnDef} from "material-react-table";
+import {MRT_ColumnDef, MaterialReactTable} from "material-react-table";
 import {Box, Card, CardContent, Typography} from "@mui/material";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
@@ -63,7 +63,7 @@ export const TableSize: React.FC<ReportingItemProps<TableSizeData[]>> = ({ data 
           </Typography>
           <Box sx={{marginTop: '2vh'}}>
             <ThemeProvider theme={tableTheme}>
-              <MRT_Table table={table} />
+              <MaterialReactTable table={table} />
             </ThemeProvider>
           </Box>
           <Typography variant="body2" align="left" sx={{ marginTop: '2vh' }}>

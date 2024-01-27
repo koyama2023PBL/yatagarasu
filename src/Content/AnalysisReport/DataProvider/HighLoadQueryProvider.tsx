@@ -53,14 +53,15 @@ const fetchDataFromAPI = async (starttime: Date, endtime: Date) => {
   const datname = yatagarasuSettings?.dbname;
   const callsQuery = `increase(pg_stat_statements_calls_total{datname="${datname}"}[${duringSeconds}s])>0`;
   const timeQuery  = `increase(pg_stat_statements_seconds_total{datname="${datname}"}[${duringSeconds}s])>0`;
+  const sqlQuery   = `pg_stat_statements_queries{datname="${datname}"}`;
 
   const { status: statusCalls, data: callsData } = await invokeQuery<QueryResponse<StatStatementsMetrics>>(callsQuery, endtime);
   const { status: statusTime, data: timeData }  = await invokeQuery<QueryResponse<StatStatementsMetrics>>(timeQuery, endtime);
-  const { status: statusSql, data: sqlData } = await invokeQuery<QueryResponse<SQLMetrics>>('pg_stat_statements_queries', endtime);
+  const { status: statusSql, data: sqlData } = await invokeQuery<QueryResponse<SQLMetrics>>(sqlQuery, endtime);
 
   const callsObj: { [key: string]: number } = {}
-  const timeObj: { [key: string]: number } = {}
-  const sqlObj: { [key: string]: string } = {}
+  const timeObj:  { [key: string]: number } = {}
+  const sqlObj:   { [key: string]: string } = {}
   callsData.data.result.forEach((item: QueryResult<StatStatementsMetrics>) => callsObj[item.metric.queryid] = Number(item.value[1]));
   timeData.data.result.forEach((item: QueryResult<StatStatementsMetrics>) => timeObj[item.metric.queryid] = Number(item.value[1]));
   sqlData.data.result.forEach((item: QueryResult<SQLMetrics>) => sqlObj[item.metric.queryid] = item.metric.query);
@@ -71,7 +72,7 @@ const fetchDataFromAPI = async (starttime: Date, endtime: Date) => {
     if (mean_time < 0.1) return;
     response.push({
       queryid: Number(queryid),
-      query: sqlObj[queryid],
+      query: sqlObj[queryid] ?? queryid,
       calls: Math.round(callsObj[queryid]),
       total_time: Math.round(timeObj[queryid] * 100) / 100,
       mean_time: Math.round(timeObj[queryid] / callsObj[queryid] * 1000) / 1000,

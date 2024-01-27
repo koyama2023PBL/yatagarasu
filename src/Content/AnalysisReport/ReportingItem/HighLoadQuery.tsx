@@ -1,11 +1,10 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {getItemTitleSx, ReportingItemProps, StatusType, tableObject, tableThemeOptions} from "../AnalysisReportUtil";
 import {HighLoadQueryData, useHighLoadQuery} from "../DataProvider/HighLoadQueryProvider";
-import {MRT_ColumnDef, MRT_Table} from "material-react-table";
+import {MaterialReactTable, MRT_ColumnDef} from "material-react-table";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import Divider from "@mui/material/Divider";
-import {getLongTransactionStatus} from "./LongTransaction";
 
 /**
  * 高負荷クエリのステータスを取得する
@@ -27,7 +26,7 @@ export const HighLoadQuery: React.FC<ReportingItemProps<HighLoadQueryData[]>> = 
   const columns = useMemo<MRT_ColumnDef<HighLoadQueryData>[]>(() => [
     {
       // @ts-ignore
-      header: <div><br/>クエリ<br/></div>,
+      header: <div>クエリ</div>,
       accessorKey: 'query',
       muiTableHeadCellProps: {
         align: 'center',
@@ -35,7 +34,7 @@ export const HighLoadQuery: React.FC<ReportingItemProps<HighLoadQueryData[]>> = 
     },
     {
       // @ts-ignore
-      header: <div><br/>実行回数<br/></div>,
+      header: <div>実行回数</div>,
       accessorKey: 'calls',
       size: 50,
       muiTableHeadCellProps: {
@@ -47,7 +46,7 @@ export const HighLoadQuery: React.FC<ReportingItemProps<HighLoadQueryData[]>> = 
     },
     {
       // @ts-ignore
-      header: <div>合計<br />実行<br />秒数</div>,
+      header: <div>実行秒数<br />（合計）</div>,
       accessorKey: 'total_time',
       size: 20,
       muiTableHeadCellProps: {
@@ -59,7 +58,7 @@ export const HighLoadQuery: React.FC<ReportingItemProps<HighLoadQueryData[]>> = 
     },
     {
       // @ts-ignore
-      header: <div>平均<br />実行<br />秒数</div>,
+      header: <div>実行秒数<br />（平均）</div>,
       accessorKey: 'mean_time',
       size: 20,
       muiTableHeadCellProps: {
@@ -108,7 +107,7 @@ export const HighLoadQuery: React.FC<ReportingItemProps<HighLoadQueryData[]>> = 
             <div style={{ width: '100%' }}>
               { tableData ?
                 <ThemeProvider theme={tableTheme}>
-                  <MRT_Table table={table} />
+                  <MaterialReactTable table={table} />
                 </ThemeProvider> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
             </div>
           </Box>

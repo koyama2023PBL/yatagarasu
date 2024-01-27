@@ -89,7 +89,6 @@ export const DiskBusyRatio: React.FC<ReportingItemProps<DiskBusyRatioData[]>> = 
                 <ul>
                   <li>ディスクビジー率が50%を頻繁に超えている場合、ディスクがボトルネックとなっている可能性が高いです。</li>
                   <li>問題となっているのはどのディスクなのか、書き込み／読み込みのどちらで問題が発生しているのかを確認してください。</li>
-                  <li>より詳細な確認はこちらから。</li>
                 </ul>
               </Typography>
             </Box>

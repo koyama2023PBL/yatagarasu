@@ -33,32 +33,32 @@ const ReportingInfo: React.FC = () => {
             診断情報
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%' , marginTop: '1vh'}}>
-            <Typography variant="body1" sx={{ marginLeft: '1vw', width: '6vw' }}>
-              作成日時:
+            <Typography variant="body1" sx={{ marginLeft: '1vw', width: '10vw' }}>
+              作成日時
             </Typography>
             <Typography variant="body1" sx={{ marginLeft: '1vw' }}>
               {reportingInfoItems.createdAt.toLocaleString()}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%'}}>
-            <Typography variant="body1" sx={{ marginLeft: '1vw', width: '6vw' }}>
-              診断開始日時:
+            <Typography variant="body1" sx={{ marginLeft: '1vw', width: '10vw' }}>
+              診断開始日時
             </Typography>
             <Typography variant="body1" sx={{ marginLeft: '1vw' }}>
               {reportingInfoItems.from.toLocaleString()}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%'}}>
-            <Typography variant="body1" sx={{ marginLeft: '1vw', width: '6vw' }}>
-              診断終了日時:
+            <Typography variant="body1" sx={{ marginLeft: '1vw', width: '10vw' }}>
+              診断終了日時
             </Typography>
             <Typography variant="body1" sx={{ marginLeft: '1vw' }}>
               {reportingInfoItems.to.toLocaleString()}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%'}}>
-            <Typography variant="body1" sx={{ marginLeft: '1vw', width: '6vw' }}>
-              診断期間:
+            <Typography variant="body1" sx={{ marginLeft: '1vw', width: '10vw' }}>
+              診断期間
             </Typography>
             <Typography variant="body1" sx={{ marginLeft: '1vw' }}>
               {reportingInfoItems.period.toLocaleString()}

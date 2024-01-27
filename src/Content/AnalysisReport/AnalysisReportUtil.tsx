@@ -83,6 +83,12 @@ export function tableObject<T extends MRT_RowData>(columns: MRT_ColumnDef<T>[], 
   return useMaterialReactTable<T>({
     columns: columns,
     data: data,
+    initialState: {
+      pagination: {
+        pageSize: 5,
+        pageIndex: 0,
+      },
+    },
     enableColumnActions: false,
     enableColumnFilters: false,
     enableSorting: false,

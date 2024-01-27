@@ -1,7 +1,7 @@
 import {getItemTitleSx, ReportingItemProps, StatusType, tableObject, tableThemeOptions} from "../AnalysisReportUtil";
 import {LongTransactionData, useLongTransaction} from "../DataProvider/LongTransactionProvider";
 import React, {useEffect, useMemo, useState} from "react";
-import {MRT_ColumnDef, MRT_Table} from "material-react-table";
+import {MaterialReactTable, MRT_ColumnDef} from "material-react-table";
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import Divider from "@mui/material/Divider";
@@ -98,7 +98,7 @@ export const LongTransaction: React.FC<ReportingItemProps<LongTransactionData[]>
               <div style={{ width: '100%' }}>
                 { tableData ?
                   <ThemeProvider theme={tableTheme}>
-                    <MRT_Table table={table} style={{ width: '500px' }}/>
+                    <MaterialReactTable table={table} />
                   </ThemeProvider> : <CircularProgress sx={{ marginTop: '7vh' }}/> }
               </div>
             </Box>
