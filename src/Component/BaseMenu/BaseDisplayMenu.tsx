@@ -153,16 +153,15 @@ export default function BaseDisplayMenu() {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{marginRight: 1, ...(open && { display: 'none' })}}
-          >
-            <MenuIcon />
-          </IconButton>
-          
+          {/*<IconButton*/}
+          {/*  color="inherit"*/}
+          {/*  aria-label="open drawer"*/}
+          {/*  onClick={handleDrawerOpen}*/}
+          {/*  edge="start"*/}
+          {/*  sx={{marginRight: 1, ...(open && { display: 'none' })}}*/}
+          {/*>*/}
+          {/*  <MenuIcon />*/}
+          {/*</IconButton>*/}
           <Typography variant="h6" noWrap component="a" href="/"
             sx={{
               mr: 2,
@@ -195,7 +194,7 @@ export default function BaseDisplayMenu() {
         <Divider />
         <List>
         {menuItems.map((item) => (
-        <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
+        <ListItem key={item.id} disablePadding sx={{ display: 'block', marginBottom: '1vh' }}>
           <Link to={`/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Tooltip title={item.text} placement="right" arrow>
               <ListItemButton
@@ -206,6 +205,7 @@ export default function BaseDisplayMenu() {
                   backgroundColor: isSelected(item.id) ? '#DDE1E1' : 'inherit',
                 }}
               >
+              <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
@@ -216,7 +216,8 @@ export default function BaseDisplayMenu() {
                 >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemTextIcon primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: '0.75rem' }} sx={{ mt: 0.5 }}/>
+              </Box>
               </ListItemButton>
             </Tooltip>
           </Link>
