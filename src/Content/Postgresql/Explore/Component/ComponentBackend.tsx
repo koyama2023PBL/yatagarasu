@@ -6,7 +6,6 @@ import { RootState } from '../../../../Component/Redux/StateStore';
 import BackendProcess from './Backend/BackendProcess';
 import BackendMemory from './Backend/BackendMemory';
 import ListenerProcess from './Backend/ListenerProcess';
-import { Outlet } from 'react-router-dom';
 
 const steps = [
   { step: "backend-process", description: "1. バックエンドプロセス" },
