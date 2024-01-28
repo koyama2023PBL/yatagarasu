@@ -185,15 +185,14 @@ export default function BaseDisplayMenu() {
         {menuItems.map((item) => (
         <ListItem key={item.id} disablePadding sx={{ display: 'block', marginBottom: '1vh' }}>
           <Link to={`/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <Tooltip title={item.text} placement="right" arrow>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 3,
-                  backgroundColor: isSelected(item.id) ? '#DDE1E1' : 'inherit',
-                }}
-              >
+            <ListItemButton
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 3,
+                backgroundColor: isSelected(item.id) ? '#DDE1E1' : 'inherit',
+              }}
+            >
               <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <ListItemIcon
                   sx={{
@@ -207,8 +206,7 @@ export default function BaseDisplayMenu() {
                 </ListItemIcon>
                 <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: '0.75rem' }} sx={{ mt: 0.5 }}/>
               </Box>
-              </ListItemButton>
-            </Tooltip>
+            </ListItemButton>
           </Link>
         </ListItem>
       ))}
