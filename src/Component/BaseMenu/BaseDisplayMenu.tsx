@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme, Theme, CSSObject, SxProps } from '@mui/material/styles';
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -12,37 +12,26 @@ import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemTextIcon from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
-import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  Home as HomeIcon,
   Summarize as SummarizeIcon,
-  Dashboard as DashboardIcon,
   Explore as ExploreIcon,
-  Troubleshoot as TroubleshootIcon,
   QueryStats as QueryStatsIcon,
-  DashboardCustomize as DashboardCustomizeIcon,
-  DeveloperBoard as DeveloperBoardIcon,
   Settings as SettingsIcon,
-  Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
 } from '@mui/icons-material';
 
 
-import ExploreModeMenu from '../Layers/ExploreModeMenu';
 import icon from '../../img/icon.png';
 
-import { CheckModeMenu } from "../Layers/CheckModeMenu";
 import { setSelected } from '../Redux/MenuState';
 import { RootState } from '../Redux/StateStore';
-import HomeMenu from '../Layers/HomeMenu';
-import {AdvancedModeMenu} from "../Layers/AdvancedModeMenu";
-import SettingsMenu from '../Layers/SettingsMenu';
 import renderRoutes from '../Router/YatagarasuRouter';
+import {ListItemText} from "@mui/material";
 
 const drawerWidth = 200;
 

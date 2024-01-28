@@ -6,8 +6,6 @@ import { CheckModeMenu } from '../Layers/CheckModeMenu';
 import { AdvancedModeMenu } from '../Layers/AdvancedModeMenu';
 import SettingsMenu from '../Layers/SettingsMenu';
 import ServerRoot from '../../Content/Postgresql/Explore/Server/ServerRoot';
-import ComponentRoot from '../../Content/Postgresql/Explore/Component/ComponentRoot';
-import QueryRoot from '../../Content/Postgresql/Explore/Query/QueryRoot';
 import QueryAdvanceHome from '../../Content/Postgresql/Explore/Query/QueryAdvanceHome';
 import ExploreRoot from '../../Content/Postgresql/Explore/ExploreRoot';
 import QueryHome from '../../Content/Postgresql/Explore/Query/QueryHome';
