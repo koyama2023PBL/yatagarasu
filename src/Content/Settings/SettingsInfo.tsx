@@ -18,7 +18,7 @@ const SettingsInfo: React.FC = () => {
         console.error('YAML ファイルの読み込み中にエラーが発生しました', error);
       }
     };
-    fetchSettings();
+    void fetchSettings();
   }, []);
 
   return (

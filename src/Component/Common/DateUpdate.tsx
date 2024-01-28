@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setFromDate, setToDate } from '../Redux/DateState';
-import { parseDateString, getDate} from './Util';
+import { parseDateString } from './Util';
 import { RootState } from '../Redux/StateStore';
 import { format } from 'date-fns';
 

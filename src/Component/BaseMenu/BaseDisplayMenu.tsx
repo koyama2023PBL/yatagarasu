@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme, Theme, CSSObject, SxProps } from '@mui/material/styles';
+import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -12,37 +12,26 @@ import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemTextIcon from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
-import { Link, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  Home as HomeIcon,
   Summarize as SummarizeIcon,
-  Dashboard as DashboardIcon,
   Explore as ExploreIcon,
-  Troubleshoot as TroubleshootIcon,
   QueryStats as QueryStatsIcon,
-  DashboardCustomize as DashboardCustomizeIcon,
-  DeveloperBoard as DeveloperBoardIcon,
   Settings as SettingsIcon,
-  Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
 } from '@mui/icons-material';
 
 
-import ExploreModeMenu from '../Layers/ExploreModeMenu';
 import icon from '../../img/icon.png';
 
-import { CheckModeMenu } from "../Layers/CheckModeMenu";
 import { setSelected } from '../Redux/MenuState';
 import { RootState } from '../Redux/StateStore';
-import HomeMenu from '../Layers/HomeMenu';
-import {AdvancedModeMenu} from "../Layers/AdvancedModeMenu";
-import SettingsMenu from '../Layers/SettingsMenu';
 import renderRoutes from '../Router/YatagarasuRouter';
+import {ListItemText} from "@mui/material";
 
 const drawerWidth = 200;
 
@@ -153,16 +142,15 @@ export default function BaseDisplayMenu() {
       <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{marginRight: 1, ...(open && { display: 'none' })}}
-          >
-            <MenuIcon />
-          </IconButton>
-          
+          {/*<IconButton*/}
+          {/*  color="inherit"*/}
+          {/*  aria-label="open drawer"*/}
+          {/*  onClick={handleDrawerOpen}*/}
+          {/*  edge="start"*/}
+          {/*  sx={{marginRight: 1, ...(open && { display: 'none' })}}*/}
+          {/*>*/}
+          {/*  <MenuIcon />*/}
+          {/*</IconButton>*/}
           <Typography variant="h6" noWrap component="a" href="/"
             sx={{
               mr: 2,
@@ -195,7 +183,7 @@ export default function BaseDisplayMenu() {
         <Divider />
         <List>
         {menuItems.map((item) => (
-        <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
+        <ListItem key={item.id} disablePadding sx={{ display: 'block', marginBottom: '1vh' }}>
           <Link to={`/${item.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <Tooltip title={item.text} placement="right" arrow>
               <ListItemButton
@@ -206,6 +194,7 @@ export default function BaseDisplayMenu() {
                   backgroundColor: isSelected(item.id) ? '#DDE1E1' : 'inherit',
                 }}
               >
+              <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <ListItemIcon
                   sx={{
                     minWidth: 0,
@@ -216,7 +205,8 @@ export default function BaseDisplayMenu() {
                 >
                   {item.icon}
                 </ListItemIcon>
-                <ListItemTextIcon primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText primary={item.text} primaryTypographyProps={{ fontSize: '0.75rem' }} sx={{ mt: 0.5 }}/>
+              </Box>
               </ListItemButton>
             </Tooltip>
           </Link>
