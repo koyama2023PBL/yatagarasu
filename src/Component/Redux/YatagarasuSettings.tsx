@@ -13,7 +13,7 @@ const yatagarasuSettings: YatagarasuSettings = {
   dbname: 'capf',
   nodeExporterJobName: 'node_exporter',
   postgresExporterJobName: 'postgres_exporter',
-  grafanaDashboardUrl: 'http://www.koakjo.com:9294/d/000000039/postgresql-database',
+  grafanaDashboardUrl: 'https://www.koakjo.com:19300/d/000000039/postgresql-database',
   grafanaDashboardContainerUrl: 'http://localhost:8080/d/000000039/postgresql-database',
   grafanaDashboardOrgId: 1,
 };
