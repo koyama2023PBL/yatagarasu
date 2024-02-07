@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
 import {CheckpointProgressData, useCheckpointProgress} from "../DataProvider/CheckpointProgressProvider";
-import {Chart, Filler} from "chart.js";
+import {Chart, registerables} from "chart.js";
 import {getItemTitleSx, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
-Chart.register(Filler);
+Chart.register(...registerables);
 
 /**
  * チェックポイント実行状況のステータスを取得する

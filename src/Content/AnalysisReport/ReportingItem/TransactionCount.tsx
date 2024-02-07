@@ -5,6 +5,9 @@ import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/materia
 import {Bar} from "react-chartjs-2";
 import Divider from "@mui/material/Divider";
 import {getDiskUsageStatus} from "./DiskUsage";
+import {Chart, registerables} from "chart.js";
+
+Chart.register(...registerables);
 
 /**
  * トランザクション数のステータスを取得する
