@@ -10,7 +10,7 @@ interface YatagarasuSettings {
 }
 
 const yatagarasuSettings: YatagarasuSettings = {
-  dbname: 'capf',
+  dbname: 'explorer',
   nodeExporterJobName: 'node_exporter',
   postgresExporterJobName: 'postgres_exporter',
   grafanaDashboardUrl: 'https://www.koakjo.com:19300/d/000000039/postgresql-database',

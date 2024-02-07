@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import instance from '../../Axios/AxiosInstance';
-import {getDate, rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
+import {rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import {Box, Card, CardContent, Checkbox, CircularProgress, IconButton, Popover, Typography} from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import { green, yellow, red } from '@mui/material/colors';
-import {
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS, Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip
-} from "chart.js";
+import {Chart, registerables} from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 import yatagarasuSettings from "../../Component/Redux/YatagarasuSettings";
 import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
@@ -37,17 +27,7 @@ interface SlowQueryApiResponseMetric {
   job: string;
 }
 
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    BarElement,
-    Tooltip,
-    annotationPlugin,
-    Title,
-    Legend
-);
+Chart.register(annotationPlugin, ...registerables);
 
 const SlowQuery: React.FC<SlowQueryProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);

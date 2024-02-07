@@ -1,25 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Legend,
-  BarElement,
-  Tooltip,
-} from "chart.js";
+import {Chart, registerables} from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 import {rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
 import { Box, Card, CardContent, Checkbox,CircularProgress,IconButton,Popover,Typography } from "@mui/material";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { green, yellow, red } from '@mui/material/colors';
 import annotationPlugin from 'chartjs-plugin-annotation';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import ErrorIcon from '@mui/icons-material/Error';
-import WarningIcon from '@mui/icons-material/Warning';
 import { Status, statusColors, Thresholds } from "../../Component/Threshold/Threshold";
 import { prometheusSettings } from "../../Component/Redux/PrometheusSettings";
 import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
@@ -34,21 +20,11 @@ interface MemoryUsageProps {
   endtime: Date;
 }
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Tooltip,
-  annotationPlugin,
-  Title,
-  Legend
-);
+Chart.register(annotationPlugin, ...registerables);
 
 const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
-  const [statusCode, setStatusCode] = useState<number | null>(null);
+  const [, setStatusCode] = useState<number | null>(null);
   const [yAxisFixed, setYAxisFixed] = useState<boolean>(true);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const handlePopoverOpen = (event: React.MouseEvent<HTMLButtonElement>) => {setAnchorEl(event.currentTarget)};
@@ -159,34 +135,6 @@ const MemoryUsage: React.FC<MemoryUsageProps> = ({ starttime, endtime }) => {
       },
     }
   });
-  
-  const getIcon = () => {
-    if (statusCode === null) {
-      return WarningIcon; 
-    }
-
-    if (statusCode >= 500) {
-      return ErrorIcon;
-    } else if (statusCode >= 400 || chartData.length === 0) {
-      return WarningIcon;
-    } else {
-      return CheckCircleOutlineIcon;
-    }
-  }
-
-  const getIconColor = () => {
-    if (statusCode === null) {
-      return; 
-    }
-  
-    if (statusCode >= 500) {
-      return red[500];
-    } else if (statusCode >= 400 || chartData.length === 0) {
-      return yellow[700];
-    } else {
-      return green[500];
-    }
-  }
 
   return (
     <Card sx={{ width: '100%' }}>

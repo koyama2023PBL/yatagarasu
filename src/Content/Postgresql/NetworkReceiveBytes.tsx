@@ -1,14 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {
-  Chart,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Legend,
-  Tooltip,
-} from "chart.js";
+import {Chart, registerables} from "chart.js";
 import {Bar} from 'react-chartjs-2';
 import {Box, Card, CardContent, Checkbox, CircularProgress, IconButton, Popover, Typography} from "@mui/material";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
@@ -19,9 +10,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import WarningIcon from '@mui/icons-material/Warning';
 import {prometheusSettings} from "../../Component/Redux/PrometheusSettings";
 import {invokeQueryRange, QueryRangeResponse} from "../../Component/Common/PrometheusClient";
-import {getRandomColor, rgbToRgba, unixTimeToDate} from "../../Component/Common/Util";
-import {Status, statusColors, Thresholds} from "../../Component/Threshold/Threshold";
-
+import {getRandomColor, unixTimeToDate} from "../../Component/Common/Util";
 
 interface ReceiveBytesProps {
   starttime: Date;
@@ -34,16 +23,7 @@ interface ReceiveBytesApiResponseMetric {
   job: string;
 }
 
-Chart.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  annotationPlugin,
-  Title,
-  Legend,
-);
+Chart.register(annotationPlugin, ...registerables);
 
 const NetworkReceiveBytes: React.FC<ReceiveBytesProps> = ({starttime, endtime}) => {
   const [chartData, setChartData] = useState<any | null>(null);
@@ -82,7 +62,7 @@ const NetworkReceiveBytes: React.FC<ReceiveBytesProps> = ({starttime, endtime}) 
       });
       setChartData({ labels, datasets });
     };
-    fetchDiskReadData();
+    void fetchDiskReadData();
   }, [starttime, endtime]);
 
   const options = () => ({

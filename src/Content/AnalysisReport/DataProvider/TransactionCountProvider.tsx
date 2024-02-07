@@ -45,6 +45,11 @@ const fetchDataFromAPI = async (starttime: Date, endtime: Date) => {
   const { status: statusCount, data: resCount } = await invokeQueryRange<QueryRangeResponse<any>>(queryCount, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
 
   const maxConnections = Number(resMax.data.result[0].value[1]);
+
+  if (resCount.data.result.length === 0) {
+    return {status: Math.max(statusMax, statusCount), data: []};
+  }
+
   const data: TransactionCountData[] = resCount.data.result[0].values.map(([timestamp, value]) => {
     return {
       datetime: unixTimeToDate(timestamp).toLocaleString(),

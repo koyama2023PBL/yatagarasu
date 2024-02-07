@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Legend,
-  BarElement,
-  Tooltip,
-} from "chart.js";
+import {Chart, registerables} from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 import { rgbToRgba, unixTimeToDate } from '../../Component/Common/Util';
@@ -34,17 +24,7 @@ interface MemoryUsageRatioProps {
   endtime: Date;
 }
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Tooltip,
-  annotationPlugin,
-  Title,
-  Legend
-);
+Chart.register(annotationPlugin, ...registerables);
 
 const MemoryUsageRatio: React.FC<MemoryUsageRatioProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
