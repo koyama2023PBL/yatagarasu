@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
-import { Chart, Filler } from 'chart.js';
+import {Chart, registerables} from 'chart.js';
 import {Bar} from "react-chartjs-2";
 import {MemorySwapIOData, useMemorySwapIO} from "../DataProvider/MemorySwapIOProvider";
 import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
-Chart.register(Filler);
+Chart.register(...registerables);
 
 /**
  * メモリスワップI/Oのステータスを取得する

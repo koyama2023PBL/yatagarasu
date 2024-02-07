@@ -1,4 +1,4 @@
-import {Chart, Filler} from "chart.js";
+import {Chart, registerables} from "chart.js";
 import {DiskUsageData, useDiskUsage} from "../DataProvider/DiskUsageProvider";
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
@@ -6,7 +6,7 @@ import {Bar} from "react-chartjs-2";
 import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
-Chart.register(Filler);
+Chart.register(...registerables);
 
 /**
  * ディスク使用率のステータスを取得する

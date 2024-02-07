@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {Box, Card, CardContent, CircularProgress, Typography} from "@mui/material";
-import {Chart, Filler} from "chart.js";
+import {Chart, registerables} from "chart.js";
 import {CPUUsageRatioData, useCPUUsageRatio} from "../DataProvider/CPUUsageRatioProvider";
 import {Bar} from "react-chartjs-2";
 import {getItemTitleSx, lineChartOptions, ReportingItemProps, StatusType} from "../AnalysisReportUtil";
 import Divider from "@mui/material/Divider";
 
-Chart.register(Filler);
+Chart.register(...registerables);
 
 /**
  * CPU使用率のステータスを取得する
