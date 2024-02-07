@@ -1,15 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from "chart.js";
+import {Chart, registerables} from 'chart.js';
 import {Bar} from "react-chartjs-2";
 
 import {rgbToRgba, unixTimeToDate} from '../../Component/Common/Util';
@@ -38,17 +28,7 @@ interface QueryCountsApiResponseMetric {
   job: string;
 }
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  Tooltip,
-  annotationPlugin,
-  Title,
-  Legend
-);
+Chart.register(annotationPlugin, ...registerables);
 
 const QueryCounts: React.FC<QueryCountsProps> = ({ starttime, endtime }) => {
   const [chartData, setChartData] = useState<any | null>(null);
