@@ -12,8 +12,8 @@ target_db:
 
 grafana:
   dashboard_urls: [
-    http://localhost:8080/d/000000039/postgresql-database?orgId=1,
-    http://localhost:8080/d/rYdddlPWk/node-exporter-full?orgId=1
+    https://www.koakjo.com:19300/d/000000039/postgresql-database?orgId=1,
+    https://www.koakjo.com:19300/d/rYdddlPWk/node-exporter-full?orgId=1
   ]
 
 status_colors:
