@@ -1,44 +1,44 @@
 import * as React from 'react';
 import WelcomeExplore from './WelcomeExplore';
-import { Link, NavLink, Outlet, Route, Routes } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import WelcomeQuery from './WelcomeQuery';
 import WelcomeComponent from './WelcomeComponent';
 import WelcomeServer from './WelcomeServer';
-import { Box } from '@mui/material';
 import WelcomeOverview from './WelcomeOverview';
+import { Grid } from '@mui/material';
 
 const WelcomeRoot: React.FC = () => (
   <div>
     <WelcomeExplore />
 
-    <Box sx={{ marginTop: '10px' }}>
-      <NavLink to ="/explore/query">
-        <WelcomeQuery />
-      </NavLink>
-    </Box>
+    <Grid container spacing={1} sx={{ marginTop: '5px' }}>
+      <Grid item xs={12} md={6}>
+        <NavLink to="/explore/query">
+          <WelcomeQuery />
+        </NavLink>
+      </Grid>
 
-    <Box sx={{ marginTop: '10px' }}>
-      <NavLink to="/explore/component">
-        <WelcomeComponent />
-      </NavLink>
-    </Box>
+      <Grid item xs={12} md={6}>
+        {/*<NavLink to="/explore/component">*/}
+          <WelcomeComponent />
+        {/*</NavLink>*/}
+      </Grid>
 
-    <Box sx={{ marginTop: '10px' }}>
-      <NavLink to="/explore/server">
-        <WelcomeServer />
-      </NavLink>
-    </Box>
+      <Grid item xs={12} md={6}>
+        <NavLink to="/explore/server">
+          <WelcomeServer />
+        </NavLink>
+      </Grid>
 
-    <Box sx={{ marginTop: '1vh' }}>
-      <NavLink to="/explore/overview">
-        <WelcomeOverview />
-      </NavLink>
-    </Box>
+      <Grid item xs={12} md={6}>
+        <NavLink to="/explore/overview">
+          <WelcomeOverview />
+        </NavLink>
+      </Grid>
+    </Grid>
 
-    <Outlet/>
+    <Outlet />
   </div>
-)
+);
 
 export default WelcomeRoot;
-
-
