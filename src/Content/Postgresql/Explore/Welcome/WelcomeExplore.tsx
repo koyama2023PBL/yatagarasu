@@ -6,28 +6,27 @@ import { useState } from 'react';
 import { useTheme } from '@mui/system';
 import { useSyncQueryString } from '../../../../Component/Common/DateUpdate';
 import SvgExploreWelcome from '../../SVGs/ReactComponent/Welcome/ExploreWelcome';
+import { ReportingOverview } from '../../../AnalysisReport/ReportingOverview';
 
 
 const WelcomeExplore: React.FC = () => {
   
   return (
-    <Card sx={{ height: '50vh' }}>
-    <CardContent>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Typography variant="body1" align="left" sx={{ fontWeight: 'bold' }}>
-          ようこそ！
-        </Typography>
-      </Box>
-      <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', p: '1.5', marginTop: '1vh', marginLeft: '2vw'}}>
-        <Box sx={{  display: 'left' }}>
-          <SvgExploreWelcome style={{ width: '80%', height: 'auto' }} />
+    <Card sx={{ height: '15vh' }}>
+      <CardContent>
+        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+          <Typography variant="h6" align="left" sx={{ fontWeight: 'bold', marginBottom: '1vh' }}>
+            ようこそ！
+          </Typography>
+          <Typography variant="body1" sx={{marginLight:'5vw'}}>
+            「クエリ」「サーバー」「PostgreSQLコンポーネント」「全体アーキテクチャ概要」を表示します。
+          </Typography>
+          <Typography variant="body1">
+            Checkモードでの診断結果を元に確認をすると良いヒントがあるかもしれません。 ※リリースに向けて全般的にブラッシュアップ中
+          </Typography>
         </Box>
-        <Box sx={{  display: 'left' }}>
-          <SvgExploreWelcome style={{ width: '80%', height: 'auto' }} />
-        </Box>
-      </Box>
-    </CardContent>
-  </Card>
+      </CardContent>
+    </Card>
   );
 }
 

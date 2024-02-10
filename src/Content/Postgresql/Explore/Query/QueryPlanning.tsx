@@ -61,7 +61,16 @@ const QueryPlanning: React.FC = () => {
                   こういった方法や経路などから、"プランナ"と呼ばれるモジュールにて最適と考えられる実行計画が決められます。
                 </Typography>
                 <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
-                  なお、実行計画自体は"オプティマイザ"と呼ばれるモジュールが作成します。
+                  実行計画自体は"オプティマイザ"と呼ばれるモジュールが作成します。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  実行計画はさまざまな手法で見れますが、"EXPLAIN ANALYZE (実行したいクエリ);"で見ることができます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  なお、"EXPLAIN ANALYZE"を単純に実行すると更新処理含めて実際にクエリが実行されてしまうため、
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  トランザクションを張って調査後にロールバックする手法をお勧めします。
                 </Typography>
               </CardContent>
             </Card>

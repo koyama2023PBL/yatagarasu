@@ -49,6 +49,15 @@ const QueryExecution: React.FC = () => {
                 <Typography fontSize="10pt" sx={{ marginLeft: '20pt', marginBottom: '6px' }}>
                   3. 結果セットの生成： 最終的には、クエリによって要求されたデータが集められ、アプリケーションに返されるためのレスポンスが作成されます。
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  実行されたクエリには一つ一つIDが振られ、PostgreSQLによって管理されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  "SELECT QUERY FROM PG_STAT_STATEMENTS WHERE QUERY_ID = 'クエリID';"でどのクエリかを確認することができます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  なお、同じクエリが何度も発行される場合は同じQUERY_IDの扱いとなり、実行回数・統計情報などが管理されます。
+                </Typography>
               </CardContent>
             </Card>
           </Box>
