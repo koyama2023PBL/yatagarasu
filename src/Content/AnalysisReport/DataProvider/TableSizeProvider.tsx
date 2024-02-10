@@ -60,7 +60,7 @@ const fetchDataFromApi = async (endtime: Date) => {
 
   // データの整形
   const sizeObj = sizeData.data.result.reduce((acc: { [key: string]: { table: string, schema: string; size: number } }, item) => {
-    acc[item.metric.relname] = { table: item.metric.relname, schema: item.metric.schemaname, size: Number(item.value[1]) };
+    acc[item.metric.relname] = { table: item.metric.relname, schema: item.metric.schemaname, size: Math.round(Number(item.value[1])) };
     return acc;
   }, {});
 
