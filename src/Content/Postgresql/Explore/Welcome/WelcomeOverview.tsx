@@ -21,7 +21,7 @@ const WelcomeOverview: React.FC = () => {
           <Box sx={{  display: 'left' }}>
             <Business style={{ width: '50%', height: 'auto' }} />
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '3vh'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '1vh'}}>
             <Typography variant="body1" >
               PostgreSQL全体のアーキテクチャ概要図を示します。
             </Typography>
