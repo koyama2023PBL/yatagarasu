@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { Card, CardContent, CircularProgress, IconButton, Popover, Typography } from '@mui/material';
-import Querystats from '@mui/icons-material/Querystats';
+import QueryStats from '@mui/icons-material/QueryStats';
 import { useState } from 'react';
 import { useTheme } from '@mui/system';
 import SvgExploreQueryRoot from '../../SVGs/ReactComponent/Queries/ExploreQueryRoot';
@@ -22,7 +22,7 @@ const WelcomeQuery: React.FC = () => {
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'row',  p: '1.5', marginTop: '1vh', marginLeft: '2vw'}}>
           <Box sx={{  display: 'left' }}>
-            <Querystats sx={{ width: '50%', height: 'auto', color: theme.palette.primary.main }} />
+            <QueryStats sx={{ width: '50%', height: 'auto', color: theme.palette.primary.main }} />
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '2vh'}}>
             <Typography variant="body1" >
