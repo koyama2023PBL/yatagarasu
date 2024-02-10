@@ -25,6 +25,19 @@ export function setReportingInfoItems(createdAt: Date, from: Date, to: Date, per
 }
 
 const ReportingInfo: React.FC = () => {
+  function formatDate(date: Date): string {
+    const year = date.getFullYear();
+    // getMonth()は0から始まるため、1を加える
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+
+    // フォーマットした文字列を組み立てる
+    return `${year}/${month}/${day} ${hours}:${minutes}:${seconds}`;
+  }
+
   return reportingInfoItems == null ? (<div/>) : (
     <Card>
       <CardContent>
@@ -37,7 +50,7 @@ const ReportingInfo: React.FC = () => {
               作成日時
             </Typography>
             <Typography variant="body1" sx={{ marginLeft: '1vw' }}>
-              {reportingInfoItems.createdAt.toLocaleString()}
+              {formatDate(reportingInfoItems.createdAt)}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%'}}>
@@ -45,7 +58,7 @@ const ReportingInfo: React.FC = () => {
               診断開始日時
             </Typography>
             <Typography variant="body1" sx={{ marginLeft: '1vw' }}>
-              {reportingInfoItems.from.toLocaleString()}
+              {formatDate(reportingInfoItems.from)}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%'}}>
@@ -53,7 +66,7 @@ const ReportingInfo: React.FC = () => {
               診断終了日時
             </Typography>
             <Typography variant="body1" sx={{ marginLeft: '1vw' }}>
-              {reportingInfoItems.to.toLocaleString()}
+              {formatDate(reportingInfoItems.to)}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', width: '100%'}}>
