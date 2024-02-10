@@ -5,6 +5,7 @@ import {
   QueryRangeResponse,
 } from "../../../Component/Common/PrometheusClient";
 import {unixTimeToDate} from "../../../Component/Common/Util";
+import {prometheusSettings} from "../../../Component/Redux/PrometheusSettings";
 
 /**
  * データプロバイダのプロパティ
@@ -42,7 +43,8 @@ const DataContext: React.Context<any> = createContext<LongTransactionData[] | nu
  */
 const fetchDataFromAPI = async (starttime: Date, endtime: Date) => {
   const query = `pg_stat_activity_max_tx_duration{datname="${yatagarasuSettings?.dbname}"}>300`;
-  const {status: status, data: res} = await invokeQueryRange<QueryRangeResponse<LongTransactionMetric>>(query, starttime, endtime, '15s');
+  const {status: status, data: res}
+      = await invokeQueryRange<QueryRangeResponse<LongTransactionMetric>>(query, starttime, endtime, prometheusSettings?.postgresqlScrapeInterval);
 
   const data: LongTransactionData[] = [];
 
