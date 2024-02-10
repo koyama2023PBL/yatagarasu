@@ -18,8 +18,8 @@ export const Thresholds = {
     watch: 70
   },
   memory: {
-    ok: 1000,
-    watch: 1500
+    ok: 60000,
+    watch: 80000
   },
   disk: {
     ok: 40,
