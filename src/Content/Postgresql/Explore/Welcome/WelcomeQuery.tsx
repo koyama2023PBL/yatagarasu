@@ -24,7 +24,7 @@ const WelcomeQuery: React.FC = () => {
           <Box sx={{  display: 'left' }}>
             <Querystats sx={{ width: '50%', height: 'auto', color: theme.palette.primary.main }} />
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '4vh'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '2vh'}}>
             <Typography variant="body1" >
               リクエストされたSQLクエリがどのような順序で処理されるかを示します。
             </Typography>

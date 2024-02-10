@@ -20,7 +20,7 @@ const WelcomeComponent: React.FC = () => {
           <Box sx={{  display: 'left' }}>
             <Polyline style={{ width: '50%', height: 'auto', color: '#bf360c' }} />
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '4vh'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '2vh'}}>
             <Typography variant="body1" >
               PostgreSQL本体のコンポーネント・プロセスの詳細と稼働状況を示します。
             </Typography>

@@ -23,7 +23,7 @@ const WelcomeServer: React.FC = () => {
           <Box sx={{  display: 'left' }}>
             <Memory style={{ width: '50%', height: 'auto', color: '#004d40' }} />
           </Box>
-          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '4vh'}}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', marginLeft: '-4vw', marginTop: '2vh'}}>
             <Typography variant="body1" >
               PostgreSQLの稼働するサーバの稼働状況を示します。
             </Typography>
