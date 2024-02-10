@@ -1,6 +1,9 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
 import yatagarasuSettings from "../../../Component/Redux/YatagarasuSettings";
-import {invokeQuery, QueryResponse} from "../../../Component/Common/PrometheusClient";
+import {
+  invokeQueryRange,
+  QueryRangeResponse,
+} from "../../../Component/Common/PrometheusClient";
 import {unixTimeToDate} from "../../../Component/Common/Util";
 
 /**
@@ -8,6 +11,7 @@ import {unixTimeToDate} from "../../../Component/Common/Util";
  */
 interface LongTransactionProviderProps {
   children: React.ReactNode;
+  starttime: Date;
   endtime: Date;
 }
 
@@ -33,17 +37,47 @@ const DataContext: React.Context<any> = createContext<LongTransactionData[] | nu
 
 /**
  * APIにリクエストを送信する
+ * @param starttime
  * @param endtime
  */
-const fetchDataFromAPI = async (endtime: Date) => {
+const fetchDataFromAPI = async (starttime: Date, endtime: Date) => {
   const query = `pg_stat_activity_max_tx_duration{datname="${yatagarasuSettings?.dbname}"}>300`;
-  const {status: status, data: res } = await invokeQuery<QueryResponse<LongTransactionMetric>>(query, endtime);
+  const {status: status, data: res} = await invokeQueryRange<QueryRangeResponse<LongTransactionMetric>>(query, starttime, endtime, '15s');
 
-  const data: LongTransactionData[] = res.data.result.map((result) => {
+  const data: LongTransactionData[] = [];
+
+  res.data.result.forEach((result) => {
+    let last_time = 0;
+    let last_during = 0;
+    result.values.forEach((value) => {
+      const during = Number(value[1]);
+      if (during > last_during) {
+        last_time = value[0];
+        last_during = during;
+        return;
+      }
+      data.push({
+        client: result.metric.server.split(':')[0],
+        start_at: unixTimeToDate(last_time - last_during).toLocaleString(),
+        duration: Math.round(Number(last_during)),
+        state: result.metric.state
+      });
+      last_during = 0;
+    });
+    data.push({
+      client: result.metric.server.split(':')[0],
+      start_at: unixTimeToDate(last_time - last_during).toLocaleString(),
+      duration: Math.round(Number(last_during)),
+      state: result.metric.state
+    });
+  });
+
+  res.data.result.map((result) => {
+    const value = result.values[result.values.length - 1];
     return {
       client: result.metric.server.split(':')[0],
-      start_at: unixTimeToDate(endtime.getTime() / 1000 - Number(result.value[1])).toLocaleString(),
-      duration: Math.round(Number(result.value[1])),
+      start_at: unixTimeToDate(value[0] - Number(value[1])).toLocaleString(),
+      duration: Math.round(Number(value[1])),
       state: result.metric.state
     };
   });
@@ -57,14 +91,14 @@ const fetchDataFromAPI = async (endtime: Date) => {
  * @param starttime
  * @param endtime
  */
-export const LongTransactionProvider: React.FC<LongTransactionProviderProps> = ({ children, endtime }) => {
+export const LongTransactionProvider: React.FC<LongTransactionProviderProps> = ({ children, starttime, endtime }) => {
   const [, setStatusCode] = useState<number | null>(null);
   const [data, setData] = useState<LongTransactionData[] | null>(null);
 
   useEffect(() => {
     setData(null);
     const fetchData = async () => {
-      const {status, data} = await fetchDataFromAPI(endtime);
+      const {status, data} = await fetchDataFromAPI(starttime, endtime);
       setStatusCode(status);
       setData(data);
     }

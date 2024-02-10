@@ -42,7 +42,7 @@ export const CheckModeMenu: React.FC = () => {
           <DiskUsageProvider          starttime={starttime} endtime={endtime}>
           <TableSizeProvider                                endtime={endtime}>
           <TransactionCountProvider   starttime={starttime} endtime={endtime}>
-          <LongTransactionProvider                          endtime={endtime}>
+          <LongTransactionProvider    starttime={starttime} endtime={endtime}>
           <HighLoadQueryProvider      starttime={starttime} endtime={endtime}>
             <Box sx={{p: 1, flexDirection: 'column', alignItems: 'center', marginTop: '0vh', width: '70vw', marginRight: 'auto', marginLeft: 'auto'}}>
               <ReportingOverview />
