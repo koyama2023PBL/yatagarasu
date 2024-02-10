@@ -44,7 +44,7 @@ const fetchDataFromApi = async (endtime: Date) => {
   const datname = yatagarasuSettings?.dbname;
 
   // 投げるクエリ
-  const sizeQuery = `pg_stat_user_tables_size_bytes{datname="${datname}"}/1024`;
+  const sizeQuery = `pg_stat_user_tables_size_bytes{datname="${datname}"}/1048576`;
   const deadTupleRatioQuery = `pg_stat_user_tables_n_dead_tup{datname="${datname}"}/(pg_stat_user_tables_n_dead_tup{datname="${datname}"}+pg_stat_user_tables_n_live_tup{datname="${datname}"})*100`;
   const lastAnalyzedQuery = `pg_stat_user_tables_last_autoanalyze{datname="${datname}"}`;
   const lastVacuumedQuery = `pg_stat_user_tables_last_autovacuum{datname="${datname}"}`;
