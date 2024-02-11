@@ -53,7 +53,7 @@ const QueryExecution: React.FC = () => {
                   実行されたクエリには一つ一つIDが振られ、PostgreSQLによって管理されます。
                 </Typography>
                 <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
-                  "SELECT QUERY FROM PG_STAT_STATEMENTS WHERE QUERY_ID = 'クエリID';"でどのクエリかを確認することができます。
+                  "SELECT QUERY FROM PG_STAT_STATEMENTS WHERE QUERYID = 'クエリID';"でどのクエリかを確認することができます。
                 </Typography>
                 <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
                   なお、同じクエリが何度も発行される場合は同じQUERY_IDの扱いとなり、実行回数・統計情報などが管理されます。
