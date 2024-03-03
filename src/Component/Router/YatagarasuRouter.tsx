@@ -12,6 +12,10 @@ import QueryHome from '../../Content/Postgresql/Explore/Query/QueryHome';
 import OverviewHome from '../../Content/Postgresql/Explore/Overview/OverviewHome';
 import ComponentBackend from '../../Content/Postgresql/Explore/Component/ComponentBackend';
 import ComponentHome from '../../Content/Postgresql/Explore/Component/ComponentHome';
+import ComponentRoot from '../../Content/Postgresql/Explore/Component/ComponentRoot';
+import SvgExploreComponentPostgresprocess from '../../Content/Postgresql/SVGs/ReactComponent/Components/ExploreComponentPostgresprocess';
+import ComponentPostgresProcess from '../../Content/Postgresql/Explore/Component/ComponentPostgresProcess';
+import ComponentPostgresFile from '../../Content/Postgresql/Explore/Component/ComponentPostgresFile';
 
 
 const renderRoutes = () => (
@@ -26,9 +30,12 @@ const renderRoutes = () => (
     <Route path="explore" element={<ExploreModeMenu />}>
       <Route index element={<ExploreRoot />} />
       <Route path="server" element={<ServerRoot/>} />
-      <Route path="component" />
-        <Route index={true} element={<ComponentHome />} />
+      <Route path="component">
+        <Route index={true} element={<ComponentRoot />} />
         <Route path="backend-process" element={<ComponentBackend />} />
+        <Route path="postgres-process" element={<ComponentPostgresProcess />} />
+        <Route path="postgres-file" element={<ComponentPostgresFile />} />
+      </Route>
       <Route path="query" >
         <Route index={true} element={<QueryHome />} />
         <Route path="advanced" element={<QueryAdvanceHome />} />

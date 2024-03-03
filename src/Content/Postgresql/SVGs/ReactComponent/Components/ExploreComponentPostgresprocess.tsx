@@ -4,81 +4,15 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width={731}
-    height={331}
-    viewBox="-0.5 -0.5 731 331"
+    width={641}
+    height={281}
+    viewBox="-0.5 -0.5 641 281"
     {...props}
   >
-    <path
-      fill="#FFF"
-      stroke="#000"
-      d="M50 20h680v310H50z"
-      pointerEvents="all"
-    />
-    <path fill="#FFF" stroke="#000" d="M0 0h90v40H0z" pointerEvents="all" />
-    <switch transform="translate(-.5 -.5)">
-      <foreignObject
-        width="100%"
-        height="100%"
-        pointerEvents="none"
-        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-        style={{
-          overflow: "visible",
-          textAlign: "left",
-        }}
-      >
-        <div
-          
-          style={{
-            display: "flex",
-            alignItems: "unsafe center",
-            justifyContent: "unsafe center",
-            width: 88,
-            height: 1,
-            paddingTop: 20,
-            marginLeft: 1,
-          }}
-        >
-          <div
-            data-drawio-colors="color: rgb(0, 0, 0);"
-            style={{
-              boxSizing: "border-box",
-              fontSize: 0,
-              textAlign: "center",
-            }}
-          >
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: 12,
-                fontFamily: "Helvetica",
-                color: "#000",
-                lineHeight: 1.2,
-                pointerEvents: "all",
-                whiteSpace: "normal",
-                overflowWrap: "normal",
-              }}
-            >
-              {"Component"}
-            </div>
-          </div>
-        </div>
-      </foreignObject>
-      <text
-        x={45}
-        y={24}
-        fontFamily="Helvetica"
-        fontSize={12}
-        textAnchor="middle"
-      >
-        {"Component"}
-      </text>
-    </switch>
     <rect
       width={70}
       height={60}
-      x={70}
-      y={156}
+      y={116}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -104,8 +38,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 68,
             height: 1,
-            paddingTop: 186,
-            marginLeft: 71,
+            paddingTop: 146,
+            marginLeft: 1,
           }}
         >
           <div
@@ -134,8 +68,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={105}
-        y={190}
+        x={35}
+        y={150}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -146,8 +80,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <rect
       width={550}
       height={280}
-      x={160}
-      y={40}
+      x={90}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -173,8 +106,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 548,
             height: 1,
-            paddingTop: 47,
-            marginLeft: 161,
+            paddingTop: 7,
+            marginLeft: 91,
           }}
         >
           <div
@@ -203,8 +136,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={435}
-        y={59}
+        x={365}
+        y={19}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -215,8 +148,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <rect
       width={70}
       height={60}
-      x={70}
-      y={234}
+      y={194}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -242,8 +174,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 68,
             height: 1,
-            paddingTop: 264,
-            marginLeft: 71,
+            paddingTop: 224,
+            marginLeft: 1,
           }}
         >
           <div
@@ -272,8 +204,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={105}
-        y={268}
+        x={35}
+        y={228}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -284,8 +216,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <rect
       width={130}
       height={50}
-      x={170}
-      y={160}
+      x={100}
+      y={120}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -311,8 +243,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 128,
             height: 1,
-            paddingTop: 185,
-            marginLeft: 171,
+            paddingTop: 145,
+            marginLeft: 101,
           }}
         >
           <div
@@ -343,8 +275,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={235}
-        y={189}
+        x={165}
+        y={149}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -355,8 +287,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <rect
       width={310}
       height={230}
-      x={304}
-      y={80}
+      x={234}
+      y={40}
       fill="#fff2cc"
       stroke="#d6b656"
       pointerEvents="all"
@@ -382,8 +314,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 308,
             height: 1,
-            paddingTop: 87,
-            marginLeft: 305,
+            paddingTop: 47,
+            marginLeft: 235,
           }}
         >
           <div
@@ -414,8 +346,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={459}
-        y={99}
+        x={389}
+        y={59}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -427,15 +359,15 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M630 89h40l30 30v170h-70V89Z"
+      d="M560 49h40l30 30v170h-70V49Z"
       pointerEvents="all"
     />
-    <path fillOpacity={0.05} d="M670 89v30h30Z" pointerEvents="all" />
+    <path fillOpacity={0.05} d="M600 49v30h30Z" pointerEvents="all" />
     <path
       fill="none"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M670 89v30h30"
+      d="M600 49v30h30"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -457,8 +389,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 68,
             height: 1,
-            paddingTop: 189,
-            marginLeft: 631,
+            paddingTop: 149,
+            marginLeft: 561,
           }}
         >
           <div
@@ -489,8 +421,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={665}
-        y={193}
+        x={595}
+        y={153}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -502,83 +434,14 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M607.5 180v-10h15.33v-3.5l8.67 8.5-8.67 8.5V180ZM631.5 190v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM142.5 262v-10h15.33v-3.5l8.67 8.5-8.67 8.5V262ZM166.5 272v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM142.5 181.76v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM166.5 191.76v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
+      d="M537.5 140v-10h15.33v-3.5l8.67 8.5-8.67 8.5V140ZM561.5 150v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM72.5 222v-10h15.33v-3.5l8.67 8.5-8.67 8.5V222ZM96.5 232v10H81.17v3.5L72.5 237l8.67-8.5v3.5ZM72.5 141.76v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM96.5 151.76v10H81.17v3.5l-8.67-8.5 8.67-8.5v3.5Z"
       pointerEvents="all"
     />
-    <rect
-      width={130}
-      height={30}
-      x={170}
-      y={110}
-      fill="#FFF"
-      stroke="#000"
-      pointerEvents="all"
-      rx={4.5}
-      ry={4.5}
-    />
-    <switch transform="translate(-.5 -.5)">
-      <foreignObject
-        width="100%"
-        height="100%"
-        pointerEvents="none"
-        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-        style={{
-          overflow: "visible",
-          textAlign: "left",
-        }}
-      >
-        <div
-          
-          style={{
-            display: "flex",
-            alignItems: "unsafe flex-start",
-            justifyContent: "unsafe center",
-            width: 128,
-            height: 1,
-            paddingTop: 117,
-            marginLeft: 171,
-          }}
-        >
-          <div
-            data-drawio-colors="color: rgb(0, 0, 0);"
-            style={{
-              boxSizing: "border-box",
-              fontSize: 0,
-              textAlign: "center",
-            }}
-          >
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: 12,
-                fontFamily: "Helvetica",
-                color: "#000",
-                lineHeight: 1.2,
-                pointerEvents: "all",
-                whiteSpace: "normal",
-                overflowWrap: "normal",
-              }}
-            >
-              {"Listener Process"}
-            </div>
-          </div>
-        </div>
-      </foreignObject>
-      <text
-        x={235}
-        y={129}
-        fontFamily="Helvetica"
-        fontSize={12}
-        textAnchor="middle"
-      >
-        {"Listener Process"}
-      </text>
-    </switch>
     <rect
       width={130}
       height={50}
-      x={170}
-      y={239}
+      x={100}
+      y={199}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -604,8 +467,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 128,
             height: 1,
-            paddingTop: 264,
-            marginLeft: 171,
+            paddingTop: 224,
+            marginLeft: 101,
           }}
         >
           <div
@@ -636,8 +499,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={235}
-        y={268}
+        x={165}
+        y={228}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -649,13 +512,13 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M290.5 182v-10h15.33v-3.5l8.67 8.5-8.67 8.5V182ZM314.5 192v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM290.5 260.8v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM314.5 270.8v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
+      d="M220.5 142v-10h15.33v-3.5l8.67 8.5-8.67 8.5V142ZM244.5 152v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM220.5 220.8v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM244.5 230.8v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
       pointerEvents="all"
     />
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
-      d="M320 130h130v20H320z"
+      d="M100 90h280v20H100z"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -675,10 +538,10 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             display: "flex",
             alignItems: "unsafe center",
             justifyContent: "unsafe center",
-            width: 128,
+            width: 278,
             height: 1,
-            paddingTop: 140,
-            marginLeft: 321,
+            paddingTop: 100,
+            marginLeft: 101,
           }}
         >
           <div
@@ -707,8 +570,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={385}
-        y={144}
+        x={240}
+        y={104}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -719,7 +582,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
-      d="M460 130h140v20H460z"
+      d="M390 90h140v20H390z"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -741,8 +604,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 138,
             height: 1,
-            paddingTop: 140,
-            marginLeft: 461,
+            paddingTop: 100,
+            marginLeft: 391,
           }}
         >
           <div
@@ -771,8 +634,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={530}
-        y={144}
+        x={460}
+        y={104}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -783,7 +646,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
-      d="M460 156h140v20H460z"
+      d="M390 116h140v20H390z"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -805,8 +668,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 138,
             height: 1,
-            paddingTop: 166,
-            marginLeft: 461,
+            paddingTop: 126,
+            marginLeft: 391,
           }}
         >
           <div
@@ -835,8 +698,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={530}
-        y={170}
+        x={460}
+        y={130}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -847,7 +710,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
-      d="M460 181h140v20H460z"
+      d="M390 141h140v20H390z"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -869,8 +732,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 138,
             height: 1,
-            paddingTop: 191,
-            marginLeft: 461,
+            paddingTop: 151,
+            marginLeft: 391,
           }}
         >
           <div
@@ -899,8 +762,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={530}
-        y={195}
+        x={460}
+        y={155}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -911,7 +774,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
-      d="M460 206h140v20H460z"
+      d="M390 166h140v20H390z"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -933,8 +796,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 138,
             height: 1,
-            paddingTop: 216,
-            marginLeft: 461,
+            paddingTop: 176,
+            marginLeft: 391,
           }}
         >
           <div
@@ -963,8 +826,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={530}
-        y={220}
+        x={460}
+        y={180}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -975,7 +838,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
-      d="M460 232h140v20H460z"
+      d="M390 192h140v20H390z"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -997,8 +860,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 138,
             height: 1,
-            paddingTop: 242,
-            marginLeft: 461,
+            paddingTop: 202,
+            marginLeft: 391,
           }}
         >
           <div
@@ -1027,8 +890,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={530}
-        y={246}
+        x={460}
+        y={206}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -1039,7 +902,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
-      d="M460 257h140v20H460z"
+      d="M390 217h140v20H390z"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -1061,8 +924,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 138,
             height: 1,
-            paddingTop: 267,
-            marginLeft: 461,
+            paddingTop: 227,
+            marginLeft: 391,
           }}
         >
           <div
@@ -1091,8 +954,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={530}
-        y={271}
+        x={460}
+        y={231}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -1103,7 +966,7 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
-      d="M460 282h140v20H460z"
+      d="M390 242h140v20H390z"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -1125,8 +988,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 138,
             height: 1,
-            paddingTop: 292,
-            marginLeft: 461,
+            paddingTop: 252,
+            marginLeft: 391,
           }}
         >
           <div
@@ -1155,8 +1018,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={530}
-        y={296}
+        x={460}
+        y={256}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -1165,8 +1028,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
       </text>
     </switch>
     <ellipse
-      cx={385}
-      cy={230}
+      cx={315}
+      cy={190}
       fill="#ffe6cc"
       stroke="#d79b00"
       pointerEvents="all"
@@ -1192,8 +1055,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 128,
             height: 1,
-            paddingTop: 230,
-            marginLeft: 321,
+            paddingTop: 190,
+            marginLeft: 251,
           }}
         >
           <div
@@ -1222,8 +1085,8 @@ const SvgExploreComponentPostgresprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={385}
-        y={234}
+        x={315}
+        y={194}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"

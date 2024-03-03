@@ -22,7 +22,7 @@ const WelcomeExplore: React.FC = () => {
             「クエリ」「サーバー」「PostgreSQLコンポーネント」「全体アーキテクチャ概要」を表示します。
           </Typography>
           <Typography variant="body1">
-            Checkモードでの診断結果を元に確認をすると良いヒントがあるかもしれません。 ※リリースに向けて全般的にブラッシュアップ中
+            Checkモードでの診断結果を元に確認をすると良いヒントがあるかもしれません。
           </Typography>
         </Box>
       </CardContent>
