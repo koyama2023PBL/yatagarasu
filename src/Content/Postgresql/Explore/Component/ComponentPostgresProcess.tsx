@@ -77,7 +77,10 @@ const ComponentPostgresProcess: React.FC = () => {
               Postmasterプロセスが最上位のプロセスとして稼働し、PostgreSQLの稼働に必要なプロセスを管理します。
             </Typography>
             <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
-              アプリケーションなどからのコネクションは、1コネクション=1プロセスとして実行されます。
+              PostmasterがPostgreSQLをクラスタとして動作させるために必要なプロセスをコントロールします。
+            </Typography>
+            <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
+              OS上のプロセスとして各機能を実行することで、スケーラビリティに優れた構成になっています。
             </Typography>
           </CardContent>
         </Card>
