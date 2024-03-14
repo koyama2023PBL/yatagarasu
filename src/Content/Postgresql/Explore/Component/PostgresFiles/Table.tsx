@@ -32,6 +32,24 @@ const Table: React.FC<Props> = ({ starttime, endtime }) => {
                 <Typography fontSize="14pt" gutterBottom>
                   Table
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  テーブルのデータを保持するファイルは、各データベース毎に切られたディレクトリに保管されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  PostgreSQLのホームディレクトリ配下にある"~/data/base"ディレクトリに配置されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  ディレクトリ名にはデータベースのOIDというユニークな識別子が振られます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  そしてそれぞれのテーブル・レコード数などに応じてファイルが作成されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  テーブルのサイズが大きい場合、1GB毎にテーブルファイルが分割されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  これらのファイルをSQLを介さず、直接編集することは当然ながら非推奨です。
+                </Typography>
               </CardContent>
             </Card>
           </Box>

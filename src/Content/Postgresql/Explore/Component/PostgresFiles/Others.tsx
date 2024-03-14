@@ -32,6 +32,18 @@ const Others: React.FC<Props> = ({ starttime, endtime }) => {
                 <Typography fontSize="14pt" gutterBottom>
                   Others
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  PostgreSQLには、当然ながら実テーブルファイルやインデックスファイル以外にも多くのファイルがあります。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  各種ログファイルやクラスタ構成の設定ファイルとしての'pg_hba.conf'、'postgresql.conf'などの他、バックアップファイルもあります。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  また、各種プロセスの状態を一時保管するなどのファイルや、トランザクションの状態を一時保存するためのファイルなども使用されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  細かいところで言えばパフォーマンスを向上させるための、空き領域マップファイルやVACUUM処理時に参照する可視性マップファイルといったファイルもあります。
+                </Typography>
               </CardContent>
             </Card>
           </Box>

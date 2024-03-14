@@ -32,6 +32,27 @@ const WAL: React.FC<Props> = ({ starttime, endtime }) => {
                 <Typography fontSize="14pt" gutterBottom>
                   WAL
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  Write Ahead Logの略称であり、PostgreSQLにおいて非常に重要な役割を持ちます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  PostgreSQLではトランザクションがコミットされると、テーブル本体に書き込まれる前にクエリによる変更はこのWALファイルに書き込まれます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  実はトランザクションがコミット完了するというのは、テーブルファイルを変更することではなくこのWALへの書き込みが完了することです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  これによりWALにより回復性の確保のほか、ファイルの書き込み回数が減りディスクI/Oの最適化を行えるようになります。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  WALファイル自体は"~/data/pg_wal"配下に保管されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  また、このWALファイルをセカンダリサーバ側で複製することで、データベースクラスタ間でのデータレプリケーションを実現できます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  CHECKPOINT処理は、このWALファイルを実際のテーブルファイルに書き込む処理のことを指します。
+                </Typography>
               </CardContent>
             </Card>
           </Box>

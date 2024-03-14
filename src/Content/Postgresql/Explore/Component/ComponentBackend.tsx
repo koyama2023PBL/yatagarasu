@@ -7,11 +7,6 @@ import BackendProcess from './Backend/BackendProcess';
 import BackendMemory from './Backend/BackendMemory';
 import SvgExploreComponentBackendprocess from '../../SVGs/ReactComponent/Components/ExploreComponentBackendprocess';
 
-const steps = [
-  { step: "backend-process", description: "1. バックエンドプロセス" },
-  { step: "backend-memory", description: "2. バックエンドメモリ" },
-  { step: "listener-process", description: "3. リスナープロセス" },
-];
 
 const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
   if (ref.current) {
@@ -65,16 +60,6 @@ const ComponentBackend: React.FC = () => {
             </Typography>
             <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
               アプリケーションなどからのコネクションは、1コネクション=1プロセスとして実行されます。
-            </Typography>
-            {steps.map((item) => (
-              <Box key={item.step} sx={{ marginBottom: '1rem', marginLeft: '20pt'}}>
-                <Link href={`#${item.step}`} color="secondary" variant="body1">
-                  {`<${item.step}>`}: {item.description}
-                </Link>
-              </Box>
-            ))}
-            <Typography variant="body2" sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
-              ※クリックすると、各工程の詳細へジャンプします
             </Typography>
           </CardContent>
         </Card>

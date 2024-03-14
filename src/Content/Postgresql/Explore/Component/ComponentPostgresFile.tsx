@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Card, CardContent, Typography, Link, Box } from '@mui/material';
-import SvgExploreComponentHome from '../../SVGs/ReactComponent/Components/ExploreComponentHome';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../Component/Redux/StateStore';
 import Catalog from './PostgresFiles/Catalog';
@@ -9,14 +8,6 @@ import Others from './PostgresFiles/Others';
 import Table from './PostgresFiles/Table';
 import WAL from './PostgresFiles/WAL';
 import SvgExploreComponentFiles from '../../SVGs/ReactComponent/Components/ExploreComponentFiles';
-
-const steps = [
-  { step: "table", description: "1. テーブルファイル" },
-  { step: "index", description: "2. インデックスファイル" },
-  { step: "catalog", description: "3. カタログ" },
-  { step: "wal", description: "4. WAL" },
-  { step: "other", description: "5. その他の主要ファイル" },
-];
 
 const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
   if (ref.current) {
@@ -63,23 +54,16 @@ const ComponentPostgresFile: React.FC = () => {
               PostgreSQLのファイルについて
             </Typography>
             <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
-              PostgreSQLはOS上にて複数のプロセス群で稼働します。
+              PostgreSQLといえど、最終的なデータ保管はOS上のファイルによって行われます。
             </Typography>
             <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
-              Postmasterプロセスが最上位のプロセスとして稼働し、PostgreSQLの稼働に必要なプロセスを管理します。
+              テーブル上のファイルやインデックス、システムカタログなどもファイルとして保管されます。
             </Typography>
             <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
-              アプリケーションなどからのコネクションは、1コネクション=1プロセスとして実行されます。
+              そのためデータの保管、つまり永続化はOSの機能を活用したものになります。
             </Typography>
-            {steps.map((item) => (
-              <Box key={item.step} sx={{ marginBottom: '1rem', marginLeft: '20pt'}}>
-                <Link href={`#${item.step}`} color="secondary" variant="body1">
-                  {`<${item.step}>`}: {item.description}
-                </Link>
-              </Box>
-            ))}
-            <Typography variant="body2" sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
-              ※クリックすると、各工程の詳細へジャンプします
+            <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
+              無論、ACID特性を満たすためにさまざな機構が備えられています。
             </Typography>
           </CardContent>
         </Card>

@@ -30,6 +30,30 @@ const Catalog: React.FC<Props> = ({ starttime, endtime }) => {
                 <Typography fontSize="14pt" gutterBottom>
                   Catalog
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  システムカタログとは、データベースを構成する内部情報がまとまったテーブル、またはビューです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  PostgreSQLが使用する内部情報であり、データベース毎に作成されるものとクラスタ全体の情報を管理するものとで分かれます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  代表的なカタログは以下のようなものです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '20pt', marginBottom: '4px' }}>
+                  pg_class: テーブル、インデックス、シーケンス、ビューなどのデータベースオブジェクトに関する情報が格納されています。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '20pt', marginBottom: '4px' }}>
+                  pg_database: データベースクラスタ内のデータベースに関する情報が格納されています。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '20pt', marginBottom: '6px' }}>
+                  pg_stat_activity: 現在のアクティビティやセッションに関する統計情報が格納されています。*拡張機能です。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  これらのカタログは権限のあるユーザであれば、以下のような通常のSQLで中身を見ることができます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '20pt', marginBottom: '4px' }}>
+                  'SELECT * FROM pg_database;'
+                </Typography>
               </CardContent>
             </Card>
           </Box>

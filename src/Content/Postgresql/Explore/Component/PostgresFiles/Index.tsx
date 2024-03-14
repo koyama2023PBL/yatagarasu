@@ -32,6 +32,24 @@ const Index: React.FC<Props> = ({ starttime, endtime }) => {
                 <Typography fontSize="14pt" gutterBottom>
                   Index
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  インデックスのデータを保持するファイルは、各データベース毎に切られたディレクトリに保管されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  テーブルファイルと同様、"~/data/base"ディレクトリに配置されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  文字通り、テーブルファイル検索を効率化するための索引となるのがインデックスファイルです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  インデックスを特段作成していなくても、主キーがあればデフォルトでユニークインデックスが作成されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  実はインデックスの再作成とは、このインデックスファイルの再作成に他なりません。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  そしてテーブルファイルと同様、これらのファイルを直接編集することは非推奨です。
+                </Typography>
               </CardContent>
             </Card>
           </Box>
