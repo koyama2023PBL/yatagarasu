@@ -60,39 +60,43 @@ const ComponentHome: React.FC = () => {
               アプリケーションなどからのコネクションは、1コネクション=1プロセスとして実行されます。
             </Typography>
           </CardContent>
-          <Box sx={{ display: 'flex', p: '1.5', marginLeft: '1vw' }}>
-            <NavLink to="/explore/component/backend-process">
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', p: '1.5', marginLeft: '1vw' }}>
+            <NavLink style={{textDecoration: 'none'}} to="/explore/component/backend-process">
               <Card sx={{ height: '10vh', width: '15vw', marginLeft: '1vw' }}>
                 <CardContent>
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
                     <Typography variant="body2">
-                      1. Listener/Backend processes
+                      1. Backend processes
                     </Typography>
                     <ArrowCircleRightIcon sx={{ transform: 'scale(2)', color: '#073A66' }} />
                   </Box>
                 </CardContent>
               </Card>
             </NavLink>
-            <Card sx={{ height: '10vh', width: '15vw', marginLeft: '1vw' }}>
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
-                  <Typography variant="body2">
-                    2. PostgreSQL's processes
-                  </Typography>
-                  <ArrowCircleRightIcon sx={{ transform: 'scale(2)', color: '#073A66' }} />
-                </Box>
-              </CardContent>
-            </Card>
-            <Card sx={{ height: '10vh', width: '15vw', marginLeft: '1vw' }}>
-              <CardContent>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
-                  <Typography variant="body2">
-                    3. PostgreSQL's files
-                  </Typography>
-                  <ArrowCircleRightIcon sx={{ transform: 'scale(2)', color: '#073A66' }} />
-                </Box>
-              </CardContent>
-            </Card>
+            <NavLink style={{textDecoration: 'none'}} to="/explore/component/postgres-process">
+              <Card sx={{ height: '10vh', width: '15vw', marginLeft: '1vw' }}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
+                    <Typography variant="body2">
+                      2. PostgreSQL's processes
+                    </Typography>
+                    <ArrowCircleRightIcon sx={{ transform: 'scale(2)', color: '#073A66' }} />
+                  </Box>
+                </CardContent>
+              </Card>
+            </NavLink>
+            <NavLink style={{textDecoration: 'none'}} to="/explore/component/postgres-file">
+              <Card sx={{ height: '10vh', width: '15vw', marginLeft: '1vw' }}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '100%' }}>
+                    <Typography variant="body2">
+                      3. PostgreSQL's files
+                    </Typography>
+                    <ArrowCircleRightIcon sx={{ transform: 'scale(2)', color: '#073A66' }} />
+                  </Box>
+                </CardContent>
+              </Card>
+            </NavLink>
           </Box>
         </Card>
       </Box>

@@ -1,6 +1,8 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
+const SvgExploreComponentBackendprocessMemory = (
+  props: SVGProps<SVGSVGElement>
+) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -218,7 +220,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       height={115}
       x={100}
       y={80}
-      fill="#fff2cc"
+      fill="#FFF"
       stroke="#000"
       pointerEvents="all"
       rx={17.25}
@@ -437,7 +439,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       height={30}
       x={100}
       y={205}
-      fill="#fff2cc"
+      fill="#FFF"
       stroke="#000"
       pointerEvents="all"
       rx={4.5}
@@ -507,19 +509,12 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M527.5 130.71v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM551.5 140.71v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
+      d="M527.5 130.71v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM551.5 140.71v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM440.5 135v-10h15.33v-3.5l8.67 8.5-8.67 8.5V135ZM464.5 145v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM438.5 214.8v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM462.5 224.8v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM72.5 212v-10h15.33v-3.5l8.67 8.5-8.67 8.5V212ZM96.5 222v10H81.17v3.5L72.5 227l8.67-8.5v3.5ZM72.5 131.76v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM96.5 141.76v10H81.17v3.5l-8.67-8.5 8.67-8.5v3.5Z"
       pointerEvents="all"
     />
     <path
-      fill="#fff2cc"
+      fill="#FFF"
       stroke="#000"
-      strokeMiterlimit={10}
-      d="M440.5 135v-10h15.33v-3.5l8.67 8.5-8.67 8.5V135ZM464.5 145v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM438.5 214.8v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM462.5 224.8v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM72.5 212v-10h15.33v-3.5l8.67 8.5-8.67 8.5V212ZM96.5 222v10H81.17v3.5L72.5 227l8.67-8.5v3.5ZM72.5 131.76v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM96.5 141.76v10H81.17v3.5l-8.67-8.5 8.67-8.5v3.5Z"
-      pointerEvents="all"
-    />
-    <path
-      fill="#ffe6cc"
-      stroke="#d79b00"
       d="M107 120h173v59H107z"
       pointerEvents="all"
     />
@@ -719,4 +714,4 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
     </switch>
   </svg>
 );
-export default SvgExploreComponentBackendprocess;
+export default SvgExploreComponentBackendprocessMemory;

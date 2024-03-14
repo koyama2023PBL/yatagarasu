@@ -4,22 +4,15 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width={731}
-    height={301}
-    viewBox="-0.5 -0.5 731 301"
+    width={641}
+    height={231}
+    viewBox="-0.5 -0.5 641 231"
     {...props}
   >
-    <path
-      fill="#FFF"
-      stroke="#000"
-      d="M50 20h680v280H50z"
-      pointerEvents="all"
-    />
     <rect
       width={520}
       height={230}
-      x={180}
-      y={50}
+      x={120}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -45,8 +38,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 518,
             height: 1,
-            paddingTop: 57,
-            marginLeft: 181,
+            paddingTop: 7,
+            marginLeft: 121,
           }}
         >
           <div
@@ -75,8 +68,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={440}
-        y={69}
+        x={380}
+        y={19}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -87,8 +80,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
     <rect
       width={120}
       height={60}
-      x={200}
-      y={122}
+      x={140}
+      y={72}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -114,8 +107,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 118,
             height: 1,
-            paddingTop: 152,
-            marginLeft: 201,
+            paddingTop: 102,
+            marginLeft: 141,
           }}
         >
           <div
@@ -146,8 +139,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={260}
-        y={156}
+        x={200}
+        y={106}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -158,8 +151,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
     <rect
       width={120}
       height={60}
-      x={200}
-      y={190}
+      x={140}
+      y={140}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -185,8 +178,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 118,
             height: 1,
-            paddingTop: 220,
-            marginLeft: 201,
+            paddingTop: 170,
+            marginLeft: 141,
           }}
         >
           <div
@@ -217,8 +210,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={260}
-        y={224}
+        x={200}
+        y={174}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -229,8 +222,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
     <rect
       width={120}
       height={20}
-      x={200}
-      y={90}
+      x={140}
+      y={40}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -256,8 +249,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 118,
             height: 1,
-            paddingTop: 100,
-            marginLeft: 201,
+            paddingTop: 50,
+            marginLeft: 141,
           }}
         >
           <div
@@ -286,8 +279,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={260}
-        y={104}
+        x={200}
+        y={54}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -295,7 +288,16 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         {"Listener Process"}
       </text>
     </switch>
-    <path fill="#FFF" stroke="#000" d="M0 0h90v40H0z" pointerEvents="all" />
+    <rect
+      width={110}
+      height={60}
+      y={72}
+      fill="#FFF"
+      stroke="#000"
+      pointerEvents="all"
+      rx={9}
+      ry={9}
+    />
     <switch transform="translate(-.5 -.5)">
       <foreignObject
         width="100%"
@@ -313,9 +315,9 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             display: "flex",
             alignItems: "unsafe center",
             justifyContent: "unsafe center",
-            width: 88,
+            width: 108,
             height: 1,
-            paddingTop: 20,
+            paddingTop: 102,
             marginLeft: 1,
           }}
         >
@@ -339,26 +341,32 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
                 overflowWrap: "normal",
               }}
             >
-              {"Component"}
+              {"Application"}
             </div>
           </div>
         </div>
       </foreignObject>
       <text
-        x={45}
-        y={24}
+        x={55}
+        y={106}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
       >
-        {"Component"}
+        {"Application"}
       </text>
     </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      strokeMiterlimit={10}
+      d="m139.55 116-.1 9.99-30-.3-.11 10.5L90.5 120.5l19.15-15.3-.1 10.5ZM90.5 96V86h30V75.5l19 15.5-19 15.5V96Z"
+      pointerEvents="all"
+    />
     <rect
       width={110}
       height={60}
-      x={60}
-      y={122}
+      y={140}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -384,8 +392,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 108,
             height: 1,
-            paddingTop: 152,
-            marginLeft: 61,
+            paddingTop: 170,
+            marginLeft: 1,
           }}
         >
           <div
@@ -414,8 +422,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={115}
-        y={156}
+        x={55}
+        y={174}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -427,97 +435,21 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="m199.55 166-.1 9.99-30-.3-.11 10.5-18.84-15.69 19.15-15.3-.1 10.5ZM150.5 146v-10h30v-10.5l19 15.5-19 15.5V146Z"
-      pointerEvents="all"
-    />
-    <rect
-      width={110}
-      height={60}
-      x={60}
-      y={190}
-      fill="#FFF"
-      stroke="#000"
-      pointerEvents="all"
-      rx={9}
-      ry={9}
-    />
-    <switch transform="translate(-.5 -.5)">
-      <foreignObject
-        width="100%"
-        height="100%"
-        pointerEvents="none"
-        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-        style={{
-          overflow: "visible",
-          textAlign: "left",
-        }}
-      >
-        <div
-          
-          style={{
-            display: "flex",
-            alignItems: "unsafe center",
-            justifyContent: "unsafe center",
-            width: 108,
-            height: 1,
-            paddingTop: 220,
-            marginLeft: 61,
-          }}
-        >
-          <div
-            data-drawio-colors="color: rgb(0, 0, 0);"
-            style={{
-              boxSizing: "border-box",
-              fontSize: 0,
-              textAlign: "center",
-            }}
-          >
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: 12,
-                fontFamily: "Helvetica",
-                color: "#000",
-                lineHeight: 1.2,
-                pointerEvents: "all",
-                whiteSpace: "normal",
-                overflowWrap: "normal",
-              }}
-            >
-              {"Application"}
-            </div>
-          </div>
-        </div>
-      </foreignObject>
-      <text
-        x={115}
-        y={224}
-        fontFamily="Helvetica"
-        fontSize={12}
-        textAnchor="middle"
-      >
-        {"Application"}
-      </text>
-    </switch>
-    <path
-      fill="#FFF"
-      stroke="#000"
-      strokeMiterlimit={10}
-      d="M199.5 233v10h-30v10.5l-19-15.5 19-15.5V233Z"
+      d="M139.5 183v10h-30v10.5l-19-15.5 19-15.5V183Z"
       pointerEvents="all"
     />
     <path
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M150.5 216v-10h30v-10.5l19 15.5-19 15.5V216Z"
+      d="M90.5 166v-10h30v-10.5l19 15.5-19 15.5V166Z"
       pointerEvents="all"
     />
     <rect
       width={91}
       height={160}
-      x={329}
-      y={90}
+      x={269}
+      y={40}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -543,8 +475,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 89,
             height: 1,
-            paddingTop: 170,
-            marginLeft: 330,
+            paddingTop: 120,
+            marginLeft: 270,
           }}
         >
           <div
@@ -575,8 +507,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={375}
-        y={174}
+        x={315}
+        y={124}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -588,15 +520,15 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
       fill="#fff2cc"
       stroke="#d6b656"
       strokeMiterlimit={10}
-      d="M430 80h230l30 30v150H430V80Z"
+      d="M370 30h230l30 30v150H370V30Z"
       pointerEvents="all"
     />
-    <path fillOpacity={0.05} d="M660 80v30h30Z" pointerEvents="all" />
+    <path fillOpacity={0.05} d="M600 30v30h30Z" pointerEvents="all" />
     <path
       fill="none"
       stroke="#d6b656"
       strokeMiterlimit={10}
-      d="M660 80v30h30"
+      d="M600 30v30h30"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -618,8 +550,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 258,
             height: 1,
-            paddingTop: 87,
-            marginLeft: 431,
+            paddingTop: 37,
+            marginLeft: 371,
           }}
         >
           <div
@@ -648,8 +580,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={560}
-        y={99}
+        x={500}
+        y={49}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -661,29 +593,29 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
       fill="#fff2cc"
       stroke="#d6b656"
       strokeMiterlimit={10}
-      d="M410.5 164.76v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM434.5 174.76v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
+      d="M350.5 114.76v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM374.5 124.76v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
       pointerEvents="all"
     />
     <path
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M316.5 146.92v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM340.5 156.92v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM316.5 214.92v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM340.5 224.92v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
+      d="M256.5 96.92v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM280.5 106.92v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM256.5 164.92v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM280.5 174.92v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
       pointerEvents="all"
     />
     <path
       fill="#ffe6cc"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M444 118h96l14 14v24H444v-38Z"
+      d="M384 68h96l14 14v24H384V68Z"
       pointerEvents="all"
     />
-    <path fillOpacity={0.05} d="M540 118v14h14Z" pointerEvents="all" />
+    <path fillOpacity={0.05} d="M480 68v14h14Z" pointerEvents="all" />
     <path
       fill="none"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M540 118v14h14"
+      d="M480 68v14h14"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -705,8 +637,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 108,
             height: 1,
-            paddingTop: 137,
-            marginLeft: 445,
+            paddingTop: 87,
+            marginLeft: 385,
           }}
         >
           <div
@@ -735,8 +667,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={499}
-        y={141}
+        x={439}
+        y={91}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -748,15 +680,15 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
       fill="#ffe6cc"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M444 167h96l14 14v24H444v-38Z"
+      d="M384 117h96l14 14v24H384v-38Z"
       pointerEvents="all"
     />
-    <path fillOpacity={0.05} d="M540 167v14h14Z" pointerEvents="all" />
+    <path fillOpacity={0.05} d="M480 117v14h14Z" pointerEvents="all" />
     <path
       fill="none"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M540 167v14h14"
+      d="M480 117v14h14"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -778,8 +710,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 108,
             height: 1,
-            paddingTop: 186,
-            marginLeft: 445,
+            paddingTop: 136,
+            marginLeft: 385,
           }}
         >
           <div
@@ -808,8 +740,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={499}
-        y={190}
+        x={439}
+        y={140}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -821,15 +753,15 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
       fill="#ffe6cc"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M568 118h96l14 14v24H568v-38Z"
+      d="M508 68h96l14 14v24H508V68Z"
       pointerEvents="all"
     />
-    <path fillOpacity={0.05} d="M664 118v14h14Z" pointerEvents="all" />
+    <path fillOpacity={0.05} d="M604 68v14h14Z" pointerEvents="all" />
     <path
       fill="none"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M664 118v14h14"
+      d="M604 68v14h14"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -851,8 +783,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 108,
             height: 1,
-            paddingTop: 137,
-            marginLeft: 569,
+            paddingTop: 87,
+            marginLeft: 509,
           }}
         >
           <div
@@ -881,8 +813,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={623}
-        y={141}
+        x={563}
+        y={91}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -894,15 +826,15 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
       fill="#ffe6cc"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M568 167h96l14 14v24H568v-38Z"
+      d="M508 117h96l14 14v24H508v-38Z"
       pointerEvents="all"
     />
-    <path fillOpacity={0.05} d="M664 167v14h14Z" pointerEvents="all" />
+    <path fillOpacity={0.05} d="M604 117v14h14Z" pointerEvents="all" />
     <path
       fill="none"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M664 167v14h14"
+      d="M604 117v14h14"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -924,8 +856,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 108,
             height: 1,
-            paddingTop: 186,
-            marginLeft: 569,
+            paddingTop: 136,
+            marginLeft: 509,
           }}
         >
           <div
@@ -954,8 +886,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={623}
-        y={190}
+        x={563}
+        y={140}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -967,15 +899,15 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
       fill="#ffe6cc"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M444 220h222l14 14v16H444v-30Z"
+      d="M384 170h222l14 14v16H384v-30Z"
       pointerEvents="all"
     />
-    <path fillOpacity={0.05} d="M666 220v14h14Z" pointerEvents="all" />
+    <path fillOpacity={0.05} d="M606 170v14h14Z" pointerEvents="all" />
     <path
       fill="none"
       stroke="#d79b00"
       strokeMiterlimit={10}
-      d="M666 220v14h14"
+      d="M606 170v14h14"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -997,8 +929,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 234,
             height: 1,
-            paddingTop: 235,
-            marginLeft: 445,
+            paddingTop: 185,
+            marginLeft: 385,
           }}
         >
           <div
@@ -1027,8 +959,8 @@ const SvgExploreComponentFiles = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={562}
-        y={239}
+        x={502}
+        y={189}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"

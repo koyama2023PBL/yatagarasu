@@ -11,6 +11,24 @@ npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Cont
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_backendprocess.svg
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess.svg
 
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess_postmaster.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess_sharedbuffers.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess_walwriter.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess_statscollector.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess_checkpointer.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess_autovacuum.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess_backgroundwriter.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_postgresprocess_archiver.svg
+
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_backendprocess_process.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_backendprocess_memory.svg
+
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_files_table.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_files_index.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_files_catalog.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_files_wal.svg
+npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Components/ src/Content/Postgresql/SVGs/explore/components/explore_component_files_others.svg
+
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_root.svg
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_home.svg
 npx @svgr/cli -d src/Content/Postgresql/SVGs/ReactComponent/Queries/ src/Content/Postgresql/SVGs/explore/queries/explore_query_advance_home.svg

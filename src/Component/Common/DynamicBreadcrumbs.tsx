@@ -8,7 +8,7 @@ export const DynamicBreadcrumbs = () => {
   const pathnames = location.pathname.split('/').filter((path) => path);
 
   return (
-    <Breadcrumbs maxItems={3} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" sx={{marginTop: '-0.5vh', marginBottom: '-1.2vh'}}>
+    <Breadcrumbs maxItems={6} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb" sx={{marginTop: '-0.5vh', marginBottom: '-1.2vh'}}>
       <Link color="inherit" to="/">
         Yatagarasu
       </Link>

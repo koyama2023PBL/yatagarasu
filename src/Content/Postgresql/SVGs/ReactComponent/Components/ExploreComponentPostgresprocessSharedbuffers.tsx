@@ -1,18 +1,20 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
+const SvgExploreComponentPostgresprocessSharedbuffers = (
+  props: SVGProps<SVGSVGElement>
+) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
-    width={631}
-    height={261}
-    viewBox="-0.5 -0.5 631 261"
+    width={641}
+    height={281}
+    viewBox="-0.5 -0.5 641 281"
     {...props}
   >
     <rect
       width={70}
       height={60}
-      y={106}
+      y={116}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -38,7 +40,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 68,
             height: 1,
-            paddingTop: 136,
+            paddingTop: 146,
             marginLeft: 1,
           }}
         >
@@ -69,7 +71,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       </foreignObject>
       <text
         x={35}
-        y={140}
+        y={150}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -78,14 +80,14 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       </text>
     </switch>
     <rect
-      width={540}
-      height={260}
+      width={550}
+      height={280}
       x={90}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
-      rx={39}
-      ry={39}
+      rx={42}
+      ry={42}
     />
     <switch transform="translate(-.5 -.5)">
       <foreignObject
@@ -104,7 +106,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
             display: "flex",
             alignItems: "unsafe flex-start",
             justifyContent: "unsafe center",
-            width: 538,
+            width: 548,
             height: 1,
             paddingTop: 7,
             marginLeft: 91,
@@ -136,7 +138,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={360}
+        x={365}
         y={19}
         fontFamily="Helvetica"
         fontSize={12}
@@ -148,7 +150,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
     <rect
       width={70}
       height={60}
-      y={190}
+      y={194}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
@@ -174,7 +176,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 68,
             height: 1,
-            paddingTop: 220,
+            paddingTop: 224,
             marginLeft: 1,
           }}
         >
@@ -205,7 +207,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       </foreignObject>
       <text
         x={35}
-        y={224}
+        y={228}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -214,15 +216,15 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       </text>
     </switch>
     <rect
-      width={350}
-      height={115}
+      width={130}
+      height={50}
       x={100}
-      y={80}
-      fill="#fff2cc"
+      y={120}
+      fill="#FFF"
       stroke="#000"
       pointerEvents="all"
-      rx={17.25}
-      ry={17.25}
+      rx={7.5}
+      ry={7.5}
     />
     <switch transform="translate(-.5 -.5)">
       <foreignObject
@@ -239,11 +241,11 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
           
           style={{
             display: "flex",
-            alignItems: "unsafe flex-start",
+            alignItems: "unsafe center",
             justifyContent: "unsafe center",
-            width: 348,
+            width: 128,
             height: 1,
-            paddingTop: 87,
+            paddingTop: 145,
             marginLeft: 101,
           }}
         >
@@ -275,8 +277,8 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={275}
-        y={99}
+        x={165}
+        y={149}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -285,15 +287,15 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       </text>
     </switch>
     <rect
-      width={70}
-      height={210}
-      x={460}
-      y={30}
+      width={310}
+      height={230}
+      x={234}
+      y={40}
       fill="#FFF"
       stroke="#000"
       pointerEvents="all"
-      rx={10.5}
-      ry={10.5}
+      rx={34.5}
+      ry={34.5}
     />
     <switch transform="translate(-.5 -.5)">
       <foreignObject
@@ -310,12 +312,12 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
           
           style={{
             display: "flex",
-            alignItems: "unsafe center",
+            alignItems: "unsafe flex-start",
             justifyContent: "unsafe center",
-            width: 68,
+            width: 308,
             height: 1,
-            paddingTop: 135,
-            marginLeft: 461,
+            paddingTop: 47,
+            marginLeft: 235,
           }}
         >
           <div
@@ -338,9 +340,7 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
                 overflowWrap: "normal",
               }}
             >
-              {"Postgres"}
-              <br />
-              {"Processes"}
+              {"Postgres Processes"}
               <br />
               {"& Memory"}
             </div>
@@ -348,28 +348,28 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={495}
-        y={139}
+        x={389}
+        y={59}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
       >
-        {"Postgres..."}
+        {"Postgres Processes..."}
       </text>
     </switch>
     <path
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M550 30h40l30 30v180h-70V30Z"
+      d="M560 49h40l30 30v170h-70V49Z"
       pointerEvents="all"
     />
-    <path fillOpacity={0.05} d="M590 30v30h30Z" pointerEvents="all" />
+    <path fillOpacity={0.05} d="M600 49v30h30Z" pointerEvents="all" />
     <path
       fill="none"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M590 30v30h30"
+      d="M600 49v30h30"
       pointerEvents="all"
     />
     <switch transform="translate(-.5 -.5)">
@@ -391,8 +391,8 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
             justifyContent: "unsafe center",
             width: 68,
             height: 1,
-            paddingTop: 135,
-            marginLeft: 551,
+            paddingTop: 149,
+            marginLeft: 561,
           }}
         >
           <div
@@ -423,8 +423,8 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={585}
-        y={139}
+        x={595}
+        y={153}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -432,16 +432,23 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
         {"PostgreSQL..."}
       </text>
     </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      strokeMiterlimit={10}
+      d="M537.5 140v-10h15.33v-3.5l8.67 8.5-8.67 8.5V140ZM561.5 150v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM72.5 222v-10h15.33v-3.5l8.67 8.5-8.67 8.5V222ZM96.5 232v10H81.17v3.5L72.5 237l8.67-8.5v3.5ZM72.5 141.76v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM96.5 151.76v10H81.17v3.5l-8.67-8.5 8.67-8.5v3.5Z"
+      pointerEvents="all"
+    />
     <rect
-      width={350}
-      height={30}
+      width={130}
+      height={50}
       x={100}
-      y={205}
-      fill="#fff2cc"
+      y={199}
+      fill="#FFF"
       stroke="#000"
       pointerEvents="all"
-      rx={4.5}
-      ry={4.5}
+      rx={7.5}
+      ry={7.5}
     />
     <switch transform="translate(-.5 -.5)">
       <foreignObject
@@ -460,9 +467,9 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
             display: "flex",
             alignItems: "unsafe center",
             justifyContent: "unsafe center",
-            width: 348,
+            width: 128,
             height: 1,
-            paddingTop: 220,
+            paddingTop: 224,
             marginLeft: 101,
           }}
         >
@@ -494,8 +501,8 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
         </div>
       </foreignObject>
       <text
-        x={275}
-        y={224}
+        x={165}
+        y={228}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
@@ -507,157 +514,14 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
       fill="#FFF"
       stroke="#000"
       strokeMiterlimit={10}
-      d="M527.5 130.71v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM551.5 140.71v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
+      d="M220.5 142v-10h15.33v-3.5l8.67 8.5-8.67 8.5V142ZM244.5 152v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM220.5 220.8v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM244.5 230.8v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5Z"
       pointerEvents="all"
     />
     <path
-      fill="#fff2cc"
-      stroke="#000"
-      strokeMiterlimit={10}
-      d="M440.5 135v-10h15.33v-3.5l8.67 8.5-8.67 8.5V135ZM464.5 145v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM438.5 214.8v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM462.5 224.8v10h-15.33v3.5l-8.67-8.5 8.67-8.5v3.5ZM72.5 212v-10h15.33v-3.5l8.67 8.5-8.67 8.5V212ZM96.5 222v10H81.17v3.5L72.5 227l8.67-8.5v3.5ZM72.5 131.76v-10h15.33v-3.5l8.67 8.5-8.67 8.5v-3.5ZM96.5 141.76v10H81.17v3.5l-8.67-8.5 8.67-8.5v3.5Z"
-      pointerEvents="all"
-    />
-    <path
-      fill="#ffe6cc"
-      stroke="#d79b00"
-      d="M107 120h173v59H107z"
-      pointerEvents="all"
-    />
-    <switch transform="translate(-.5 -.5)">
-      <foreignObject
-        width="100%"
-        height="100%"
-        pointerEvents="none"
-        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-        style={{
-          overflow: "visible",
-          textAlign: "left",
-        }}
-      >
-        <div
-          
-          style={{
-            display: "flex",
-            alignItems: "unsafe center",
-            justifyContent: "unsafe center",
-            width: 171,
-            height: 1,
-            paddingTop: 150,
-            marginLeft: 108,
-          }}
-        >
-          <div
-            data-drawio-colors="color: rgb(0, 0, 0);"
-            style={{
-              boxSizing: "border-box",
-              fontSize: 0,
-              textAlign: "center",
-            }}
-          >
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: 12,
-                fontFamily: "Helvetica",
-                color: "#000",
-                lineHeight: 1.2,
-                pointerEvents: "all",
-                whiteSpace: "normal",
-                overflowWrap: "normal",
-              }}
-            >
-              {"Backend Process#1"}
-            </div>
-          </div>
-        </div>
-      </foreignObject>
-      <text
-        x={194}
-        y={153}
-        fontFamily="Helvetica"
-        fontSize={12}
-        textAnchor="middle"
-      >
-        {"Backend Process#1"}
-      </text>
-    </switch>
-    <ellipse
-      cx={365}
-      cy={150.75}
-      fill="#ffe6cc"
-      stroke="#d79b00"
-      pointerEvents="all"
-      rx={75}
-      ry={30.75}
-    />
-    <switch transform="translate(-.5 -.5)">
-      <foreignObject
-        width="100%"
-        height="100%"
-        pointerEvents="none"
-        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
-        style={{
-          overflow: "visible",
-          textAlign: "left",
-        }}
-      >
-        <div
-          
-          style={{
-            display: "flex",
-            alignItems: "unsafe center",
-            justifyContent: "unsafe center",
-            width: 148,
-            height: 1,
-            paddingTop: 151,
-            marginLeft: 291,
-          }}
-        >
-          <div
-            data-drawio-colors="color: rgb(0, 0, 0);"
-            style={{
-              boxSizing: "border-box",
-              fontSize: 0,
-              textAlign: "center",
-            }}
-          >
-            <div
-              style={{
-                display: "inline-block",
-                fontSize: 12,
-                fontFamily: "Helvetica",
-                color: "#000",
-                lineHeight: 1.2,
-                pointerEvents: "all",
-                whiteSpace: "normal",
-                overflowWrap: "normal",
-              }}
-            >
-              {"Backend Memory#2"}
-            </div>
-          </div>
-        </div>
-      </foreignObject>
-      <text
-        x={365}
-        y={154}
-        fontFamily="Helvetica"
-        fontSize={12}
-        textAnchor="middle"
-      >
-        {"Backend Memory#2"}
-      </text>
-    </switch>
-    <rect
-      width={430}
-      height={30}
-      x={100}
-      y={41}
       fill="#FFF"
       stroke="#000"
+      d="M100 90h280v20H100z"
       pointerEvents="all"
-      rx={4.5}
-      ry={4.5}
     />
     <switch transform="translate(-.5 -.5)">
       <foreignObject
@@ -674,11 +538,11 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
           
           style={{
             display: "flex",
-            alignItems: "unsafe flex-start",
+            alignItems: "unsafe center",
             justifyContent: "unsafe center",
-            width: 428,
+            width: 278,
             height: 1,
-            paddingTop: 48,
+            paddingTop: 100,
             marginLeft: 101,
           }}
         >
@@ -702,21 +566,536 @@ const SvgExploreComponentBackendprocess = (props: SVGProps<SVGSVGElement>) => (
                 overflowWrap: "normal",
               }}
             >
-              {"Postmaster"}
+              {"Postmaster#1"}
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+      <text
+        x={240}
+        y={104}
+        fontFamily="Helvetica"
+        fontSize={12}
+        textAnchor="middle"
+      >
+        {"Postmaster#1"}
+      </text>
+    </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      d="M390 90h140v20H390z"
+      pointerEvents="all"
+    />
+    <switch transform="translate(-.5 -.5)">
+      <foreignObject
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+        style={{
+          overflow: "visible",
+          textAlign: "left",
+        }}
+      >
+        <div
+          
+          style={{
+            display: "flex",
+            alignItems: "unsafe center",
+            justifyContent: "unsafe center",
+            width: 138,
+            height: 1,
+            paddingTop: 100,
+            marginLeft: 391,
+          }}
+        >
+          <div
+            data-drawio-colors="color: rgb(0, 0, 0);"
+            style={{
+              boxSizing: "border-box",
+              fontSize: 0,
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "#000",
+                lineHeight: 1.2,
+                pointerEvents: "all",
+                whiteSpace: "normal",
+                overflowWrap: "normal",
+              }}
+            >
+              {"Background writer#3"}
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+      <text
+        x={460}
+        y={104}
+        fontFamily="Helvetica"
+        fontSize={12}
+        textAnchor="middle"
+      >
+        {"Background writer#3"}
+      </text>
+    </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      d="M390 116h140v20H390z"
+      pointerEvents="all"
+    />
+    <switch transform="translate(-.5 -.5)">
+      <foreignObject
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+        style={{
+          overflow: "visible",
+          textAlign: "left",
+        }}
+      >
+        <div
+          
+          style={{
+            display: "flex",
+            alignItems: "unsafe center",
+            justifyContent: "unsafe center",
+            width: 138,
+            height: 1,
+            paddingTop: 126,
+            marginLeft: 391,
+          }}
+        >
+          <div
+            data-drawio-colors="color: rgb(0, 0, 0);"
+            style={{
+              boxSizing: "border-box",
+              fontSize: 0,
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "#000",
+                lineHeight: 1.2,
+                pointerEvents: "all",
+                whiteSpace: "normal",
+                overflowWrap: "normal",
+              }}
+            >
+              {"Stats collector#4"}
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+      <text
+        x={460}
+        y={130}
+        fontFamily="Helvetica"
+        fontSize={12}
+        textAnchor="middle"
+      >
+        {"Stats collector#4"}
+      </text>
+    </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      d="M390 141h140v20H390z"
+      pointerEvents="all"
+    />
+    <switch transform="translate(-.5 -.5)">
+      <foreignObject
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+        style={{
+          overflow: "visible",
+          textAlign: "left",
+        }}
+      >
+        <div
+          
+          style={{
+            display: "flex",
+            alignItems: "unsafe center",
+            justifyContent: "unsafe center",
+            width: 138,
+            height: 1,
+            paddingTop: 151,
+            marginLeft: 391,
+          }}
+        >
+          <div
+            data-drawio-colors="color: rgb(0, 0, 0);"
+            style={{
+              boxSizing: "border-box",
+              fontSize: 0,
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "#000",
+                lineHeight: 1.2,
+                pointerEvents: "all",
+                whiteSpace: "normal",
+                overflowWrap: "normal",
+              }}
+            >
+              {"WAL writer#5"}
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+      <text
+        x={460}
+        y={155}
+        fontFamily="Helvetica"
+        fontSize={12}
+        textAnchor="middle"
+      >
+        {"WAL writer#5"}
+      </text>
+    </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      d="M390 166h140v20H390z"
+      pointerEvents="all"
+    />
+    <switch transform="translate(-.5 -.5)">
+      <foreignObject
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+        style={{
+          overflow: "visible",
+          textAlign: "left",
+        }}
+      >
+        <div
+          
+          style={{
+            display: "flex",
+            alignItems: "unsafe center",
+            justifyContent: "unsafe center",
+            width: 138,
+            height: 1,
+            paddingTop: 176,
+            marginLeft: 391,
+          }}
+        >
+          <div
+            data-drawio-colors="color: rgb(0, 0, 0);"
+            style={{
+              boxSizing: "border-box",
+              fontSize: 0,
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "#000",
+                lineHeight: 1.2,
+                pointerEvents: "all",
+                whiteSpace: "normal",
+                overflowWrap: "normal",
+              }}
+            >
+              {"Checkpointer#6"}
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+      <text
+        x={460}
+        y={180}
+        fontFamily="Helvetica"
+        fontSize={12}
+        textAnchor="middle"
+      >
+        {"Checkpointer#6"}
+      </text>
+    </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      d="M390 192h140v20H390z"
+      pointerEvents="all"
+    />
+    <switch transform="translate(-.5 -.5)">
+      <foreignObject
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+        style={{
+          overflow: "visible",
+          textAlign: "left",
+        }}
+      >
+        <div
+          
+          style={{
+            display: "flex",
+            alignItems: "unsafe center",
+            justifyContent: "unsafe center",
+            width: 138,
+            height: 1,
+            paddingTop: 202,
+            marginLeft: 391,
+          }}
+        >
+          <div
+            data-drawio-colors="color: rgb(0, 0, 0);"
+            style={{
+              boxSizing: "border-box",
+              fontSize: 0,
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "#000",
+                lineHeight: 1.2,
+                pointerEvents: "all",
+                whiteSpace: "normal",
+                overflowWrap: "normal",
+              }}
+            >
+              {"Autovacuum launcher#7"}
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+      <text
+        x={460}
+        y={206}
+        fontFamily="Helvetica"
+        fontSize={12}
+        textAnchor="middle"
+      >
+        {"Autovacuum launcher#7"}
+      </text>
+    </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      d="M390 217h140v20H390z"
+      pointerEvents="all"
+    />
+    <switch transform="translate(-.5 -.5)">
+      <foreignObject
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+        style={{
+          overflow: "visible",
+          textAlign: "left",
+        }}
+      >
+        <div
+          
+          style={{
+            display: "flex",
+            alignItems: "unsafe center",
+            justifyContent: "unsafe center",
+            width: 138,
+            height: 1,
+            paddingTop: 227,
+            marginLeft: 391,
+          }}
+        >
+          <div
+            data-drawio-colors="color: rgb(0, 0, 0);"
+            style={{
+              boxSizing: "border-box",
+              fontSize: 0,
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "#000",
+                lineHeight: 1.2,
+                pointerEvents: "all",
+                whiteSpace: "normal",
+                overflowWrap: "normal",
+              }}
+            >
+              {"Autovacuum worker#8"}
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+      <text
+        x={460}
+        y={231}
+        fontFamily="Helvetica"
+        fontSize={12}
+        textAnchor="middle"
+      >
+        {"Autovacuum worker#8"}
+      </text>
+    </switch>
+    <path
+      fill="#FFF"
+      stroke="#000"
+      d="M390 242h140v20H390z"
+      pointerEvents="all"
+    />
+    <switch transform="translate(-.5 -.5)">
+      <foreignObject
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+        style={{
+          overflow: "visible",
+          textAlign: "left",
+        }}
+      >
+        <div
+          
+          style={{
+            display: "flex",
+            alignItems: "unsafe center",
+            justifyContent: "unsafe center",
+            width: 138,
+            height: 1,
+            paddingTop: 252,
+            marginLeft: 391,
+          }}
+        >
+          <div
+            data-drawio-colors="color: rgb(0, 0, 0);"
+            style={{
+              boxSizing: "border-box",
+              fontSize: 0,
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "#000",
+                lineHeight: 1.2,
+                pointerEvents: "all",
+                whiteSpace: "normal",
+                overflowWrap: "normal",
+              }}
+            >
+              {"Archiver#9"}
+            </div>
+          </div>
+        </div>
+      </foreignObject>
+      <text
+        x={460}
+        y={256}
+        fontFamily="Helvetica"
+        fontSize={12}
+        textAnchor="middle"
+      >
+        {"Archiver#9"}
+      </text>
+    </switch>
+    <ellipse
+      cx={315}
+      cy={190}
+      fill="#ffe6cc"
+      stroke="#d79b00"
+      pointerEvents="all"
+      rx={65}
+      ry={70}
+    />
+    <switch transform="translate(-.5 -.5)">
+      <foreignObject
+        width="100%"
+        height="100%"
+        pointerEvents="none"
+        requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+        style={{
+          overflow: "visible",
+          textAlign: "left",
+        }}
+      >
+        <div
+          
+          style={{
+            display: "flex",
+            alignItems: "unsafe center",
+            justifyContent: "unsafe center",
+            width: 128,
+            height: 1,
+            paddingTop: 190,
+            marginLeft: 251,
+          }}
+        >
+          <div
+            data-drawio-colors="color: rgb(0, 0, 0);"
+            style={{
+              boxSizing: "border-box",
+              fontSize: 0,
+              textAlign: "center",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-block",
+                fontSize: 12,
+                fontFamily: "Helvetica",
+                color: "#000",
+                lineHeight: 1.2,
+                pointerEvents: "all",
+                whiteSpace: "normal",
+                overflowWrap: "normal",
+              }}
+            >
+              {"Shared Buffers#2"}
             </div>
           </div>
         </div>
       </foreignObject>
       <text
         x={315}
-        y={60}
+        y={194}
         fontFamily="Helvetica"
         fontSize={12}
         textAnchor="middle"
       >
-        {"Postmaster"}
+        {"Shared Buffers#2"}
       </text>
     </switch>
   </svg>
 );
-export default SvgExploreComponentBackendprocess;
+export default SvgExploreComponentPostgresprocessSharedbuffers;

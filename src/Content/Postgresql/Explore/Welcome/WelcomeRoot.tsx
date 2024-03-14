@@ -13,25 +13,25 @@ const WelcomeRoot: React.FC = () => (
 
     <Grid container spacing={1} sx={{ marginTop: '5px' }}>
       <Grid item xs={12} md={6}>
-        <NavLink to="/explore/query">
+        <NavLink style={{textDecoration: 'none'}} to="/explore/query">
           <WelcomeQuery />
         </NavLink>
       </Grid>
 
       <Grid item xs={12} md={6}>
-        {/*<NavLink to="/explore/component">*/}
+        <NavLink style={{textDecoration: 'none'}} to="/explore/component">
           <WelcomeComponent />
-        {/*</NavLink>*/}
+        </NavLink>
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <NavLink to="/explore/server">
+        <NavLink style={{textDecoration: 'none'}} to="/explore/server">
           <WelcomeServer />
         </NavLink>
       </Grid>
 
       <Grid item xs={12} md={6}>
-        <NavLink to="/explore/overview">
+        <NavLink style={{textDecoration: 'none'}} to="/explore/overview">
           <WelcomeOverview />
         </NavLink>
       </Grid>

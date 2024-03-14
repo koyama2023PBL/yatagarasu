@@ -5,13 +5,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../../Component/Redux/StateStore';
 import BackendProcess from './Backend/BackendProcess';
 import BackendMemory from './Backend/BackendMemory';
-import ListenerProcess from './Backend/ListenerProcess';
+import SvgExploreComponentBackendprocess from '../../SVGs/ReactComponent/Components/ExploreComponentBackendprocess';
 
-const steps = [
-  { step: "backend-process", description: "1. バックエンドプロセス" },
-  { step: "backend-memory", description: "2. バックエンドメモリ" },
-  { step: "listener-process", description: "3. リスナープロセス" },
-];
 
 const scrollToRef = (ref: React.RefObject<HTMLDivElement>) => {
   if (ref.current) {
@@ -44,18 +39,18 @@ const ComponentBackend: React.FC = () => {
           <CardContent>
             <Box sx={{ display: 'flex' }}>
               <Typography variant="h6" gutterBottom>
-              PostgreSQL稼働状態
+              アプリとPostgerSQLをつなぐバックエンドプロセス
               </Typography>
             </Box>
             <Box sx={{ display: 'flex', p: '1.5', marginLeft: '1vw'}}>
-              <SvgExploreComponentHome/>
+              <SvgExploreComponentBackendprocess/>
             </Box>
           </CardContent>
         </Card>
         <Card sx={{ width: '55%', marginLeft: '5pt' }}>
           <CardContent>
             <Typography variant="h6" gutterBottom>
-              PostgreSQLについて
+              Backendプロセスについて
             </Typography>
             <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
               PostgreSQLはOS上にて複数のプロセス群で稼働します。
@@ -65,16 +60,6 @@ const ComponentBackend: React.FC = () => {
             </Typography>
             <Typography variant="body1" paragraph sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
               アプリケーションなどからのコネクションは、1コネクション=1プロセスとして実行されます。
-            </Typography>
-            {steps.map((item) => (
-              <Box key={item.step} sx={{ marginBottom: '1rem', marginLeft: '20pt'}}>
-                <Link href={`#${item.step}`} color="secondary" variant="body1">
-                  {`<${item.step}>`}: {item.description}
-                </Link>
-              </Box>
-            ))}
-            <Typography variant="body2" sx={{ marginLeft: '12pt', marginBottom: '4px' }}>
-              ※クリックすると、各工程の詳細へジャンプします
             </Typography>
           </CardContent>
         </Card>
@@ -87,11 +72,6 @@ const ComponentBackend: React.FC = () => {
       <div ref={parseRef} id="backend-memory">
         <Box sx={{marginTop: "6pt"}}>
             <BackendMemory starttime={starttime} endtime={endtime} /> 
-        </Box>
-      </div>
-      <div ref={parseRef} id="listener-process">
-        <Box sx={{marginTop: "6pt"}}>
-            <ListenerProcess starttime={starttime} endtime={endtime}/> 
         </Box>
       </div>
     </Box>
