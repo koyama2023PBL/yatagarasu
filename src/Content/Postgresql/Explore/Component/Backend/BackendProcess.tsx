@@ -31,6 +31,33 @@ const BackendProcess: React.FC<Props> = ({ starttime, endtime }) => {
                 <Typography fontSize="14pt" gutterBottom>
                   Backendプロセスの役割
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  Backendプロセスは、アプリケーションからの接続要求を受け付けたPostmasterプロセスにより作成されます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  OS上のPIDを持つ1プロセスとして稼働します。このプロセスにより接続元とのセッション・コンテキスト管理が行われます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '8px' }}>
+                  1コネクション=1プロセスで稼働し、以下のような役割も担います。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '20pt', marginBottom: '4px' }}>
+                  ・クエリの実行...SQLクエリの解釈・実行・結果のレスポンス
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '20pt', marginBottom: '4px' }}>
+                  ・トランザクションの管理...発行するトランザクションの管理・制御
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '20pt', marginBottom: '8px' }}>
+                  ・リソース管理...使用するシステムリソースの管理・制御
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  また、SharedBuffers(共有メモリ)やWALログについても、参照・編集を必要な場合は行います。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  BackendプロセスはPostgreSQLがクライアントから操作や接続を受け付ける際のインタフェースプロセスであり、
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  高いパフォーマンスを実現するPostgreSQLのマルチプロセスアーキテクチャの中核です。
+                </Typography>
               </CardContent>
             </Card>
           </Box>
