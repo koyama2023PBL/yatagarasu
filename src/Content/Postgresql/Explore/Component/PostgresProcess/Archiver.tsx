@@ -30,6 +30,21 @@ const Archiver: React.FC<Props> = ({ starttime, endtime }) => {
                 <Typography fontSize="14pt" gutterBottom>
                   Archiver
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  Archiverは、PostgreSQLにおいてはWALファイルのアーカイブを行うプロセスです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  PostgreSQLでは、WALログは耐障害性に対して非常に重要な役割を持っています。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  このWALログをアーカイブし、別の領域に保管したり、あるいはセカンダリサーバへ転送したりするのに使用します。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  データの幾重にも及ぶバックアップは、システムにおけるデータの永続化を担うRDBMSの役割において重要なものです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  アーカイブのタイミング・容量などは'postgresql.conf'ファイルにて設定変更することができます。
+                </Typography>
               </CardContent>
             </Card>
           </Box>

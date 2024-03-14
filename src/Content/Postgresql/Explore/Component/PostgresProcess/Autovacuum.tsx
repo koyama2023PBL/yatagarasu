@@ -30,6 +30,36 @@ const Autovacuum: React.FC<Props> = ({ starttime, endtime }) => {
                 <Typography fontSize="14pt" gutterBottom>
                   Autovacuum
                 </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  Autovacuumは、PostgreSQLにおいては必要不可欠なアーキテクチャです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  PostgreSQLでは、MVCC(Multi Version Concurrency Control)という制御方法を採用しています。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  このMVCCは、主に複数のトランザクションが走る場面で活躍します。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  PostgreSQLは全てのデータに番号を振っており、その番号が有効か無効かをその番号によって制御します。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  データが更新されると新しい番号が振られ、古い番号(バージョン番号)のデータは無効になります。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  イメージとしては、削除フラグに近いものです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  当然、バージョン管理がされる形であるため無効になったデータも保持されるのですが、
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  この無効となったデータを「デッドタプル」と呼びます。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  このAutovaccumとは、この「デッドタプル」を定期的・自動的に削除してくれる仕掛けです。
+                </Typography>
+                <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
+                  これにより容量の圧迫やパフォーマンスの低下を防ぐことができます。
+                </Typography>
               </CardContent>
             </Card>
           </Box>

@@ -56,7 +56,7 @@ const BackendProcess: React.FC<Props> = ({ starttime, endtime }) => {
                   BackendプロセスはPostgreSQLがクライアントから操作や接続を受け付ける際のインタフェースプロセスであり、
                 </Typography>
                 <Typography fontSize="10pt" sx={{ marginLeft: '10pt', marginBottom: '4px' }}>
-                  高いパフォーマンスを実現するPostgreSQLのマルチプロセスアーキテクチャの中核です。
+                  高いパフォーマンスを実現するPostgreSQLを構成するマルチプロセスアーキテクチャの中核です。
                 </Typography>
               </CardContent>
             </Card>
