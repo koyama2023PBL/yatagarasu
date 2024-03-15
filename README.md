@@ -99,8 +99,10 @@ npm start
 ```
 
 ### Jarを用いて実行する場合
+```sh
 git clone https://github.com/koyama2023PBL/yatagarasu.git
 java -jar ./jar/yatagarasu-demo-0.1.0.jar
+```
 
 ### PostgreSQL Server Exporterへのクエリ追加
 Yatagarasuには実際のSQLを表示する機能がありますが, デフォルトのPostgreSQL Server ExporterではSQLを取得できないため, 代わりに`queryid`が表示されます. 実際のSQLを表示するにはPostgreSQL Server Exporterにクエリを追加してください.<br/>
