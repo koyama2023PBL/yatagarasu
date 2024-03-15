@@ -98,6 +98,10 @@ npm i
 npm start
 ```
 
+### Jarを用いて実行する場合
+git clone https://github.com/koyama2023PBL/yatagarasu.git
+java -jar ./jar/yatagarasu-demo-0.1.0.jar
+
 ### PostgreSQL Server Exporterへのクエリ追加
 Yatagarasuには実際のSQLを表示する機能がありますが, デフォルトのPostgreSQL Server ExporterではSQLを取得できないため, 代わりに`queryid`が表示されます. 実際のSQLを表示するにはPostgreSQL Server Exporterにクエリを追加してください.<br/>
 クエリの追加手順は[PostgreSQL Server Exporterのリポジトリ](https://github.com/prometheus-community/postgres_exporter?tab=readme-ov-file#adding-new-metrics)を参照してください. クエリを追加する際は本リポジトリの[queries.yaml](https://github.com/koyama2023PBL/yatagarasu/blob/update-readme/queries.yaml), または[queries.py](https://github.com/koyama2023PBL/yatagarasu/blob/update-readme/queries.py)を使用できます.
